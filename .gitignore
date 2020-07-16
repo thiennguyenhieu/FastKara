@@ -30,6 +30,18 @@
 .pub/
 /build/
 
+# Android related
+**/android/**/gradle-wrapper.jar
+**/android/.gradle
+**/android/captures/
+**/android/gradlew
+**/android/gradlew.bat
+**/android/local.properties
+**/android/**/GeneratedPluginRegistrant.java
+
+# Local configuration file (sdk path, etc)
+local.properties
+
 # Web related
 lib/generated_plugin_registrant.dart
 
