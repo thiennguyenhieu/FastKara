@@ -1,7 +1,8 @@
-import 'package:fast_kara/HomeScreen.dart';
-import 'package:fast_kara/Splash_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
+
+import 'views/home_screen.dart';
+import 'views/splash_screen.dart';
 
 void main() => runApp(MyApp());
 

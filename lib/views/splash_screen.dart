@@ -1,6 +1,7 @@
-import 'package:fast_kara/HomeScreen.dart';
-import 'package:flutter/material.dart';
 import 'dart:async';
+
+import 'package:flutter/material.dart';
+import 'home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -8,8 +9,6 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
-
   Future<bool> _mockCheckForSession() async {
     await Future.delayed(Duration(milliseconds: 2000), () {} );
 
@@ -34,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
           children: <Widget>[
             Opacity(
                 opacity: 0.5,
-                child: Image.asset('assets/Fast_Kara_Splash.jpg')
+                child: Image.asset('assets/images/splash_background.jpg')
             )
           ],
         ),
