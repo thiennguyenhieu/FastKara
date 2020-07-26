@@ -10,75 +10,65 @@ class MainPage extends StatefulWidget {
   State<StatefulWidget> createState() => _MainPageState();
 }
 
-class _MainPageState extends State<MainPage>
-    with SingleTickerProviderStateMixin {
-  TabController _controller;
+class _MainPageState extends State<MainPage> {
+  List<Widget> _pages;
+  Widget _pageHome;
+  Widget _pageSearch;
+  Widget _pageFavorite;
+  Widget _pageUserAccount;
+
+  int _currentIndex;
+  Widget _currentPage;
 
   @override
   void initState() {
     super.initState();
 
-    _controller = TabController(length: 4, vsync: this);
-    _controller.addListener(_trackSeletedTab);
+    _pageHome = HomeTab();
+    _pageSearch = SearchTab();
+    _pageFavorite = FavoriteTab();
+    _pageUserAccount = UserAccountTab();
+
+    _pages = [_pageHome, _pageSearch, _pageFavorite, _pageUserAccount];
+
+    _currentIndex = 0;
+    _currentPage = _pageHome;
   }
 
-  void _trackSeletedTab() {
-    print("_tabController index: ${_controller.index}");
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
+  void _changeTab(int index) {
+    setState(() {
+      _currentIndex = index;
+      _currentPage = _pages[index];
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    Color appBarColor = const Color.fromRGBO(33, 38, 43, 1.0);
-    Color backgroundColor = const Color.fromRGBO(31, 31, 31, 1.0);
-    Color appBarTitleColor = const Color.fromRGBO(255, 218, 159, 1.0);
-
-    final List<Tab> tabList = <Tab>[
-      Tab(
-        /* Home Tab */
-        icon: Icon(Icons.home),
-      ),
-      Tab(
-        /* Search Tab */
-        icon: Icon(Icons.search),
-      ),
-      Tab(
-        /* Favorite Tab */
-        icon: Icon(Icons.favorite),
-      ),
-      Tab(
-        /* UserInfo Tab */
-        icon: Icon(Icons.account_circle),
-      ),
-    ];
-
     return SafeArea(
-      child: Scaffold(
-        backgroundColor: backgroundColor,
-        body: TabBarView(
-          children: <Widget>[
-            HomeTab(),
-            SearchTab(),
-            FavoriteTab(),
-            UserAccountTab(),
-          ],
-          controller: _controller,
-        ),
-        bottomNavigationBar: Material(
-            color: appBarColor,
-            child: TabBar(
-              labelColor: appBarTitleColor,
-              unselectedLabelColor: Colors.white,
-              indicatorColor: Colors.transparent,
-              tabs: tabList,
-              controller: _controller,
-            )),
-      ),
-    );
+        top: false,
+        bottom: false,
+        child: Scaffold(
+          appBar: null,
+          body: _currentPage,
+          bottomNavigationBar: BottomNavigationBar(
+              showSelectedLabels: false,
+              showUnselectedLabels: false,
+              type: BottomNavigationBarType.fixed,
+              backgroundColor: const Color.fromRGBO(33, 38, 43, 1.0),
+              selectedItemColor: const Color.fromRGBO(255, 218, 159, 1.0),
+              unselectedItemColor: Colors.white,
+              onTap: (index) => _changeTab(index),
+              currentIndex: _currentIndex,
+              items: [
+                BottomNavigationBarItem(
+                    title: Text(''), icon: Icon(Icons.home)),
+                BottomNavigationBarItem(
+                    title: Text(''), icon: Icon(Icons.search)),
+                BottomNavigationBarItem(
+                    title: Text(''), icon: Icon(Icons.favorite)),
+                BottomNavigationBarItem(
+                    title: Text(''), icon: Icon(Icons.account_circle))
+              ]),
+        ));
   }
 }
