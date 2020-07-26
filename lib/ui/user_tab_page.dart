@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class UserInfoTab extends StatelessWidget {
+class UserAccountTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color backgroundColor = const Color.fromRGBO(31, 31, 31, 1.0);
@@ -17,7 +17,7 @@ class UserInfoTab extends StatelessWidget {
                 color: Colors.white,
               ),
               Text(
-                "UserInfo Tab",
+                "UserAccount Tab",
                 style: TextStyle(color: Colors.white),
               )
             ],

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class HomeScreenTab extends StatelessWidget {
+class HomeTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color backgroundColor = const Color.fromRGBO(31, 31, 31, 1.0);
