@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-
+import 'package:fast_kara/ui/material/ColorDefine.dart';
 class FavoriteTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Color backgroundColor = const Color.fromRGBO(31, 31, 31, 1.0);
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: CommonColor.backgroundColor,
       body: Container(
         child: Center(
           child: Column(
