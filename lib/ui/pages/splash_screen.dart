@@ -2,8 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-import 'pages/main_page.dart';
-import 'package:fast_kara/ui/material/ColorDefine.dart';
+
+import 'main_page.dart';
+import '../static/const_color.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -25,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: CommonColor.backgroundColor,
+      backgroundColor: CommonColor.colorBackground,
       body: Container(
         child: new Stack(
           children: <Widget>[
@@ -40,7 +41,7 @@ class _SplashScreenState extends State<SplashScreen> {
                           style: TextStyle(fontSize: 60.0, fontFamily: 'Bebas'),
                         ),
                         baseColor: splashTextHighlight,
-                        highlightColor: CommonColor.textBaseColor),
+                        highlightColor: CommonColor.colorTextBase),
                   )),
             ),
             new Positioned(
@@ -62,7 +63,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 child: Text(
                   'FASTAPP STUDIO',
                   style: TextStyle(
-                    color: CommonColor.textBaseColor,
+                    color: CommonColor.colorTextBase,
                     fontFamily: 'Fialla',
                     fontSize: 15.0,
                   ),
