@@ -2,7 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-import 'main_page.dart';
+import 'pages/main_page.dart';
+import 'package:fast_kara/ui/material/ColorDefine.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -10,11 +11,8 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  Color backgroundColor = const Color.fromRGBO(31, 31, 31, 1.0);
-  Color splashTextBaseColor = const Color.fromRGBO(255, 218, 159, 1.0);
   Color splashTextHighlight = const Color.fromRGBO(108, 94, 76, 1.0);
   Color textColor = const Color.fromRGBO(92, 92, 92, 1.0);
-
   @override
   void initState() {
     super.initState();
@@ -27,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: CommonColor.backgroundColor,
       body: Container(
         child: new Stack(
           children: <Widget>[
@@ -42,7 +40,7 @@ class _SplashScreenState extends State<SplashScreen> {
                           style: TextStyle(fontSize: 60.0, fontFamily: 'Bebas'),
                         ),
                         baseColor: splashTextHighlight,
-                        highlightColor: splashTextBaseColor),
+                        highlightColor: CommonColor.textBaseColor),
                   )),
             ),
             new Positioned(
@@ -64,7 +62,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 child: Text(
                   'FASTAPP STUDIO',
                   style: TextStyle(
-                    color: splashTextBaseColor,
+                    color: CommonColor.textBaseColor,
                     fontFamily: 'Fialla',
                     fontSize: 15.0,
                   ),
