@@ -24,6 +24,11 @@ dependencies:
   flutter:
     sdk: flutter
   shimmer: ^1.0.1
+  flutter_secure_storage: ^3.3.3
+  flutter_facebook_login: ^3.0.0
+  firebase_core: ^0.4.0+9
+  firebase_auth: ^0.14.0+5
+  google_sign_in: ^4.0.11
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -50,6 +55,8 @@ flutter_launcher_name:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/icons/
 
   # assets:
   #   - images/a_dot_burr.jpeg

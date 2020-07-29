@@ -1,10 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shimmer/shimmer.dart';
 
 import 'main_page.dart';
 import '../static/const_color.dart';
+import '../pages/login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -12,13 +14,27 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  final _storage = new FlutterSecureStorage();
+  final _key = "login_key";
+  bool _isLogIn = false;
+
+  Future readUser() async {
+    String userName = await _storage.read(key: _key);
+    if (userName != null) {
+      _isLogIn = true;
+    }
+    print(userName);
+  }
+
   @override
   void initState() {
     super.initState();
+    readUser();
     Timer(
         Duration(seconds: 3),
-        () => Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (BuildContext context) => MainPage())));
+        () => Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (BuildContext context) =>
+                _isLogIn ? MainPage() : LogInScreen())));
   }
 
   @override
