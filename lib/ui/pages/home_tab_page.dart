@@ -70,8 +70,7 @@ class _HomeTabState extends State<HomeTab> {
 
   Widget _listSong(AsyncSnapshot snapshot, int index) {
     return ListItem(
-        imageUrl:
-            'https://109cdf7de.vws.vegacdn.vn/v1/banner/528.jpg?t=1593536400',
+        imageUrl: snapshot.data[index].imgUrl,
         title: snapshot.data[index].title,
         subtitle: snapshot.data[index].singer,
         onItemTab: _onItemTab,
