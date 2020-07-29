@@ -12,8 +12,6 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  Color splashTextHighlight = const Color.fromRGBO(108, 94, 76, 1.0);
-  Color textColor = const Color.fromRGBO(92, 92, 92, 1.0);
   @override
   void initState() {
     super.initState();
@@ -40,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
                           'FASTKARA',
                           style: TextStyle(fontSize: 60.0, fontFamily: 'Bebas'),
                         ),
-                        baseColor: splashTextHighlight,
+                        baseColor: CommonColor.colorSplashBaseText,
                         highlightColor: CommonColor.colorTextBase),
                   )),
             ),
@@ -52,7 +50,8 @@ class _SplashScreenState extends State<SplashScreen> {
                       child: Text(
                         'from',
                         style: TextStyle(
-                            color: textColor, fontWeight: FontWeight.bold),
+                            color: CommonColor.colorSplashFooterText,
+                            fontWeight: FontWeight.bold),
                       ),
                     ))),
             new Positioned(
@@ -63,7 +62,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 child: Text(
                   'FASTAPP STUDIO',
                   style: TextStyle(
-                    color: CommonColor.colorTextBase,
+                    color: CommonColor.colorSplashBaseText,
                     fontFamily: 'Fialla',
                     fontSize: 15.0,
                   ),

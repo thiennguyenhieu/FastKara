@@ -1,15 +1,18 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:fast_kara/ui/pages/play_song_page.dart';
 import 'package:flutter/material.dart';
 import 'package:loading/loading.dart';
 import 'package:loading/indicator/ball_pulse_indicator.dart';
 import 'package:http/http.dart' as http;
 
+import '../../model/song_model.dart';
 import '../static/const_color.dart';
 import '../static/const_http_path.dart';
 import '../widgets/list_item.dart';
-import '../../model/song_model.dart';
+import '../widgets/custom_route.dart';
+import 'play_song_page.dart';
 
 class HomeTab extends StatefulWidget {
   @override
@@ -77,6 +80,16 @@ class _HomeTabState extends State<HomeTab> {
         onMoreBtnPressed: _onMoreBtnPressed);
   }
 
-  void _onItemTab() {}
+  void _onItemTab() {
+    _navigateToSubPage(context);
+  }
+
+  Future _navigateToSubPage(context) async {
+    Navigator.push(
+        context,
+        CustomRoute(
+            previousPage: this.widget, builder: (context) => PlaySongPage()));
+  }
+
   void _onMoreBtnPressed() {}
 }
