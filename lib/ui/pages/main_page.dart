@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fast_kara/ui/home_tab_page.dart';
-import 'package:fast_kara/ui/favorite_tab_page.dart';
-import 'package:fast_kara/ui/user_tab_page.dart';
-import 'package:fast_kara/ui/search_tab_page.dart';
+
+import '../static/const_color.dart';
+import 'home_tab_page.dart';
+import 'favorite_tab_page.dart';
+import 'user_tab_page.dart';
+import 'search_tab_page.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -54,8 +56,8 @@ class _MainPageState extends State<MainPage> {
               showSelectedLabels: false,
               showUnselectedLabels: false,
               type: BottomNavigationBarType.fixed,
-              backgroundColor: const Color.fromRGBO(33, 38, 43, 1.0),
-              selectedItemColor: const Color.fromRGBO(255, 218, 159, 1.0),
+              backgroundColor: CommonColor.colorNavigationBar,
+              selectedItemColor: CommonColor.colorTextBase,
               unselectedItemColor: Colors.white,
               onTap: (index) => _changeTab(index),
               currentIndex: _currentIndex,

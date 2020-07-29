@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
+import '../static/const_color.dart';
+
 class UserAccountTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Color backgroundColor = const Color.fromRGBO(31, 31, 31, 1.0);
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: CommonColor.colorBackground,
       body: Container(
         child: Center(
           child: Column(
