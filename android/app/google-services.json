@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "760079617317",
+    "firebase_url": "https://fastkara-b18ed.firebaseio.com",
+    "project_id": "fastkara-b18ed",
+    "storage_bucket": "fastkara-b18ed.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:760079617317:android:db6acc0065b9af02735ecc",
+        "android_client_info": {
+          "package_name": "com.example.fast_kara"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "760079617317-bbjie4hso6aopop9n1p049e7dshme7gu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fast_kara",
+            "certificate_hash": "f42ca110b40de89b86303a6fbfff22a87e7eefee"
+          }
+        },
+        {
+          "client_id": "760079617317-mskmemmmmd5e3tnnivhog853pa4d59jb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-a9-N8g6Cuq9hT3H79Ld0gu4omgTxKK4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "760079617317-mskmemmmmd5e3tnnivhog853pa4d59jb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
