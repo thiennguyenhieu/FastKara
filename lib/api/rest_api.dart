@@ -9,6 +9,8 @@ class RestAPI {
   static final List<SongModel> _songBook = [];
 
   static Future<List<SongModel>> fetchSongBook() async {
+    _songBook.clear();
+
     var response = await http.get(HttpPath.pathSongBook);
 
     if (response.statusCode == 200) {

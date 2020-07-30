@@ -7,6 +7,7 @@ import 'package:loading/indicator/ball_pulse_indicator.dart';
 
 import '../../static/const_color.dart';
 import '../../api/rest_api.dart';
+import '../../model/song_model.dart';
 import '../widgets/list_item.dart';
 import '../widgets/custom_route.dart';
 import 'play_song_page.dart';
@@ -17,6 +18,8 @@ class HomeTab extends StatefulWidget {
 }
 
 class _HomeTabState extends State<HomeTab> {
+  Future<List<SongModel>> _songBook = RestAPI.fetchSongBook();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +31,7 @@ class _HomeTabState extends State<HomeTab> {
         backgroundColor: Colors.black,
         body: Container(
           child: FutureBuilder(
-            future: RestAPI.fetchSongBook(),
+            future: _songBook,
             builder: (BuildContext context, AsyncSnapshot listSong) {
               if (listSong.data == null) {
                 return Container(
