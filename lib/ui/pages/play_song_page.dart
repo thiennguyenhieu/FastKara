@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../static/const_color.dart';
+import '../../static/const_color.dart';
 
 class PlaySongPage extends StatefulWidget {
   @override

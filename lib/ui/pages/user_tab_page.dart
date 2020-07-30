@@ -1,12 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_facebook_login/flutter_facebook_login.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-
 import '../../model/user_model.dart';
-import '../static/const_color.dart';
-import 'user_details_screen.dart';
+import '../../static/const_color.dart';
+import 'user_detail_page.dart';
 
 class UserAccountTab extends StatefulWidget {
   @override
@@ -14,18 +9,17 @@ class UserAccountTab extends StatefulWidget {
 }
 
 class _UserAccountTab extends State<UserAccountTab> {
-  Color backgroundColor = const Color.fromRGBO(31, 31, 31, 1.0);
   var userModel = UserModel.getInstance();
 
   void _viewDetails() {
     Navigator.of(context).push(
-        MaterialPageRoute(builder: (BuildContext context) => UserDetails()));
+        MaterialPageRoute(builder: (BuildContext context) => UserDetailPage()));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: CommonColor.colorBackground,
       body: Container(
         child: Center(
           child: Column(

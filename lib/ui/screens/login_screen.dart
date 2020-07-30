@@ -5,10 +5,9 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-import '../static/const_color.dart';
-import '../static/const_color.dart';
-import 'main_page.dart';
-import 'package:fast_kara/model/user_model.dart';
+import '../../model/user_model.dart';
+import '../../static/const_color.dart';
+import 'main_screen.dart';
 
 class LogInScreen extends StatefulWidget {
   @override
@@ -364,7 +363,7 @@ class _LogInScreenState extends State<LogInScreen> {
       userModel.setUserName(_user.text);
       writeUser(_user.text, _pass.text);
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => MainPage()));
+          context, MaterialPageRoute(builder: (context) => MainScreen()));
     } else {
       _showAlertDialog();
     }
@@ -400,7 +399,7 @@ class _LogInScreenState extends State<LogInScreen> {
         userModel.setUserName(accessToken.userId);
         writeUser(_user.text, _pass.text);
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => MainPage()));
+            context, MaterialPageRoute(builder: (context) => MainScreen()));
         break;
       case FacebookLoginStatus.cancelledByUser:
         _showMessage('Login cancelled by the user.');
@@ -428,7 +427,7 @@ class _LogInScreenState extends State<LogInScreen> {
     userModel.setUserName(user.displayName);
     writeUser(_user.text, _pass.text);
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => MainPage()));
+        context, MaterialPageRoute(builder: (context) => MainScreen()));
     return user;
   }
 
@@ -440,14 +439,14 @@ class _LogInScreenState extends State<LogInScreen> {
         _showMessage("You are signed in");
         userModel.setUserName(fbLogin.displayName);
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => MainPage()));
+            context, MaterialPageRoute(builder: (context) => MainScreen()));
       });
     } else if (ggLogin != null) {
       setState(() {
         _showMessage("You are signed in");
         userModel.setUserName(ggLogin.displayName);
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => MainPage()));
+            context, MaterialPageRoute(builder: (context) => MainScreen()));
       });
     }
   }

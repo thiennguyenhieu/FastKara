@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shimmer/shimmer.dart';
 
-import 'main_page.dart';
-import '../static/const_color.dart';
-import '../pages/login_screen.dart';
+import '../../static/const_color.dart';
+import 'main_screen.dart';
+import 'login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -33,8 +33,8 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(
         Duration(seconds: 3),
         () => Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (BuildContext context) =>
-                _isLogIn ? MainPage() : LogInScreen())));
+            builder: (BuildContext context) => MainScreen())));
+    //_isLogIn ? MainScreen() : LogInScreen())));
   }
 
   @override

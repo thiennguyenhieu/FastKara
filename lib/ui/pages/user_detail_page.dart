@@ -5,19 +5,18 @@ import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../model/user_model.dart';
-import '../static/const_color.dart';
-import 'package:fast_kara/ui/pages/login_screen.dart';
+import '../../static/const_color.dart';
+import 'package:fast_kara/ui/screens/login_screen.dart';
 
-class UserDetails extends StatefulWidget {
+class UserDetailPage extends StatefulWidget {
   @override
-  _UserDetails createState() => _UserDetails();
+  _UserDetailPageState createState() => _UserDetailPageState();
 }
 
-class _UserDetails extends State<UserDetails> {
+class _UserDetailPageState extends State<UserDetailPage> {
   var userModel = UserModel.getInstance();
   final _storage = new FlutterSecureStorage();
   final _key = "login_key";
-  String _message = 'Log in/out by pressing the buttons below.';
   static final FacebookLogin facebookSignIn = new FacebookLogin();
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   final FirebaseAuth _auth = FirebaseAuth.instance;
