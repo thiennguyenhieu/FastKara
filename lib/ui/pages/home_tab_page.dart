@@ -43,7 +43,15 @@ class _HomeTabState extends State<HomeTab> {
                 return ListView.builder(
                     itemCount: listSong.data.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return _listSong(listSong, index);
+                      SongModel song = listSong.data[index];
+                      return ListItem(
+                          imageUrl: listSong.data[index].imgUrl,
+                          title: listSong.data[index].title,
+                          subtitle: listSong.data[index].singer,
+                          onItemTab: () {
+                            _onItemTab(song);
+                          },
+                          onMoreBtnPressed: _onMoreBtnPressed);
                     });
               }
             },
@@ -51,24 +59,16 @@ class _HomeTabState extends State<HomeTab> {
         ));
   }
 
-  Widget _listSong(AsyncSnapshot snapshot, int index) {
-    return ListItem(
-        imageUrl: snapshot.data[index].imgUrl,
-        title: snapshot.data[index].title,
-        subtitle: snapshot.data[index].singer,
-        onItemTab: _onItemTab,
-        onMoreBtnPressed: _onMoreBtnPressed);
+  void _onItemTab(SongModel song) {
+    _navigateToSubPage(context, song);
   }
 
-  void _onItemTab() {
-    _navigateToSubPage(context);
-  }
-
-  Future _navigateToSubPage(context) async {
+  Future _navigateToSubPage(context, SongModel song) async {
     Navigator.push(
         context,
         CustomRoute(
-            previousPage: this.widget, builder: (context) => PlaySongPage()));
+            previousPage: this.widget,
+            builder: (context) => PlaySongPage(song)));
   }
 
   void _onMoreBtnPressed() {}

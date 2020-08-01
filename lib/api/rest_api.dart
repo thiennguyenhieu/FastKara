@@ -17,8 +17,13 @@ class RestAPI {
       var songsJsonData = json.decode(response.body);
 
       for (var songsInfo in songsJsonData) {
-        SongModel song = SongModel(songsInfo["songid"], songsInfo["title"],
-            songsInfo["singer"], songsInfo["imgurl"], songsInfo["beaturl"]);
+        SongModel song = SongModel(
+            songsInfo["songid"],
+            songsInfo["title"],
+            songsInfo["singer"],
+            songsInfo["imgurl"],
+            songsInfo["beaturl"],
+            songsInfo["lyrics"]);
         _songBook.add(song);
       }
       return _songBook;
