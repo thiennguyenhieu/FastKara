@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:loading/loading.dart';
 import 'package:loading/indicator/ball_pulse_indicator.dart';
@@ -21,41 +22,45 @@ class _HomeTabState extends State<HomeTab> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: new AppBar(
+    return CupertinoPageScaffold(
+        navigationBar: CupertinoNavigationBar(
+        middle: Text('Popular Songs',
+        style: TextStyle(
+        color: CommonColor.colorTextBase,
+        fontSize: 25.0)),
+    backgroundColor: Colors.black,),
+      child: Scaffold (
+          appBar: null,
           backgroundColor: Colors.black,
-          title: const Text('Popular Songs',
-              style: TextStyle(color: CommonColor.colorTextBase)),
-        ),
-        backgroundColor: Colors.black,
-        body: Container(
-          child: FutureBuilder(
-            future: _songBook,
-            builder: (BuildContext context, AsyncSnapshot listSong) {
-              if (listSong.data == null) {
-                return Container(
-                  child: Center(
-                    child: Loading(indicator: BallPulseIndicator(), size: 50.0),
-                  ),
-                );
-              } else {
-                return ListView.builder(
-                    itemCount: listSong.data.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      SongModel song = listSong.data[index];
-                      return ListItem(
-                          imageUrl: listSong.data[index].imgUrl,
-                          title: listSong.data[index].title,
-                          subtitle: listSong.data[index].singer,
-                          onItemTab: () {
-                            _onItemTab(song);
-                          },
-                          onMoreBtnPressed: _onMoreBtnPressed);
-                    });
-              }
-            },
-          ),
-        ));
+          body: Container(
+            child: FutureBuilder(
+              future: _songBook,
+              builder: (BuildContext context, AsyncSnapshot listSong) {
+                if (listSong.data == null) {
+                  return Container(
+                    child: Center(
+                      child: Loading(indicator: BallPulseIndicator(), size: 50.0),
+                    ),
+                  );
+                } else {
+                  return ListView.builder(
+                      itemCount: listSong.data.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        SongModel song = listSong.data[index];
+                        return ListItem(
+                            imageUrl: listSong.data[index].imgUrl,
+                            title: listSong.data[index].title,
+                            subtitle: listSong.data[index].singer,
+                            onItemTab: () {
+                              _onItemTab(song);
+                            },
+                            onMoreBtnPressed: _onMoreBtnPressed);
+                      });
+                }
+              },
+            ),
+          ))
+      );
   }
 
   void _onItemTab(SongModel song) {
