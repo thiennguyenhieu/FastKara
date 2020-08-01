@@ -1,10 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shimmer/shimmer.dart';
 
-import 'main_page.dart';
-import '../static/const_color.dart';
+import 'package:fast_kara/static/const_color.dart';
+import 'package:fast_kara/view/screens/main_screen.dart';
+import 'package:fast_kara/view/screens/login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -12,15 +14,27 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  Color splashTextHighlight = const Color.fromRGBO(108, 94, 76, 1.0);
-  Color textColor = const Color.fromRGBO(92, 92, 92, 1.0);
+  final _storage = new FlutterSecureStorage();
+  final _key = "login_key";
+  bool _isLogIn = false;
+
+  Future readUser() async {
+    String userName = await _storage.read(key: _key);
+    if (userName != null) {
+      _isLogIn = true;
+    }
+    print(userName);
+  }
+
   @override
   void initState() {
     super.initState();
+    readUser();
     Timer(
         Duration(seconds: 3),
-        () => Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (BuildContext context) => MainPage())));
+        () => Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (BuildContext context) => MainScreen())));
+    //_isLogIn ? MainScreen() : LogInScreen())));
   }
 
   @override
@@ -40,7 +54,7 @@ class _SplashScreenState extends State<SplashScreen> {
                           'FASTKARA',
                           style: TextStyle(fontSize: 60.0, fontFamily: 'Bebas'),
                         ),
-                        baseColor: splashTextHighlight,
+                        baseColor: CommonColor.colorSplashBaseText,
                         highlightColor: CommonColor.colorTextBase),
                   )),
             ),
@@ -52,7 +66,8 @@ class _SplashScreenState extends State<SplashScreen> {
                       child: Text(
                         'from',
                         style: TextStyle(
-                            color: textColor, fontWeight: FontWeight.bold),
+                            color: CommonColor.colorSplashFooterText,
+                            fontWeight: FontWeight.bold),
                       ),
                     ))),
             new Positioned(
@@ -63,7 +78,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 child: Text(
                   'FASTAPP STUDIO',
                   style: TextStyle(
-                    color: CommonColor.colorTextBase,
+                    color: CommonColor.colorSplashBaseText,
                     fontFamily: 'Fialla',
                     fontSize: 15.0,
                   ),

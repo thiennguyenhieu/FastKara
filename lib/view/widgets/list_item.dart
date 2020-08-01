@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../static/const_color.dart';
+import 'package:fast_kara/static/const_color.dart';
 
 class ListItem extends StatelessWidget {
   ListItem(

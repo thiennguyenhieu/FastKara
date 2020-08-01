@@ -1,15 +1,15 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:loading/loading.dart';
 import 'package:loading/indicator/ball_pulse_indicator.dart';
-import 'package:http/http.dart' as http;
 
-import '../static/const_color.dart';
-import '../static/const_http_path.dart';
-import '../widgets/list_item.dart';
-import '../../model/song_model.dart';
+import 'package:fast_kara/static/const_color.dart';
+import 'package:fast_kara/api/rest_api.dart';
+import 'package:fast_kara/model/song_model.dart';
+import 'package:fast_kara/view/widgets/list_item.dart';
+import 'package:fast_kara/view/widgets/custom_route.dart';
+import 'package:fast_kara/view/pages/play_song_page.dart';
 
 class HomeTab extends StatefulWidget {
   @override
@@ -17,25 +17,7 @@ class HomeTab extends StatefulWidget {
 }
 
 class _HomeTabState extends State<HomeTab> {
-  Future<List<SongModel>> _getListSongs() async {
-    List<SongModel> songList = [];
-
-    var response = await http.get(HttpPath.pathSongBook);
-
-    if (response.statusCode == 200) {
-      var songsJsonData = json.decode(response.body);
-
-      for (var songsInfo in songsJsonData) {
-        SongModel song = SongModel(songsInfo["songid"], songsInfo["title"],
-            songsInfo["singer"], songsInfo["imgurl"], songsInfo["beaturl"]);
-        songList.add(song);
-      }
-      return songList;
-    } else {
-      //Todo: Show Error Code
-      return songList;
-    }
-  }
+  Future<List<SongModel>> _songBook = RestAPI.fetchSongBook();
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +30,7 @@ class _HomeTabState extends State<HomeTab> {
         backgroundColor: Colors.black,
         body: Container(
           child: FutureBuilder(
-            future: _getListSongs(),
+            future: _songBook,
             builder: (BuildContext context, AsyncSnapshot listSong) {
               if (listSong.data == null) {
                 return Container(
@@ -60,7 +42,15 @@ class _HomeTabState extends State<HomeTab> {
                 return ListView.builder(
                     itemCount: listSong.data.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return _listSong(listSong, index);
+                      SongModel song = listSong.data[index];
+                      return ListItem(
+                          imageUrl: listSong.data[index].imgUrl,
+                          title: listSong.data[index].title,
+                          subtitle: listSong.data[index].singer,
+                          onItemTab: () {
+                            _onItemTab(song);
+                          },
+                          onMoreBtnPressed: _onMoreBtnPressed);
                     });
               }
             },
@@ -68,16 +58,17 @@ class _HomeTabState extends State<HomeTab> {
         ));
   }
 
-  Widget _listSong(AsyncSnapshot snapshot, int index) {
-    return ListItem(
-        imageUrl:
-            'https://109cdf7de.vws.vegacdn.vn/v1/banner/528.jpg?t=1593536400',
-        title: snapshot.data[index].title,
-        subtitle: snapshot.data[index].singer,
-        onItemTab: _onItemTab,
-        onMoreBtnPressed: _onMoreBtnPressed);
+  void _onItemTab(SongModel song) {
+    _navigateToSubPage(context, song);
   }
 
-  void _onItemTab() {}
+  Future _navigateToSubPage(context, SongModel song) async {
+    Navigator.push(
+        context,
+        CustomRoute(
+            previousPage: this.widget,
+            builder: (context) => PlaySongPage(song)));
+  }
+
   void _onMoreBtnPressed() {}
 }

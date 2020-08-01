@@ -1,18 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../static/const_color.dart';
-import 'home_tab_page.dart';
-import 'favorite_tab_page.dart';
-import 'user_tab_page.dart';
-import 'search_tab_page.dart';
+import 'package:fast_kara/static/const_color.dart';
+import 'package:fast_kara/view/pages/home_tab_page.dart';
+import 'package:fast_kara/view/pages/favorite_tab_page.dart';
+import 'package:fast_kara/view/pages/user_tab_page.dart';
+import 'package:fast_kara/view/pages/search_tab_page.dart';
 
-class MainPage extends StatefulWidget {
+class MainScreen extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _MainPageState();
+  _MainScreenState createState() => _MainScreenState();
 }
 
-class _MainPageState extends State<MainPage> {
+class _MainScreenState extends State<MainScreen> {
   List<Widget> _pages;
   Widget _pageHome;
   Widget _pageSearch;

@@ -4,6 +4,8 @@ class SongModel {
   final String singer;
   final String imgUrl;
   final String beatUrl;
+  final String lyrics;
 
-  SongModel(this.songId, this.title, this.singer, this.imgUrl, this.beatUrl);
+  SongModel(this.songId, this.title, this.singer, this.imgUrl, this.beatUrl,
+      this.lyrics);
 }
