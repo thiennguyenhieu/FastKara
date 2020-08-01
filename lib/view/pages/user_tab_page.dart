@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../model/user_model.dart';
-import '../../static/const_color.dart';
-import 'user_detail_page.dart';
+
+import 'package:fast_kara/model/user_model.dart';
+import 'package:fast_kara/static/const_color.dart';
+import 'package:fast_kara/view/pages/user_detail_page.dart';
 
 class UserAccountTab extends StatefulWidget {
   @override

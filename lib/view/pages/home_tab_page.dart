@@ -1,16 +1,15 @@
 import 'dart:async';
 
-import 'package:fast_kara/ui/pages/play_song_page.dart';
 import 'package:flutter/material.dart';
 import 'package:loading/loading.dart';
 import 'package:loading/indicator/ball_pulse_indicator.dart';
 
-import '../../static/const_color.dart';
-import '../../api/rest_api.dart';
-import '../../model/song_model.dart';
-import '../widgets/list_item.dart';
-import '../widgets/custom_route.dart';
-import 'play_song_page.dart';
+import 'package:fast_kara/static/const_color.dart';
+import 'package:fast_kara/api/rest_api.dart';
+import 'package:fast_kara/model/song_model.dart';
+import 'package:fast_kara/view/widgets/list_item.dart';
+import 'package:fast_kara/view/widgets/custom_route.dart';
+import 'package:fast_kara/view/pages/play_song_page.dart';
 
 class HomeTab extends StatefulWidget {
   @override

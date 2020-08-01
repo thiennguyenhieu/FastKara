@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-import '../../model/user_model.dart';
-import '../../static/const_color.dart';
-import 'package:fast_kara/ui/screens/login_screen.dart';
+import 'package:fast_kara/model/user_model.dart';
+import 'package:fast_kara/static/const_color.dart';
+import 'package:fast_kara/view/screens/login_screen.dart';
 
 class UserDetailPage extends StatefulWidget {
   @override

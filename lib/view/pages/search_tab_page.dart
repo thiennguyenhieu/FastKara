@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../static/const_color.dart';
+import 'package:fast_kara/static/const_color.dart';
 
-class FavoriteTab extends StatelessWidget {
+class SearchTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,12 +13,12 @@ class FavoriteTab extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Icon(
-                Icons.favorite,
+                Icons.youtube_searched_for,
                 size: 100.0,
                 color: Colors.white,
               ),
               Text(
-                "Favorite Tab",
+                "Search Tab",
                 style: TextStyle(color: Colors.white),
               )
             ],

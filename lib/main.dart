@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'ui/screens/splash_screen.dart';
+
+import 'package:fast_kara/view/screens/splash_screen.dart';
 
 void main() => runApp(MyApp());
 

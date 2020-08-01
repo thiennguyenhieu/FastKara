@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-import '../static/const_http_path.dart';
-import '../model/song_model.dart';
+import 'package:fast_kara/static/const_http_path.dart';
+import 'package:fast_kara/model/song_model.dart';
 
 class RestAPI {
   static final List<SongModel> _songBook = [];

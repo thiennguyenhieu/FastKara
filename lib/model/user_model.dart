@@ -1,10 +1,8 @@
 class UserModel {
   String _user;
-  String _pass;
 
   static final UserModel _instance = UserModel._internal();
   static UserModel getInstance() {
-    print('call instance');
     return _instance;
   }
 

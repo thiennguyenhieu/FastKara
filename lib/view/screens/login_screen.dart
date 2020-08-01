@@ -5,9 +5,9 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-import '../../model/user_model.dart';
-import '../../static/const_color.dart';
-import 'main_screen.dart';
+import 'package:fast_kara/model/user_model.dart';
+import 'package:fast_kara/static/const_color.dart';
+import 'package:fast_kara/view/screens/main_screen.dart';
 
 class LogInScreen extends StatefulWidget {
   @override

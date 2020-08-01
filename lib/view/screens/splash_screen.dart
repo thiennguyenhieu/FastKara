@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../../static/const_color.dart';
-import 'main_screen.dart';
-import 'login_screen.dart';
+import 'package:fast_kara/static/const_color.dart';
+import 'package:fast_kara/view/screens/main_screen.dart';
+import 'package:fast_kara/view/screens/login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   @override

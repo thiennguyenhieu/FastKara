@@ -1,7 +1,7 @@
-import 'package:fast_kara/model/song_model.dart';
 import 'package:flutter/material.dart';
 
-import '../../static/const_color.dart';
+import 'package:fast_kara/static/const_color.dart';
+import 'package:fast_kara/model/song_model.dart';
 
 class PlaySongPage extends StatefulWidget {
   final SongModel song;
