@@ -18,7 +18,7 @@ class HomeTab extends StatefulWidget {
 }
 
 class _HomeTabState extends State<HomeTab> {
-  Future<List<SongModel>> _songBook = RestAPI.fetchSongBook();
+  List<SongModel> _songBook = SongSingleton.instance.getSongList();
 
   @override
   Widget build(BuildContext context) {
@@ -26,41 +26,33 @@ class _HomeTabState extends State<HomeTab> {
         navigationBar: CupertinoNavigationBar(
         middle: Text('Popular Songs',
         style: TextStyle(
-        color: CommonColor.colorTextBase,
-        fontSize: 25.0)),
-    backgroundColor: Colors.black,),
-      child: Scaffold (
+          color: CommonColor.colorTextBase,
+          fontSize: 25.0)
+        ),
+        backgroundColor: Colors.black,
+        ),
+        child: Scaffold (
           appBar: null,
           backgroundColor: Colors.black,
           body: Container(
-            child: FutureBuilder(
-              future: _songBook,
-              builder: (BuildContext context, AsyncSnapshot listSong) {
-                if (listSong.data == null) {
-                  return Container(
-                    child: Center(
-                      child: Loading(indicator: BallPulseIndicator(), size: 50.0),
-                    ),
+            child: ListView.builder(
+                itemCount: _songBook.length,
+                itemBuilder: (BuildContext context, int index) {
+                  SongModel song = _songBook[index];
+                  return ListItem(
+                    imageUrl: song.imgUrl,
+                    title: song.title,
+                    subtitle: song.singer,
+                    onItemTab: (){
+                      _onItemTab(song);
+                    },
+                    onMoreBtnPressed: _onMoreBtnPressed,
                   );
-                } else {
-                  return ListView.builder(
-                      itemCount: listSong.data.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        SongModel song = listSong.data[index];
-                        return ListItem(
-                            imageUrl: listSong.data[index].imgUrl,
-                            title: listSong.data[index].title,
-                            subtitle: listSong.data[index].singer,
-                            onItemTab: () {
-                              _onItemTab(song);
-                            },
-                            onMoreBtnPressed: _onMoreBtnPressed);
-                      });
-                }
-              },
+                },
             ),
-          ))
-      );
+          )
+        )
+    );
   }
 
   void _onItemTab(SongModel song) {
@@ -75,5 +67,7 @@ class _HomeTabState extends State<HomeTab> {
             builder: (context) => PlaySongPage(song)));
   }
 
-  void _onMoreBtnPressed() {}
+  void _onMoreBtnPressed() {
+
+  }
 }
