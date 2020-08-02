@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -7,19 +8,45 @@ import 'package:fast_kara/model/song_model.dart';
 class PlaySongPage extends StatefulWidget {
   final SongModel song;
   const PlaySongPage(this.song);
-
   @override
   _PlaySongPageState createState() => _PlaySongPageState();
 }
 
 class _PlaySongPageState extends State<PlaySongPage> {
+  var testBeatURL = "https://luan.xyz/files/audio/ambient_c_motion.mp3";
+  Duration _duration = new Duration(seconds:1);
+  Duration _position = new Duration(seconds:1);
+  AudioPlayer _audioPlayer = AudioPlayer();
+  bool _isPlaying = false;
+
+
+  @override
+  void initState() {
+    super.initState();
+    initPlayer();
+  }
+
+
+  void initPlayer() {
+    _audioPlayer.onDurationChanged.listen((Duration d) {
+      setState(() => _duration = d);});
+
+    _audioPlayer.onAudioPositionChanged.listen((Duration  p) => {
+        setState(() => _position = p)});
+  }
+
+  void goBack(BuildContext context) {
+    _audioPlayer.stop();
+    Navigator.of(context).pop();
+  }
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
           leading: CupertinoNavigationBarBackButton(
             color: CommonColor.colorTextBase,
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: () => goBack(context)
+            ,
           ),
           middle: Text(
             'FastKara',
@@ -84,8 +111,8 @@ class _PlaySongPageState extends State<PlaySongPage> {
                 child: LinearProgressIndicator(
                   backgroundColor: Colors.grey[800],
                   valueColor:
-                      new AlwaysStoppedAnimation<Color>(Colors.grey[600]),
-                  value: 5,
+                      new AlwaysStoppedAnimation<Color>(Colors.white),
+                  value: _position.inSeconds.toDouble()/_duration.inSeconds.toDouble(),
                 ),
               ),
               Container(
@@ -109,16 +136,36 @@ class _PlaySongPageState extends State<PlaySongPage> {
                     IconButton(
                         iconSize: 60,
                         icon: Icon(
-                          Icons.play_circle_filled,
+                          _isPlaying ? Icons.pause_circle_filled : Icons.play_circle_filled,
                           color: Colors.white,
                         ),
-                        onPressed: () {}),
+                        onPressed: () async {
+                          int status;
+                          if(_isPlaying){
+                            status = await _audioPlayer.pause();
+                          }
+                          else {
+                            status = await _audioPlayer.play(testBeatURL);
+                          }
+                          if(status == 1){
+                            setState(() {
+                              _isPlaying = !_isPlaying;
+                            });
+                          }
+
+                        }),
                     IconButton(
                         icon: Icon(
                           Icons.replay,
                           color: Colors.white,
                         ),
-                        onPressed: () {}),
+                        onPressed: () async {
+                          int status = 0;
+                          if(_isPlaying) {
+                             status = await _audioPlayer.stop();
+                             status = await _audioPlayer.play(testBeatURL);
+                          }
+                        }),
                     IconButton(
                         icon: Icon(
                           Icons.keyboard_voice,
@@ -149,4 +196,5 @@ class _PlaySongPageState extends State<PlaySongPage> {
               ),
             ])));
   }
+
 }
