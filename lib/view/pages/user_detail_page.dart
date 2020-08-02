@@ -14,7 +14,7 @@ class UserDetailPage extends StatefulWidget {
 }
 
 class _UserDetailPageState extends State<UserDetailPage> {
-  var userModel = UserModel.getInstance();
+  var userModel = UserModel();
   final _storage = new FlutterSecureStorage();
   final _key = "login_key";
   static final FacebookLogin facebookSignIn = new FacebookLogin();

@@ -10,7 +10,7 @@ class UserAccountTab extends StatefulWidget {
 }
 
 class _UserAccountTab extends State<UserAccountTab> {
-  var userModel = UserModel.getInstance();
+  var userModel = UserModel();
 
   void _viewDetails() {
     Navigator.of(context).push(
@@ -45,7 +45,7 @@ class _UserAccountTab extends State<UserAccountTab> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15.0),
                 ),
-                color: Color(0xFFFFBD4D),
+                color: Colors.orange[200],
                 child: Text(
                   'Log out',
                   style: TextStyle(
