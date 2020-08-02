@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:fast_kara/static/const_color.dart';
@@ -14,19 +15,16 @@ class PlaySongPage extends StatefulWidget {
 class _PlaySongPageState extends State<PlaySongPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: new AppBar(
-          iconTheme: IconThemeData(color: CommonColor.colorTextBase),
-          title: Text(
-            "FastKara",
-            style: TextStyle(
-              color: CommonColor.colorTextBase,
-            ),
-          ),
-          centerTitle: true,
-          backgroundColor: Colors.transparent,
-          elevation: 0.0,
+    return CupertinoPageScaffold(
+          navigationBar: CupertinoNavigationBar(
+          middle: Text('FastKara',
+          style: TextStyle(
+          color: CommonColor.colorTextBase,
+          fontSize: 25.0)),
+          backgroundColor: Colors.black,
         ),
+      child: Scaffold(
+        appBar: null,
         backgroundColor: CommonColor.colorBackground,
         body: Column(children: <Widget>[
           Container(
@@ -142,6 +140,7 @@ class _PlaySongPageState extends State<PlaySongPage> {
               ],
             ),
           ),
-        ]));
+        ]))
+    );
   }
 }

@@ -20,7 +20,7 @@ class _UserAccountTab extends State<UserAccountTab> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: CommonColor.colorBackground,
+      backgroundColor: Colors.black,
       body: Container(
         child: Center(
           child: Column(

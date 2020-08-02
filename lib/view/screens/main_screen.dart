@@ -19,58 +19,62 @@ class _MainScreenState extends State<MainScreen> {
   Widget _pageFavorite;
   Widget _pageUserAccount;
 
-  int _currentIndex;
-  Widget _currentPage;
-
   @override
   void initState() {
     super.initState();
-
     _pageHome = HomeTab();
     _pageSearch = SearchTab();
     _pageFavorite = FavoriteTab();
     _pageUserAccount = UserAccountTab();
-
     _pages = [_pageHome, _pageSearch, _pageFavorite, _pageUserAccount];
-
-    _currentIndex = 0;
-    _currentPage = _pageHome;
   }
-
-  void _changeTab(int index) {
-    setState(() {
-      _currentIndex = index;
-      _currentPage = _pages[index];
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
         top: false,
         bottom: false,
-        child: Scaffold(
-          appBar: null,
-          body: _currentPage,
-          bottomNavigationBar: BottomNavigationBar(
-              showSelectedLabels: false,
-              showUnselectedLabels: false,
-              type: BottomNavigationBarType.fixed,
-              backgroundColor: CommonColor.colorNavigationBar,
-              selectedItemColor: CommonColor.colorTextBase,
-              unselectedItemColor: Colors.white,
-              onTap: (index) => _changeTab(index),
-              currentIndex: _currentIndex,
-              items: [
-                BottomNavigationBarItem(
-                    title: Text(''), icon: Icon(Icons.home)),
-                BottomNavigationBarItem(
-                    title: Text(''), icon: Icon(Icons.search)),
-                BottomNavigationBarItem(
-                    title: Text(''), icon: Icon(Icons.favorite)),
-                BottomNavigationBarItem(
-                    title: Text(''), icon: Icon(Icons.account_circle))
-              ]),
+        child: CupertinoTabScaffold(
+          tabBar: CupertinoTabBar(
+            backgroundColor: CommonColor.colorNavigationBar ,
+            activeColor: CommonColor.colorTextBase ,
+            items: <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.home), title: Text('Home')),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.search), title: Text('Search')),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.favorite), title: Text('Favorite')),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.account_circle), title: Text('Info')),
+            ],
+          ),
+              tabBuilder: (context, index) {
+                CupertinoTabView returnValue;
+                switch (index) {
+                  case 0:
+                    returnValue = CupertinoTabView(builder: (context) {
+                      return CupertinoPageScaffold(child: _pages[index],);
+                    });
+                    break;
+                  case 1:
+                    returnValue = CupertinoTabView(builder: (context) {
+                      return CupertinoPageScaffold(child: _pages[index],);
+                    });
+                    break;
+                  case 2:
+                    returnValue = CupertinoTabView(builder: (context) {
+                      return CupertinoPageScaffold(child: _pages[index],);
+                    });
+                    break;
+                  case 3:
+                    returnValue = CupertinoTabView(builder: (context) {
+                      return CupertinoPageScaffold(child: _pages[index],);
+                    });
+                    break;
+                }
+                return returnValue;
+    },
         ));
   }
 }
+
