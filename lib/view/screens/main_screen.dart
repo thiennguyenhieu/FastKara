@@ -28,6 +28,7 @@ class _MainScreenState extends State<MainScreen> {
     _pageUserAccount = UserAccountTab();
     _pages = [_pageHome, _pageSearch, _pageFavorite, _pageUserAccount];
   }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -35,46 +36,27 @@ class _MainScreenState extends State<MainScreen> {
         bottom: false,
         child: CupertinoTabScaffold(
           tabBar: CupertinoTabBar(
-            backgroundColor: CommonColor.colorNavigationBar ,
-            activeColor: CommonColor.colorTextBase ,
+            backgroundColor: CommonColor.colorNavigationBar,
+            activeColor: CommonColor.colorTextBase,
+            inactiveColor: Colors.white,
             items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
-                  icon: Icon(Icons.home), title: Text('Home')),
+                  icon: Icon(Icons.home), title: Container()),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.search), title: Text('Search')),
+                  icon: Icon(Icons.search), title: Container()),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.favorite), title: Text('Favorite')),
+                  icon: Icon(Icons.favorite), title: Container()),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.account_circle), title: Text('Info')),
+                  icon: Icon(Icons.account_circle), title: Container()),
             ],
           ),
-              tabBuilder: (context, index) {
-                CupertinoTabView returnValue;
-                switch (index) {
-                  case 0:
-                    returnValue = CupertinoTabView(builder: (context) {
-                      return CupertinoPageScaffold(child: _pages[index],);
-                    });
-                    break;
-                  case 1:
-                    returnValue = CupertinoTabView(builder: (context) {
-                      return CupertinoPageScaffold(child: _pages[index],);
-                    });
-                    break;
-                  case 2:
-                    returnValue = CupertinoTabView(builder: (context) {
-                      return CupertinoPageScaffold(child: _pages[index],);
-                    });
-                    break;
-                  case 3:
-                    returnValue = CupertinoTabView(builder: (context) {
-                      return CupertinoPageScaffold(child: _pages[index],);
-                    });
-                    break;
-                }
-                return returnValue;
-    },
+          tabBuilder: (context, index) {
+            return CupertinoTabView(builder: (context) {
+              return CupertinoPageScaffold(
+                child: _pages[index],
+              );
+            });
+          },
         ));
   }
 }
-
