@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
 
@@ -6,6 +7,7 @@ import 'package:fast_kara/static/const_http_path.dart';
 import 'package:fast_kara/model/song_model.dart';
 
 class RestAPI {
+
   static final List<SongModel> _songBook = [];
 
   static Future<List<SongModel>> fetchSongBook() async {
@@ -13,7 +15,7 @@ class RestAPI {
 
     var response = await http.get(HttpPath.pathSongBook);
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == HttpStatus.ok) {
       var songsJsonData = json.decode(response.body);
 
       for (var songsInfo in songsJsonData) {
