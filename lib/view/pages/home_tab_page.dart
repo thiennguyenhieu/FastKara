@@ -24,18 +24,16 @@ class _HomeTabState extends State<HomeTab> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
-        middle: Text('Popular Songs',
-        style: TextStyle(
-          color: CommonColor.colorTextBase,
-          fontSize: 25.0)
-        ),
-        backgroundColor: Colors.black,
-        ),
-        child: Scaffold (
-          appBar: null,
+          middle: Text('Popular Songs',
+              style:
+                  TextStyle(color: CommonColor.colorTextBase, fontSize: 25.0)),
           backgroundColor: Colors.black,
-          body: Container(
-            child: ListView.builder(
+        ),
+        child: Scaffold(
+            appBar: null,
+            backgroundColor: Colors.black,
+            body: Container(
+              child: ListView.builder(
                 itemCount: _songBook.length,
                 itemBuilder: (BuildContext context, int index) {
                   SongModel song = _songBook[index];
@@ -43,16 +41,14 @@ class _HomeTabState extends State<HomeTab> {
                     imageUrl: song.imgUrl,
                     title: song.title,
                     subtitle: song.singer,
-                    onItemTab: (){
+                    onItemTab: () {
                       _onItemTab(song);
                     },
                     onMoreBtnPressed: _onMoreBtnPressed,
                   );
                 },
-            ),
-          )
-        )
-    );
+              ),
+            )));
   }
 
   void _onItemTab(SongModel song) {
@@ -67,7 +63,5 @@ class _HomeTabState extends State<HomeTab> {
             builder: (context) => PlaySongPage(song)));
   }
 
-  void _onMoreBtnPressed() {
-
-  }
+  void _onMoreBtnPressed() {}
 }
