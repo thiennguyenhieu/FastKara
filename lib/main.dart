@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:fast_kara/view/screens/splash_screen.dart';
+import 'package:fast_kara/bloc/bloc_provider.dart';
 
 void main() => runApp(MyApp());
 
@@ -14,13 +15,15 @@ class MyApp extends StatelessWidget {
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
-    return CupertinoApp(
-      debugShowCheckedModeBanner: false 
-      /*  app is slow when it's in checked mode. In checked mode, Flutter enables a large number of
-      expensive diagnostics to aid in development,
-      and so performance in checked mode is not representative of what will happen in release mode. */,
-      title: 'FastKara',
-      home: SplashScreen(),
+    return BlocProvider(
+      child: CupertinoApp(
+        //  app is slow when it's in checked mode. In checked mode, Flutter enables a large number of
+        // expensive diagnostics to aid in development,
+        // and so performance in checked mode is not representative of what will happen in release mode.
+        debugShowCheckedModeBanner: false,
+        title: 'FastKara',
+        home: SplashScreen(),
+      ),
     );
   }
 }
