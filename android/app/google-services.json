@@ -8,20 +8,12 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:760079617317:android:db6acc0065b9af02735ecc",
+        "mobilesdk_app_id": "1:760079617317:android:a9e23f43a8291574735ecc",
         "android_client_info": {
-          "package_name": "com.example.fast_kara"
+          "package_name": "com.fastapp.fastkara"
         }
       },
       "oauth_client": [
-        {
-          "client_id": "760079617317-bbjie4hso6aopop9n1p049e7dshme7gu.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.fast_kara",
-            "certificate_hash": "f42ca110b40de89b86303a6fbfff22a87e7eefee"
-          }
-        },
         {
           "client_id": "760079617317-mskmemmmmd5e3tnnivhog853pa4d59jb.apps.googleusercontent.com",
           "client_type": 3
