@@ -2,8 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-class SearchBarAPI extends AnimatedWidget {
-  SearchBarAPI({
+class CustomSearchBar extends AnimatedWidget {
+  CustomSearchBar({
     Key key,
     @required Animation<double> animation,
     @required this.controller,

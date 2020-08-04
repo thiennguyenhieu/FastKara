@@ -56,11 +56,8 @@ class _HomeTabState extends State<HomeTab> {
   }
 
   Future _navigateToSubPage(context, SongModel song) async {
-    Navigator.push(
-        context,
-        CustomRoute(
-            previousPage: this.widget,
-            builder: (context) => PlaySongPage(song)));
+    Navigator.of(context, rootNavigator: true).push(
+        CupertinoPageRoute(builder: (context) => PlaySongPage(song)));
   }
 
   void _onMoreBtnPressed() {}

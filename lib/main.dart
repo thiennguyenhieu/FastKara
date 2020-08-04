@@ -15,7 +15,10 @@ class MyApp extends StatelessWidget {
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
     return CupertinoApp(
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: false 
+      /*  app is slow when it's in checked mode. In checked mode, Flutter enables a large number of
+      expensive diagnostics to aid in development,
+      and so performance in checked mode is not representative of what will happen in release mode. */,
       title: 'FastKara',
       home: SplashScreen(),
     );

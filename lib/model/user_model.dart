@@ -1,24 +1,32 @@
 class UserModel {
-  String _user;
+  String _userName;
+  String _password;
 
   static final UserModel _instance = UserModel._internal();
-  static UserModel getInstance() {
+  factory UserModel() {
     return _instance;
   }
 
-  UserModel._internal();
+  UserModel._internal() {
+    _userName = null;
+    _password = null;
+  }
 
-  String get getUserName => _user;
-
+  String get getUserName => _userName;
   void setUserName(String userName) {
-    this._user = userName;
+    this._userName = userName;
   }
 
-  static bool isValidUser(String user) {
-    return user != null && user.length > 6;
+  String get getPassword => _password;
+  void setPassword(String password) {
+    this._password = password;
   }
 
-  static bool isValidPass(String pass) {
-    return pass != null && pass.length > 6;
+  static bool isValidUser(String userName) {
+    return userName != null && userName.length > 6;
+  }
+
+  static bool isValidPassword(String password) {
+    return password != null && password.length > 6;
   }
 }

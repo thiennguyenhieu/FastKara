@@ -59,7 +59,7 @@ flutter:
   
   assets:
     - assets/icons/
-    - assets/images/playsong_image.jpg
+    - assets/images/
 
   fonts:
     - family: Bebas
