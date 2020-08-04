@@ -15,7 +15,7 @@ class PlaySongPage extends StatefulWidget {
 class _PlaySongPageState extends State<PlaySongPage> {
   var testBeatURL = "https://luan.xyz/files/audio/ambient_c_motion.mp3";
   Duration _duration = new Duration(seconds:1);
-  Duration _position = new Duration(seconds:1);
+  Duration _position = new Duration(seconds:0);
   AudioPlayer _audioPlayer = AudioPlayer();
   bool _isPlaying = false;
 
@@ -24,6 +24,7 @@ class _PlaySongPageState extends State<PlaySongPage> {
   void initState() {
     super.initState();
     initPlayer();
+    _audioPlayer.setUrl(testBeatURL);
   }
 
 
@@ -33,10 +34,21 @@ class _PlaySongPageState extends State<PlaySongPage> {
 
     _audioPlayer.onAudioPositionChanged.listen((Duration  p) => {
         setState(() => _position = p)});
+
+    _audioPlayer.onPlayerStateChanged.listen((AudioPlayerState audioState) {
+        setState(() {
+          if(audioState == AudioPlayerState.PLAYING){
+            _isPlaying = true;
+          }
+          else if(audioState == AudioPlayerState.COMPLETED  || audioState == AudioPlayerState.STOPPED || audioState == AudioPlayerState.PAUSED) {
+            _isPlaying = false;
+          }
+        });
+    });
   }
 
   void goBack(BuildContext context) {
-    _audioPlayer.stop();
+    _audioPlayer.release();
     Navigator.of(context).pop();
   }
   @override
@@ -45,8 +57,7 @@ class _PlaySongPageState extends State<PlaySongPage> {
         navigationBar: CupertinoNavigationBar(
           leading: CupertinoNavigationBarBackButton(
             color: CommonColor.colorTextBase,
-            onPressed: () => goBack(context)
-            ,
+            onPressed: () => goBack(context),
           ),
           middle: Text(
             'FastKara',
@@ -116,6 +127,31 @@ class _PlaySongPageState extends State<PlaySongPage> {
                 ),
               ),
               Container(
+                margin: EdgeInsets.only(top: 10.0,right: 10.0),
+                child: Row(
+                  children: <Widget>[
+                     new Container(
+                       margin: EdgeInsets.only(left: 10.0),
+                       child: Text(
+                         _position.toString().substring(2,7),
+                         style: TextStyle(
+                             color: Colors.white
+                         ),
+                       ),
+                     ),
+                     new Container(
+                       margin: EdgeInsets.only(left: 313.0),
+                       child: Text(
+                         _duration.toString().substring(2,7),
+                         style: TextStyle(
+                           color: Colors.white
+                         ),
+                       ),
+                     )
+                  ],
+                ),
+              ),
+              Container(
                 margin: EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
                 alignment: Alignment.topLeft,
                 child: Row(
@@ -140,19 +176,12 @@ class _PlaySongPageState extends State<PlaySongPage> {
                           color: Colors.white,
                         ),
                         onPressed: () async {
-                          int status;
                           if(_isPlaying){
-                            status = await _audioPlayer.pause();
+                            await _audioPlayer.pause();
                           }
                           else {
-                            status = await _audioPlayer.play(testBeatURL);
+                            await _audioPlayer.play(testBeatURL);
                           }
-                          if(status == 1){
-                            setState(() {
-                              _isPlaying = !_isPlaying;
-                            });
-                          }
-
                         }),
                     IconButton(
                         icon: Icon(
@@ -160,10 +189,9 @@ class _PlaySongPageState extends State<PlaySongPage> {
                           color: Colors.white,
                         ),
                         onPressed: () async {
-                          int status = 0;
                           if(_isPlaying) {
-                             status = await _audioPlayer.stop();
-                             status = await _audioPlayer.play(testBeatURL);
+                             await _audioPlayer.stop();
+                             await _audioPlayer.play(testBeatURL);
                           }
                         }),
                     IconButton(
