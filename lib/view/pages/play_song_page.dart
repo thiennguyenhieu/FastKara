@@ -1,6 +1,7 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:fast_kara/static/const_color.dart';
 import 'package:fast_kara/model/song_model.dart';
@@ -17,12 +18,17 @@ class _PlaySongPageState extends State<PlaySongPage> {
   Duration _position = new Duration(seconds: 0);
   AudioPlayer _audioPlayer = AudioPlayer();
   bool _isPlaying = false;
+  String _textFromFile = "";
 
   @override
   void initState() {
     super.initState();
     initPlayer();
     _audioPlayer.setUrl(widget.song.beatUrl);
+
+    getTextFromFile(widget.song.lyrics).then((val) => setState(() {
+          _textFromFile = val;
+        }));
   }
 
   void initPlayer() {
@@ -89,7 +95,8 @@ class _PlaySongPageState extends State<PlaySongPage> {
                   height: double.infinity,
                   alignment: Alignment.center,
                   child: Text(
-                    widget.song.lyrics,
+                    //widget.song.lyrics,
+                    _textFromFile,
                     style: TextStyle(fontSize: 30, color: Colors.white70),
                   ),
                 ),
@@ -220,5 +227,11 @@ class _PlaySongPageState extends State<PlaySongPage> {
                 ),
               ),
             ])));
+  }
+
+  /// Assumes the given path is a text-file-asset.
+  Future<String> getTextFromFile(String path) async {
+    var response = await http.get(path);
+    return response.body;
   }
 }
