@@ -13,37 +13,36 @@ class PlaySongPage extends StatefulWidget {
 }
 
 class _PlaySongPageState extends State<PlaySongPage> {
-  var testBeatURL = "https://luan.xyz/files/audio/ambient_c_motion.mp3";
-  Duration _duration = new Duration(seconds:1);
-  Duration _position = new Duration(seconds:0);
+  Duration _duration = new Duration(seconds: 1);
+  Duration _position = new Duration(seconds: 0);
   AudioPlayer _audioPlayer = AudioPlayer();
   bool _isPlaying = false;
-
 
   @override
   void initState() {
     super.initState();
     initPlayer();
-    _audioPlayer.setUrl(testBeatURL);
+    _audioPlayer.setUrl(widget.song.beatUrl);
   }
-
 
   void initPlayer() {
     _audioPlayer.onDurationChanged.listen((Duration d) {
-      setState(() => _duration = d);});
+      setState(() => _duration = d);
+    });
 
-    _audioPlayer.onAudioPositionChanged.listen((Duration  p) => {
-        setState(() => _position = p)});
+    _audioPlayer.onAudioPositionChanged
+        .listen((Duration p) => {setState(() => _position = p)});
 
     _audioPlayer.onPlayerStateChanged.listen((AudioPlayerState audioState) {
-        setState(() {
-          if(audioState == AudioPlayerState.PLAYING){
-            _isPlaying = true;
-          }
-          else if(audioState == AudioPlayerState.COMPLETED  || audioState == AudioPlayerState.STOPPED || audioState == AudioPlayerState.PAUSED) {
-            _isPlaying = false;
-          }
-        });
+      setState(() {
+        if (audioState == AudioPlayerState.PLAYING) {
+          _isPlaying = true;
+        } else if (audioState == AudioPlayerState.COMPLETED ||
+            audioState == AudioPlayerState.STOPPED ||
+            audioState == AudioPlayerState.PAUSED) {
+          _isPlaying = false;
+        }
+      });
     });
   }
 
@@ -51,6 +50,7 @@ class _PlaySongPageState extends State<PlaySongPage> {
     _audioPlayer.release();
     Navigator.of(context).pop();
   }
+
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
@@ -121,33 +121,29 @@ class _PlaySongPageState extends State<PlaySongPage> {
                 alignment: Alignment.topLeft,
                 child: LinearProgressIndicator(
                   backgroundColor: Colors.grey[800],
-                  valueColor:
-                      new AlwaysStoppedAnimation<Color>(Colors.white),
-                  value: _position.inSeconds.toDouble()/_duration.inSeconds.toDouble(),
+                  valueColor: new AlwaysStoppedAnimation<Color>(Colors.white),
+                  value: _position.inSeconds.toDouble() /
+                      _duration.inSeconds.toDouble(),
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(top: 10.0,right: 10.0),
+                margin: EdgeInsets.only(top: 10.0, right: 10.0),
                 child: Row(
                   children: <Widget>[
-                     new Container(
-                       margin: EdgeInsets.only(left: 10.0),
-                       child: Text(
-                         _position.toString().substring(2,7),
-                         style: TextStyle(
-                             color: Colors.white
-                         ),
-                       ),
-                     ),
-                     new Container(
-                       margin: EdgeInsets.only(left: 313.0),
-                       child: Text(
-                         _duration.toString().substring(2,7),
-                         style: TextStyle(
-                           color: Colors.white
-                         ),
-                       ),
-                     )
+                    new Container(
+                      margin: EdgeInsets.only(left: 10.0),
+                      child: Text(
+                        _position.toString().substring(2, 7),
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                    new Container(
+                      margin: EdgeInsets.only(left: 313.0),
+                      child: Text(
+                        _duration.toString().substring(2, 7),
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    )
                   ],
                 ),
               ),
@@ -172,15 +168,16 @@ class _PlaySongPageState extends State<PlaySongPage> {
                     IconButton(
                         iconSize: 60,
                         icon: Icon(
-                          _isPlaying ? Icons.pause_circle_filled : Icons.play_circle_filled,
+                          _isPlaying
+                              ? Icons.pause_circle_filled
+                              : Icons.play_circle_filled,
                           color: Colors.white,
                         ),
                         onPressed: () async {
-                          if(_isPlaying){
+                          if (_isPlaying) {
                             await _audioPlayer.pause();
-                          }
-                          else {
-                            await _audioPlayer.play(testBeatURL);
+                          } else {
+                            await _audioPlayer.play(widget.song.beatUrl);
                           }
                         }),
                     IconButton(
@@ -189,9 +186,9 @@ class _PlaySongPageState extends State<PlaySongPage> {
                           color: Colors.white,
                         ),
                         onPressed: () async {
-                          if(_isPlaying) {
-                             await _audioPlayer.stop();
-                             await _audioPlayer.play(testBeatURL);
+                          if (_isPlaying) {
+                            await _audioPlayer.stop();
+                            await _audioPlayer.play(widget.song.beatUrl);
                           }
                         }),
                     IconButton(
@@ -224,5 +221,4 @@ class _PlaySongPageState extends State<PlaySongPage> {
               ),
             ])));
   }
-
 }

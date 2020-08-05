@@ -1,8 +1,6 @@
 import 'package:fast_kara/api/rest_api.dart';
 import 'package:fast_kara/model/song_model.dart';
 import 'package:fast_kara/static/const_color.dart';
-import 'package:fast_kara/view/pages/play_song_page.dart';
-import 'package:fast_kara/view/widgets/custom_route.dart';
 import 'package:fast_kara/view/widgets/custom_search_bar.dart';
 import 'package:fast_kara/view/widgets/list_item.dart';
 import 'package:flutter/material.dart';

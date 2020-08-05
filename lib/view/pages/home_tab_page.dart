@@ -2,14 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:loading/loading.dart';
-import 'package:loading/indicator/ball_pulse_indicator.dart';
 
 import 'package:fast_kara/static/const_color.dart';
-import 'package:fast_kara/api/rest_api.dart';
 import 'package:fast_kara/model/song_model.dart';
 import 'package:fast_kara/view/widgets/list_item.dart';
-import 'package:fast_kara/view/widgets/custom_route.dart';
 import 'package:fast_kara/view/pages/play_song_page.dart';
 
 class HomeTab extends StatefulWidget {
@@ -56,8 +52,8 @@ class _HomeTabState extends State<HomeTab> {
   }
 
   Future _navigateToSubPage(context, SongModel song) async {
-    Navigator.of(context, rootNavigator: true).push(
-        CupertinoPageRoute(builder: (context) => PlaySongPage(song)));
+    Navigator.of(context, rootNavigator: true)
+        .push(CupertinoPageRoute(builder: (context) => PlaySongPage(song)));
   }
 
   void _onMoreBtnPressed() {}
