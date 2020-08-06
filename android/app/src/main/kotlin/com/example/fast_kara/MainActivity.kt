@@ -1,4 +1,4 @@
-package com.example.fast_kara
+package com.fastapp.fastkara
 
 import io.flutter.embedding.android.FlutterActivity
 
