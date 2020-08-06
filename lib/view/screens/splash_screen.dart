@@ -4,10 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
 import 'package:fast_kara/static/const_color.dart';
-import 'package:fast_kara/view/screens/main_screen.dart';
 import 'package:fast_kara/view/screens/login_screen.dart';
-import 'package:fast_kara/api/rest_api.dart';
-import 'package:fast_kara/model/song_model.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -19,22 +16,10 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
 
-    bool _isHttpRequestDone = false;
-    bool _isTimerThreeSecDone = false;
-
-    Future getSongList = RestAPI.fetchSongBook();
-    getSongList.then((value) => SongSingleton.instance.addSongList(value)).then(
-        (value) => _isTimerThreeSecDone
-            ? Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (BuildContext context) => MainScreen()))
-            : _isHttpRequestDone = true);
-
     Timer(
         Duration(seconds: 3),
-        () => _isHttpRequestDone
-            ? Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (BuildContext context) => LogInScreen()))
-            : _isTimerThreeSecDone = true);
+        () => Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (BuildContext context) => LogInScreen())));
   }
 
   @override
