@@ -55,7 +55,12 @@ class _SongBookList extends StatelessWidget {
                   },
                 );
               } else {
-                return Center(child: CircularProgressIndicator());
+                return Center(
+                    child: CircularProgressIndicator(
+                  strokeWidth: 5,
+                  valueColor: new AlwaysStoppedAnimation<Color>(
+                      CommonColor.colorTextBase),
+                ));
               }
             }));
   }
