@@ -61,6 +61,8 @@ class _PlaySongPageState extends State<PlaySongPage> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
+          heroTag: 'playsongpage',
+          transitionBetweenRoutes: false,
           leading: CupertinoNavigationBarBackButton(
             color: CommonColor.colorTextBase,
             onPressed: () => goBack(context),

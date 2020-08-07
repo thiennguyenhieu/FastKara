@@ -93,6 +93,8 @@ class SearchWidgetState extends State<SearchTab>
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
+          heroTag: 'searchtabpage',
+          transitionBetweenRoutes: false,
           backgroundColor: Colors.black,
           middle: Text(
             'Search',

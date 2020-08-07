@@ -14,6 +14,8 @@ class HomeTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
+          heroTag: 'hometabpage',
+          transitionBetweenRoutes: false,
           middle: Text('Popular Songs',
               style:
                   TextStyle(color: CommonColor.colorTextBase, fontSize: 25.0)),
