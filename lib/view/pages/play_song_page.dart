@@ -1,10 +1,13 @@
-import 'package:audioplayers/audioplayers.dart';
-import 'package:flutter/cupertino.dart';
+import 'dart:convert' show utf8;
+
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:fast_kara/static/const_color.dart';
 import 'package:fast_kara/model/song_model.dart';
+import 'package:fast_kara/view/widgets/custom_lyric.dart';
 
 class PlaySongPage extends StatefulWidget {
   final SongModel song;
@@ -83,25 +86,20 @@ class _PlaySongPageState extends State<PlaySongPage> {
                 height: MediaQuery.of(context).size.height / 2,
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: Colors.grey.shade300,
-                  borderRadius: BorderRadius.circular(5),
+                  color: Colors.white,
+                  //borderRadius: BorderRadius.circular(5),
                   image: new DecorationImage(
                     image:
-                        new ExactAssetImage('assets/images/playsong_image.jpg'),
+                        new ExactAssetImage('assets/images/playsong_image.png'),
                     fit: BoxFit.cover,
                   ),
                 ),
                 child: Container(
-                  margin: EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
-                  width: double.infinity,
-                  height: double.infinity,
-                  alignment: Alignment.center,
-                  child: Text(
-                    //widget.song.lyrics,
-                    _textFromFile,
-                    style: TextStyle(fontSize: 30, color: Colors.white70),
-                  ),
-                ),
+                    margin: EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
+                    width: double.infinity,
+                    height: double.infinity,
+                    alignment: Alignment.center,
+                    child: CustomLyric(_textFromFile)),
               ),
               Container(
                 margin: EdgeInsets.only(top: 40.0, left: 10.0, right: 10.0),
@@ -234,6 +232,6 @@ class _PlaySongPageState extends State<PlaySongPage> {
   /// Assumes the given path is a text-file-asset.
   Future<String> getTextFromFile(String path) async {
     var response = await http.get(path);
-    return response.body;
+    return utf8.decode(response.bodyBytes);
   }
 }
