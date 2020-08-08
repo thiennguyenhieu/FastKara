@@ -17,31 +17,28 @@ class _LogInScreenState extends State<LogInScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: null,
       backgroundColor: CommonColor.colorBackground,
-      body: Container(
-        child: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                SignInHeader(),
-                SignInEmailTextBox(),
-                SignInPasswordTextBox(),
-                SignInForgotPasswordButton(
-                  onPressed: _onForgotBtnPressed,
-                ),
-                SignInLoginButton(
-                  onPressed: _onLoginBtnPressed,
-                ),
-                SignInSocialLogin(
-                  onLoginFacebook: _onLoginFacebook,
-                  onLoginGoogle: _onLoginGoogle,
-                ),
-                SignUpButton(
-                  onPressed: _onSignUpBtnPressed,
-                ),
-              ],
-            )
-        ),
+      body: Column(
+        children: <Widget>[
+          SignInHeader(),
+          SignInEmailTextBox(),
+          SignInPasswordTextBox(),
+          SignInForgotPasswordButton(
+            onPressed: _onForgotBtnPressed,
+          ),
+          SignInLoginButton(
+            onPressed: _onLoginBtnPressed,
+          ),
+          SignInSocialLogin(
+            onLoginFacebook: _onLoginFacebook,
+            onLoginGoogle: _onLoginGoogle,
+          ),
+          SignUpButton(
+            onPressed: _onSignUpBtnPressed,
+          ),
+        ],
       ),
     );
   }
@@ -49,7 +46,7 @@ class _LogInScreenState extends State<LogInScreen> {
   void _onForgotBtnPressed() {}
 
   void _onLoginBtnPressed() {
-    Navigator.of(context,rootNavigator: false).pushReplacement(
+    Navigator.of(context, rootNavigator: false).pushReplacement(
         CupertinoPageRoute(builder: (BuildContext context) => MainScreen()));
   }
 
@@ -212,7 +209,7 @@ class SignInLoginButton extends StatelessWidget {
       child: RaisedButton(
         onPressed: onPressed,
         shape:
-        RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
         padding: EdgeInsets.all(0.0),
         child: Ink(
           decoration: BoxDecoration(
@@ -248,13 +245,13 @@ class SignInSocialLogin extends StatelessWidget {
     return Column(
       children: <Widget>[
         Padding(
-            padding: EdgeInsets.only(top: 20),
+            padding: EdgeInsets.only(top: 30),
             child: Text(
               'Sign in with',
               style: CommonTextStyle.signInNormal,
             )),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+          padding: EdgeInsets.symmetric(horizontal: 50, vertical: 30),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
@@ -295,24 +292,27 @@ class SignUpButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => print('Sign Up Button Pressed'),
-      child: RichText(
-        text: TextSpan(
-          children: [
-            TextSpan(
-              text: 'Don\'t have an Account? ',
-              style: CommonTextStyle.signInHint,
-            ),
-            TextSpan(
-              text: 'Sign Up',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 15.0,
-                fontWeight: FontWeight.bold,
+    return Padding(
+      padding: EdgeInsets.only(top: 35),
+      child: GestureDetector(
+        onTap: () => print('Sign Up Button Pressed'),
+        child: RichText(
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: 'Don\'t have an Account? ',
+                style: CommonTextStyle.signInHint,
               ),
-            ),
-          ],
+              TextSpan(
+                text: 'Sign Up',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 15.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
