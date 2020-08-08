@@ -1,8 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:fast_kara/model/user_model.dart';
 import 'package:fast_kara/static/const_color.dart';
-import 'package:fast_kara/view/pages/user_detail_page.dart';
+import 'package:fast_kara/view/screens/login_screen.dart';
 
 class UserAccountTab extends StatefulWidget {
   @override
@@ -12,9 +13,9 @@ class UserAccountTab extends StatefulWidget {
 class _UserAccountTab extends State<UserAccountTab> {
   var userModel = UserModel();
 
-  void _viewDetails() {
-    Navigator.of(context).push(
-        MaterialPageRoute(builder: (BuildContext context) => UserDetailPage()));
+  void _logOut() {
+    Navigator.of(context,rootNavigator: true).pushReplacement(
+        CupertinoPageRoute(builder: (BuildContext context) => LogInScreen()));
   }
 
   @override
@@ -39,7 +40,7 @@ class _UserAccountTab extends State<UserAccountTab> {
               RaisedButton(
                 elevation: 5.0,
                 onPressed: () {
-                  _viewDetails();
+                  _logOut();
                 },
                 padding: EdgeInsets.all(15.0),
                 shape: RoundedRectangleBorder(
