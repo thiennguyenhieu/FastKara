@@ -5,9 +5,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:http/http.dart' as http;
 
+import 'package:fast_kara/extpackage/flutter_lyric/lyric_widget.dart';
+import 'package:fast_kara/extpackage/flutter_lyric/lyric_controller.dart';
+import 'package:fast_kara/extpackage/flutter_lyric/lyric_util.dart';
+import 'package:fast_kara/extpackage/flutter_lyric/lyric.dart';
+
 import 'package:fast_kara/static/const_color.dart';
 import 'package:fast_kara/model/song_model.dart';
-import 'package:fast_kara/view/widgets/custom_lyric.dart';
 
 class PlaySongPage extends StatefulWidget {
   final SongModel song;
@@ -16,31 +20,38 @@ class PlaySongPage extends StatefulWidget {
   _PlaySongPageState createState() => _PlaySongPageState();
 }
 
-class _PlaySongPageState extends State<PlaySongPage> {
+class _PlaySongPageState extends State<PlaySongPage>
+    with TickerProviderStateMixin {
   Duration _duration = new Duration(seconds: 1);
   Duration _position = new Duration(seconds: 0);
   AudioPlayer _audioPlayer = AudioPlayer();
   bool _isPlaying = false;
-  String _textFromFile = "";
+  LyricController _controller;
+  List<Lyric> _lyrics = [];
 
   @override
   void initState() {
-    super.initState();
-    initPlayer();
-    _audioPlayer.setUrl(widget.song.beatUrl);
-
     getTextFromFile(widget.song.lyrics).then((val) => setState(() {
-          _textFromFile = val;
+          _lyrics = LyricUtil.formatLyric(val);
         }));
+
+    _controller = LyricController(vsync: this);
+
+    initPlayer();
+
+    super.initState();
   }
 
   void initPlayer() {
+    _audioPlayer.setUrl(widget.song.beatUrl);
     _audioPlayer.onDurationChanged.listen((Duration d) {
       setState(() => _duration = d);
     });
 
-    _audioPlayer.onAudioPositionChanged
-        .listen((Duration p) => {setState(() => _position = p)});
+    _audioPlayer.onAudioPositionChanged.listen((Duration p) {
+      setState(() => _position = p);
+      _controller.progress = p;
+    });
 
     _audioPlayer.onPlayerStateChanged.listen((AudioPlayerState audioState) {
       setState(() {
@@ -62,6 +73,7 @@ class _PlaySongPageState extends State<PlaySongPage> {
 
   @override
   Widget build(BuildContext context) {
+    print(_lyrics);
     return CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
           heroTag: 'playsongpage',
@@ -87,19 +99,23 @@ class _PlaySongPageState extends State<PlaySongPage> {
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  //borderRadius: BorderRadius.circular(5),
+                  borderRadius: BorderRadius.circular(5),
                   image: new DecorationImage(
                     image:
                         new ExactAssetImage('assets/images/playsong_image.png'),
                     fit: BoxFit.cover,
                   ),
                 ),
-                child: Container(
-                    margin: EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
-                    width: double.infinity,
-                    height: double.infinity,
-                    alignment: Alignment.center,
-                    child: CustomLyric(_textFromFile)),
+                child: LyricWidget(
+                  size: Size(
+                    double.infinity,
+                    double.infinity,
+                  ),
+                  lyrics: _lyrics,
+                  remarkLyrics: [],
+                  enableDrag: true,
+                  controller: _controller,
+                ),
               ),
               Container(
                 margin: EdgeInsets.only(top: 40.0, left: 10.0, right: 10.0),

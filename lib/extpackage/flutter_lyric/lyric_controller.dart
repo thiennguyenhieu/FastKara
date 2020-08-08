@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 
 class LyricController extends ChangeNotifier {
-  //当前进度
   Duration _progress = Duration();
 
   set progress(Duration value) {
@@ -13,10 +12,8 @@ class LyricController extends ChangeNotifier {
 
   Duration get progress => _progress;
 
-  //滑动保持器
   Timer draggingTimer;
 
-  //滑动保持时间
   Duration draggingTimerDuration;
 
   bool _isDragging = false;
@@ -34,13 +31,10 @@ class LyricController extends ChangeNotifier {
 
   double draggingOffset;
 
-  //启用动画
   TickerProvider vsync;
 
-  //动画控制器
   AnimationController animationController;
 
-  //动画 存放上一次偏移量
   double previousRowOffset = 0;
 
   int oldLine = 0;

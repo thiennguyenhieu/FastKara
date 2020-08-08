@@ -21,13 +21,10 @@ class LyricWidget extends StatefulWidget {
   final double remarkLyricGap;
   bool enableDrag;
 
-  //歌词画笔数组
   List<TextPainter> lyricTextPaints = [];
 
-  //翻译/音译歌词画笔数组
   List<TextPainter> subLyricTextPaints = [];
 
-  //字体最大宽度
   double lyricMaxWidth;
 
   LyricWidget(
@@ -50,15 +47,14 @@ class LyricWidget extends StatefulWidget {
         assert(lyrics != null && lyrics.isNotEmpty),
         assert(size != null),
         assert(controller != null) {
-    this.lyricStyle ??= TextStyle(color: Colors.grey, fontSize: 14);
-    this.remarkStyle ??= TextStyle(color: Colors.black, fontSize: 14);
-    this.currLyricStyle ??= TextStyle(color: Colors.red, fontSize: 14);
+    this.lyricStyle ??= TextStyle(color: Colors.grey, fontSize: 20);
+    this.remarkStyle ??= TextStyle(color: Colors.black, fontSize: 20);
+    this.currLyricStyle ??= TextStyle(color: Colors.red, fontSize: 20);
     this.currRemarkLyricStyle ??= this.currLyricStyle;
     this.draggingLyricStyle ??= lyricStyle.copyWith(color: Colors.greenAccent);
     this.draggingRemarkLyricStyle ??=
         remarkStyle.copyWith(color: Colors.greenAccent);
 
-    //歌词转画笔
     lyricTextPaints.addAll(lyrics
         .map(
           (l) => TextPainter(
@@ -67,7 +63,6 @@ class LyricWidget extends StatefulWidget {
         )
         .toList());
 
-    //翻译/音译歌词转画笔
     if (remarkLyrics != null && remarkLyrics.isNotEmpty) {
       subLyricTextPaints.addAll(remarkLyrics
           .map((l) => TextPainter(
@@ -114,7 +109,6 @@ class _LyricWidgetState extends State<LyricWidget> {
     super.initState();
   }
 
-  ///因空行高度与非空行高度不一致，获取非空行的位置
   int getNotEmptyLineHeight(List<Lyric> lyrics) =>
       lyrics.indexOf(lyrics.firstWhere((lyric) => lyric.lyric.trim().isNotEmpty,
           orElse: () => lyrics.first));
@@ -229,13 +223,12 @@ class _LyricWidgetState extends State<LyricWidget> {
           animationController = null;
         }
       });
-    // 计算当前行偏移量
+
     var currentRowOffset = computeScrollY(currentLyricIndex);
-    //如果偏移量相同不执行动画
     if (currentRowOffset == widget.controller.previousRowOffset) {
       return;
     }
-    // 起始为上一行，结束点为当前行
+
     Animation animation = Tween<double>(
             begin: widget.controller.previousRowOffset, end: currentRowOffset)
         .animate(animationController);
@@ -246,7 +239,6 @@ class _LyricWidgetState extends State<LyricWidget> {
     animationController.forward();
   }
 
-  //根据当前时长获取歌词位置
   int findLyricIndexByDuration(Duration curDuration, List<Lyric> lyrics) {
     for (int i = 0; i < lyrics.length; i++) {
       if (curDuration >= lyrics[i].startTime &&
@@ -257,7 +249,6 @@ class _LyricWidgetState extends State<LyricWidget> {
     return 0;
   }
 
-  /// 计算传入行和第一行的偏移量
   double computeScrollY(int curLine) {
     double totalHeight = 0;
     for (var i = 0; i < curLine; i++) {
@@ -268,7 +259,6 @@ class _LyricWidgetState extends State<LyricWidget> {
       totalHeight += currPaint.height + widget.lyricGap;
     }
     if (widget.remarkLyrics != null) {
-      //增加 当前行之前的翻译歌词的偏移量
       widget.remarkLyrics
           .where(
               (subLyric) => subLyric.endTime <= widget.lyrics[curLine].endTime)
