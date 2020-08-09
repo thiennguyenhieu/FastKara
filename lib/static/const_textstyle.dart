@@ -19,7 +19,7 @@ class CommonTextStyle {
   );
 
   static const signInButton = TextStyle(
-    color: Color(0xFF150B03),
+    color: Colors.blueGrey,
     letterSpacing: 1.5,
     fontSize: 18.0,
     fontWeight: FontWeight.bold,

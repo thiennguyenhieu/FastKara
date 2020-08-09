@@ -260,7 +260,6 @@ class SignInSocialLogin extends StatelessWidget {
                   child: IconButton(
                     icon: Image.asset('assets/icons/facebook_icon.jpg'),
                     iconSize: 35,
-                    //splashRadius: 30,
                     onPressed: onLoginGoogle,
                   )),
               Container(
@@ -271,7 +270,6 @@ class SignInSocialLogin extends StatelessWidget {
                   child: IconButton(
                     icon: Image.asset('assets/icons/google_icon.jpg'),
                     iconSize: 35,
-                    //splashRadius: 30,
                     onPressed: onLoginGoogle,
                   )),
             ],
@@ -292,7 +290,6 @@ class SignUpButton extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(top: 35),
       child: GestureDetector(
-        onTap: () => print('Sign Up Button Pressed'),
         child: RichText(
           text: TextSpan(
             children: [

@@ -49,7 +49,7 @@ class LyricWidget extends StatefulWidget {
         assert(controller != null) {
     this.lyricStyle ??= TextStyle(color: Colors.grey, fontSize: 20);
     this.remarkStyle ??= TextStyle(color: Colors.black, fontSize: 20);
-    this.currLyricStyle ??= TextStyle(color: Colors.red, fontSize: 20);
+    this.currLyricStyle ??= TextStyle(color: Colors.greenAccent, fontSize: 20);
     this.currRemarkLyricStyle ??= this.currLyricStyle;
     this.draggingLyricStyle ??= lyricStyle.copyWith(color: Colors.greenAccent);
     this.draggingRemarkLyricStyle ??=
@@ -268,7 +268,6 @@ class _LyricWidgetState extends State<LyricWidget> {
             .subLyricTextPaints[widget.remarkLyrics.indexOf(subLyric)]
           ..text = TextSpan(text: subLyric.lyric, style: widget.remarkStyle);
         currentPaint.layout(maxWidth: widget.lyricMaxWidth);
-        ;
         totalHeight += widget.remarkLyricGap + currentPaint.height;
       });
     }

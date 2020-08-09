@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:fast_kara/static/const_color.dart';
-
 class FavoriteTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
