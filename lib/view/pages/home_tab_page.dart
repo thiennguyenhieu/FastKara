@@ -8,6 +8,7 @@ import 'package:fast_kara/static/const_color.dart';
 import 'package:fast_kara/model/song_model.dart';
 import 'package:fast_kara/view/widgets/list_item.dart';
 import 'package:fast_kara/view/pages/play_song_page.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class HomeTab extends StatelessWidget {
   @override
@@ -49,7 +50,9 @@ class _SongBookList extends StatelessWidget {
                       onItemTab: () {
                         _navigateToSubPage(context, song);
                       },
-                      onMoreBtnPressed: _onMoreBtnPressed,
+                      onMoreBtnPressed: (){
+                        _onMoreBtnPressed(context, song);
+                      },
                     );
                   },
                 );
@@ -69,5 +72,65 @@ class _SongBookList extends StatelessWidget {
         .push(CupertinoPageRoute(builder: (context) => PlaySongPage(song)));
   }
 
-  void _onMoreBtnPressed() {}
+  void _onMoreBtnPressed(context, SongModel song) {
+    showBottomSheet(
+        context: context,
+        builder: (context) {
+          return Container(
+            height: 200,
+            color: Colors.grey[900],
+            child: ListView(
+              children: <Widget>[
+                ListTile(
+                  leading: (Image.network(song.imgUrl)),
+                  title: Text(
+                    song.title,
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  subtitle: Text(
+                    song.singer,
+                    style: TextStyle(color: Colors.white60),
+                  ),
+                ),
+                Divider(
+                  color: Colors.white,
+                  endIndent: 40,
+                  indent: 40,
+                ),
+                ListTile(
+                  leading: Icon(
+                    Icons.favorite,
+                    color: Colors.white,
+                  ),
+                  title: Text(
+                    "Add To Favorite",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onTap: _onPressFavorite,
+                ),
+                ListTile(
+                  leading: Icon(
+                    Icons.file_download,
+                    color: Colors.white,
+                  ),
+                  title: Text(
+                    "Download",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onTap: _onPressDownload,
+                )
+              ],
+            ),
+          );
+    });
+  }
+
+  void _onPressFavorite(){
+    Fluttertoast.showToast(msg: "Added to Favorite", backgroundColor: Colors.white, textColor: Colors.black, toastLength: Toast.LENGTH_SHORT);
+  }
+  void _onPressDownload(){
+    Fluttertoast.showToast(msg: "Downloading...", backgroundColor: Colors.white, textColor: Colors.black, toastLength: Toast.LENGTH_SHORT);
+  }
+
+
 }

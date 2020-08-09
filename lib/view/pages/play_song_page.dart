@@ -12,6 +12,7 @@ import 'package:fast_kara/extpackage/flutter_lyric/lyric.dart';
 
 import 'package:fast_kara/static/const_color.dart';
 import 'package:fast_kara/model/song_model.dart';
+import 'package:loading/loading.dart';
 
 class PlaySongPage extends StatefulWidget {
   final SongModel song;
@@ -32,9 +33,10 @@ class _PlaySongPageState extends State<PlaySongPage>
 
   @override
   void initState() {
-    getTextFromFile(widget.song.lyrics).then((val) => setState(() {
-          _lyrics = LyricUtil.formatLyric(val);
-        }));
+//    getTextFromFile(widget.song.lyrics).then((val) => setState(() {
+//          _lyrics.clear();
+//          _lyrics = LyricUtil.formatLyric(val);
+//        }));
 
     _controller = LyricController(vsync: this);
 
@@ -56,13 +58,7 @@ class _PlaySongPageState extends State<PlaySongPage>
 
     _audioPlayer.onPlayerStateChanged.listen((AudioPlayerState audioState) {
       setState(() {
-        if (audioState == AudioPlayerState.PLAYING) {
-          _isPlaying = true;
-        } else if (audioState == AudioPlayerState.COMPLETED ||
-            audioState == AudioPlayerState.STOPPED ||
-            audioState == AudioPlayerState.PAUSED) {
-          _isPlaying = false;
-        }
+        _isPlaying = (audioState == AudioPlayerState.PLAYING) ? true : false;
       });
     });
   }
@@ -101,15 +97,27 @@ class _PlaySongPageState extends State<PlaySongPage>
                   borderRadius: BorderRadius.circular(5),
                   color: AppColors.colorAppChildComponent,
                 ),
-                child: LyricWidget(
-                  size: Size(
-                    double.infinity,
-                    double.infinity,
-                  ),
-                  lyrics: _lyrics,
-                  remarkLyrics: [],
-                  enableDrag: true,
-                  controller: _controller,
+                child: FutureBuilder(
+                  future: getTextFromFile(widget.song.lyrics),
+                  builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                    if(snapshot.hasData){
+                      _lyrics.clear();
+                      _lyrics = LyricUtil.formatLyric(snapshot.data);
+                      return LyricWidget(
+                        size: Size(
+                          double.infinity,
+                          double.infinity,
+                        ),
+                        lyrics: _lyrics,
+                        remarkLyrics: [],
+                        enableDrag: true,
+                        controller: _controller,
+                      );
+                    }
+                    else{
+                      return Loading(size: 50,color: Colors.white);
+                    }
+                  }
                 ),
               ),
               Container(
@@ -145,8 +153,9 @@ class _PlaySongPageState extends State<PlaySongPage>
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(top: 10.0, right: 10.0),
+                margin: EdgeInsets.only(top: 5.0, right: 10.0),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     new Container(
                       margin: EdgeInsets.only(left: 10.0),
@@ -156,7 +165,6 @@ class _PlaySongPageState extends State<PlaySongPage>
                       ),
                     ),
                     new Container(
-                      margin: EdgeInsets.only(left: 313.0),
                       child: Text(
                         _duration.toString().substring(2, 7),
                         style: TextStyle(color: Colors.white),
