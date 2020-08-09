@@ -2,6 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../static/const_color.dart';
+
 class CustomSearchBar extends AnimatedWidget {
   CustomSearchBar({
     Key key,
@@ -39,9 +41,9 @@ class CustomSearchBar extends AnimatedWidget {
               padding:
                   const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
               decoration: new BoxDecoration(
-                color: Colors.white,
+                color: Color.fromRGBO(30, 30, 30, 1.0),
                 border:
-                    new Border.all(width: 0.0, color: CupertinoColors.white),
+                    new Border.all(width: 0.0, color: Color.fromRGBO(30, 30, 30, 1.0)),
                 borderRadius: new BorderRadius.circular(10.0),
               ),
               child: new Stack(
@@ -54,7 +56,7 @@ class CustomSearchBar extends AnimatedWidget {
                         padding: const EdgeInsets.fromLTRB(0.0, 0.0, 4.0, 1.0),
                         child: new Icon(
                           CupertinoIcons.search,
-                          color: CupertinoColors.inactiveGray,
+                          color: Colors.grey,
                           size: _defaultTextSize + 2.0,
                         ),
                       ),
@@ -82,12 +84,12 @@ class CustomSearchBar extends AnimatedWidget {
                             onChanged: onUpdate,
                             onSubmitted: onSubmit,
                             style: new TextStyle(
-                              color: CupertinoColors.black,
+                              color: Colors.white,
                               inherit: false,
                               fontSize: _defaultTextSize,
                             ),
-                            cursorColor: CupertinoColors.black,
-                            backgroundCursorColor: CupertinoColors.white,
+                            cursorColor: CupertinoColors.white,
+                            backgroundCursorColor: Colors.pink,
                           ),
                         ),
                       ),
@@ -95,13 +97,13 @@ class CustomSearchBar extends AnimatedWidget {
                         minSize: 10.0,
                         padding: const EdgeInsets.all(1.0),
                         borderRadius: new BorderRadius.circular(30.0),
-                        color: CupertinoColors.inactiveGray.withOpacity(
+                        color: Colors.grey.withOpacity(
                           1.0 - _opacityTween.evaluate(animation),
                         ),
                         child: new Icon(
                           Icons.close,
                           size: 15.0,
-                          color: CupertinoColors.white,
+                          color: Color.fromRGBO(30, 30, 30, 1.0),
                         ),
                         onPressed: () {
                           if (animation.isDismissed)
@@ -126,7 +128,7 @@ class CustomSearchBar extends AnimatedWidget {
                 softWrap: false,
                 style: new TextStyle(
                   inherit: false,
-                  color: CupertinoColors.activeBlue,
+                  color: AppColors.colorAppText,
                   fontSize: _defaultTextSize - 1,
                 ),
               ),
