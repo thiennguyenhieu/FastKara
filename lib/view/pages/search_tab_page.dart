@@ -1,12 +1,7 @@
-import 'package:fast_kara/api/rest_api.dart';
-import 'package:fast_kara/model/song_model.dart';
 import 'package:fast_kara/static/const_color.dart';
 import 'package:fast_kara/view/widgets/custom_search_bar.dart';
-import 'package:fast_kara/view/widgets/list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:loading/indicator/ball_pulse_indicator.dart';
-import 'package:loading/loading.dart';
 
 class SearchTab extends StatefulWidget {
   @override
@@ -17,12 +12,22 @@ class SearchTab extends StatefulWidget {
 
 class SearchWidgetState extends State<SearchTab>
     with SingleTickerProviderStateMixin {
-  Future<List<SongModel>> _songBook = RestAPI.fetchSongBook();
   TextEditingController _searchTextController = TextEditingController();
   FocusNode _searchFocusNode = FocusNode();
   Animation _animation;
   AnimationController _animationController;
   String _searchTextInProgress;
+
+  var _defaultrecent = [
+    'Sau tất cả',
+    'Ghen',
+    'Niềm tin chiến thắng',
+    'Gọi giấc mơ về',
+    'Màu nước mắt'
+  ];
+
+  var isItemSelected = true;
+  var itemSelectedText = '';
 
   @override
   initState() {
@@ -48,13 +53,12 @@ class SearchWidgetState extends State<SearchTab>
 
   _performSearch() {
     final text = _searchTextController.text;
-    if (_songBook != null && text == _searchTextInProgress) {
+    if (text == _searchTextInProgress) {
       return;
     }
 
     if (text.isEmpty) {
       this.setState(() {
-        _songBook = null;
         _searchTextInProgress = null;
       });
       return;
@@ -70,7 +74,6 @@ class SearchWidgetState extends State<SearchTab>
     _searchFocusNode.unfocus();
     _animationController.reverse();
     this.setState(() {
-      _songBook = null;
       _searchTextInProgress = null;
     });
   }
@@ -78,7 +81,6 @@ class SearchWidgetState extends State<SearchTab>
   _clearSearch() {
     _searchTextController.clear();
     this.setState(() {
-      _songBook = null;
       _searchTextInProgress = null;
     });
   }
@@ -91,53 +93,104 @@ class SearchWidgetState extends State<SearchTab>
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-        navigationBar: CupertinoNavigationBar(
-          heroTag: 'searchtabpage',
-          transitionBetweenRoutes: false,
-          backgroundColor: Colors.black,
-          middle: Text(
-            'Search',
-            style: TextStyle(color: AppColors.colorAppText, fontSize: 25.0),
-          ),
-        ),
-        child: Scaffold(
-            appBar: CupertinoNavigationBar(
+    return (isItemSelected)
+        ? CupertinoPageScaffold(
+            child: NestedScrollView(
+                headerSliverBuilder:
+                    (BuildContext context, bool innerBoxIsScrolled) {
+                  return <Widget>[
+                    CupertinoSliverNavigationBar(
+                      heroTag: 'searchtabpage',
+                      transitionBetweenRoutes: false,
+                      largeTitle: Text(
+                        'Search',
+                        style: TextStyle(color: AppColors.colorAppText),
+                      ),
+                      backgroundColor: Colors.black,
+                    ),
+                  ];
+                },
+                body: Scaffold(
+                  appBar: CupertinoNavigationBar(
+                    heroTag: 'searchtabpage',
+                    transitionBetweenRoutes: false,
+                    padding: EdgeInsetsDirectional.only(bottom: 10),
+                    backgroundColor: Colors.black,
+                    middle: CustomSearchBar(
+                      controller: _searchTextController,
+                      focusNode: _searchFocusNode,
+                      animation: _animation,
+                      onCancel: _cancelSearch,
+                      onClear: _clearSearch,
+                    ),
+                  ),
+                  backgroundColor: Colors.black,
+                  body: Scaffold(
+                    backgroundColor: Colors.black,
+                    appBar: CupertinoNavigationBar(
+                        heroTag: 'searchtabpage',
+                        transitionBetweenRoutes: false,
+                        backgroundColor: Colors.black,
+                        leading: Text('Recent',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 25.0,
+                                fontWeight: FontWeight.bold))),
+                    body: ListView.builder(
+                      itemCount: _defaultrecent.length,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          title: new Text(
+                            _defaultrecent[index],
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          onTap: () {
+                            onTapItem(_defaultrecent[index]);
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                )))
+        : CupertinoPageScaffold(
+            navigationBar: CupertinoNavigationBar(
+              heroTag: 'searchtabpage',
+              transitionBetweenRoutes: false,
               backgroundColor: Colors.black,
-              middle: CustomSearchBar(
-                controller: _searchTextController,
-                focusNode: _searchFocusNode,
-                animation: _animation,
-                onCancel: _cancelSearch,
-                onClear: _clearSearch,
+              leading: CupertinoNavigationBarBackButton(
+                  color: AppColors.colorAppText,
+                  onPressed: () => onTapItem(itemSelectedText)),
+              middle: Text(
+                """Search for "$itemSelectedText" """,
+                style: TextStyle(color: AppColors.colorAppText, fontSize: 20.0),
               ),
             ),
-            backgroundColor: Colors.black,
-            body: Container(
-                child: FutureBuilder(
-              future: _songBook,
-              builder: (BuildContext context, AsyncSnapshot listSong) {
-                if (listSong.data == null) {
-                  return Container(
-                    child: Center(
-                      child:
-                          Loading(indicator: BallPulseIndicator(), size: 50.0),
+            child: Scaffold(
+              appBar: null,
+              backgroundColor: Colors.black,
+              body: ListView.builder(
+                itemCount: _defaultrecent.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: new Text(
+                      '$itemSelectedText $index',
+                      style: TextStyle(color: Colors.white),
                     ),
                   );
-                } else {
-                  return ListView.builder(
-                      itemCount: listSong.data.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return ListItem(
-                            imageUrl: listSong.data[index].imgUrl,
-                            title: listSong.data[index].title,
-                            subtitle: listSong.data[index].singer,
-                            onMoreBtnPressed: _onMoreBtnPressed);
-                      });
-                }
-              },
-            ))));
+                },
+              ),
+            ),
+          );
   }
 
-  void _onMoreBtnPressed() {}
+  void onTapItem(String value) {
+    this.setState(() {
+      if (!isItemSelected) {
+        itemSelectedText = '';
+      } else {
+        itemSelectedText = value;
+      }
+      isItemSelected = !isItemSelected;
+    });
+  }
 }
