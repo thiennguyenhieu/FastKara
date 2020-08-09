@@ -17,8 +17,7 @@ class HomeTab extends StatelessWidget {
           heroTag: 'hometabpage',
           transitionBetweenRoutes: false,
           middle: Text('Popular Songs',
-              style:
-                  TextStyle(color: CommonColor.colorTextBase, fontSize: 25.0)),
+              style: TextStyle(color: AppColors.colorAppText, fontSize: 25.0)),
           backgroundColor: Colors.black,
         ),
         child: Scaffold(
@@ -32,7 +31,6 @@ class _SongBookList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = BlocProvider.of(context).songBookBloc;
-    bloc.fetchSongBook();
     final navigateContext = context;
 
     return Container(
@@ -60,8 +58,8 @@ class _SongBookList extends StatelessWidget {
                 return Center(
                     child: CircularProgressIndicator(
                   strokeWidth: 5,
-                  valueColor: new AlwaysStoppedAnimation<Color>(
-                      CommonColor.colorTextBase),
+                  valueColor:
+                      new AlwaysStoppedAnimation<Color>(AppColors.colorAppText),
                 ));
               }
             }));

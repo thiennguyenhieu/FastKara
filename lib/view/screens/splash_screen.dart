@@ -1,9 +1,11 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
 import 'package:fast_kara/static/const_color.dart';
+import 'package:fast_kara/bloc/bloc_provider.dart';
 import 'package:fast_kara/view/screens/login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -18,14 +20,16 @@ class _SplashScreenState extends State<SplashScreen> {
 
     Timer(
         Duration(seconds: 3),
-        () => Navigator.of(context).pushReplacement(MaterialPageRoute(
+        () => Navigator.of(context).pushReplacement(CupertinoPageRoute(
             builder: (BuildContext context) => LogInScreen())));
   }
 
   @override
   Widget build(BuildContext context) {
+    final bloc = BlocProvider.of(context).songBookBloc;
+    bloc.fetchSongBook();
     return Scaffold(
-      backgroundColor: CommonColor.colorBackground,
+      backgroundColor: AppColors.colorAppBackground,
       body: Container(
         child: new Stack(
           children: <Widget>[
@@ -39,8 +43,8 @@ class _SplashScreenState extends State<SplashScreen> {
                           'FASTKARA',
                           style: TextStyle(fontSize: 60.0, fontFamily: 'Bebas'),
                         ),
-                        baseColor: CommonColor.colorSplashBaseText,
-                        highlightColor: CommonColor.colorTextBase),
+                        baseColor: AppColors.colorAppText,
+                        highlightColor: AppColors.colorAppSplashText),
                   )),
             ),
             new Positioned(
@@ -51,8 +55,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       child: Text(
                         'from',
                         style: TextStyle(
-                            color: CommonColor.colorSplashFooterText,
-                            fontWeight: FontWeight.bold),
+                            color: Colors.grey, fontWeight: FontWeight.bold),
                       ),
                     ))),
             new Positioned(
@@ -63,7 +66,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 child: Text(
                   'FASTAPP STUDIO',
                   style: TextStyle(
-                    color: CommonColor.colorSplashBaseText,
+                    color: AppColors.colorAppText,
                     fontFamily: 'Fialla',
                     fontSize: 15.0,
                   ),

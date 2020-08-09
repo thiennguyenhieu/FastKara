@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:fast_kara/model/user_model.dart';
 import 'package:fast_kara/static/const_color.dart';
 import 'package:fast_kara/view/screens/main_screen.dart';
 import 'package:fast_kara/static/const_textstyle.dart';
@@ -12,14 +11,12 @@ class LogInScreen extends StatefulWidget {
 }
 
 class _LogInScreenState extends State<LogInScreen> {
-  UserModel _userModel = UserModel();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: null,
-      backgroundColor: CommonColor.colorBackground,
+      backgroundColor: AppColors.colorAppBackground,
       body: Column(
         children: <Widget>[
           SignInHeader(),
@@ -111,10 +108,10 @@ class SignInEmailTextBox extends StatelessWidget {
           prefix: Icon(
             CupertinoIcons.mail,
             size: 32,
-            color: Colors.yellow[600],
+            color: AppColors.colorAppText,
           ),
           padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-          cursorColor: CupertinoColors.black,
+          cursorColor: AppColors.colorAppText,
           keyboardType: TextInputType.emailAddress,
           style: CommonTextStyle.signInTextBox,
           clearButtonMode: OverlayVisibilityMode.editing,
@@ -155,11 +152,11 @@ class SignInPasswordTextBox extends StatelessWidget {
           prefix: Icon(
             CupertinoIcons.padlock,
             size: 30,
-            color: CommonColor.colorTextBase,
+            color: AppColors.colorAppText,
           ),
           obscureText: true,
           padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-          cursorColor: CupertinoColors.black,
+          cursorColor: AppColors.colorAppText,
           keyboardType: TextInputType.emailAddress,
           style: CommonTextStyle.signInTextBox,
           clearButtonMode: OverlayVisibilityMode.editing,
@@ -263,7 +260,7 @@ class SignInSocialLogin extends StatelessWidget {
                   child: IconButton(
                     icon: Image.asset('assets/icons/facebook_icon.jpg'),
                     iconSize: 35,
-                    splashRadius: 30,
+                    //splashRadius: 30,
                     onPressed: onLoginGoogle,
                   )),
               Container(
@@ -274,7 +271,7 @@ class SignInSocialLogin extends StatelessWidget {
                   child: IconButton(
                     icon: Image.asset('assets/icons/google_icon.jpg'),
                     iconSize: 35,
-                    splashRadius: 30,
+                    //splashRadius: 30,
                     onPressed: onLoginGoogle,
                   )),
             ],

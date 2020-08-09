@@ -21,7 +21,7 @@ class ListItem extends StatelessWidget {
     return SizedBox(
         height: 80,
         child: Card(
-            color: CommonColor.colorBackground,
+            color: AppColors.colorAppBackground,
             margin: EdgeInsets.all(4),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10.0),

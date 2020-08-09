@@ -29,5 +29,5 @@ class CommonTextStyle {
   static const signInHeader = TextStyle(
       fontSize: 25.0,
       fontFamily: 'BebasNeue-Regular',
-      color: CommonColor.colorTextBase);
+      color: AppColors.colorAppText);
 }

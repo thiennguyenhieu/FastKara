@@ -98,7 +98,7 @@ class SearchWidgetState extends State<SearchTab>
           backgroundColor: Colors.black,
           middle: Text(
             'Search',
-            style: TextStyle(color: CommonColor.colorTextBase, fontSize: 25.0),
+            style: TextStyle(color: AppColors.colorAppText, fontSize: 25.0),
           ),
         ),
         child: Scaffold(

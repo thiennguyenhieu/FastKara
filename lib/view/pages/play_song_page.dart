@@ -79,19 +79,19 @@ class _PlaySongPageState extends State<PlaySongPage>
           heroTag: 'playsongpage',
           transitionBetweenRoutes: false,
           leading: CupertinoNavigationBarBackButton(
-            color: CommonColor.colorTextBase,
+            color: AppColors.colorAppText,
             onPressed: () => goBack(context),
           ),
           middle: Text(
             'FastKara',
-            style: TextStyle(color: CommonColor.colorTextBase, fontSize: 20.0),
+            style: TextStyle(color: AppColors.colorAppText, fontSize: 20.0),
           ),
-          backgroundColor: CommonColor.colorBackground,
+          backgroundColor: AppColors.colorAppBackground,
           border: Border(bottom: BorderSide(color: Colors.transparent)),
         ),
         child: Scaffold(
             appBar: null,
-            backgroundColor: CommonColor.colorBackground,
+            backgroundColor: AppColors.colorAppBackground,
             body: Column(children: <Widget>[
               Container(
                 margin: EdgeInsets.only(left: 10.0, top: 0.0, right: 10.0),
