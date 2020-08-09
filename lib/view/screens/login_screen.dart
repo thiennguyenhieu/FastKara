@@ -1,16 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'package:fast_kara/bloc/bloc_provider.dart';
 import 'package:fast_kara/static/const_color.dart';
-import 'package:fast_kara/view/screens/main_screen.dart';
 import 'package:fast_kara/static/const_textstyle.dart';
+import 'package:fast_kara/view/screens/main_screen.dart';
 
-class LogInScreen extends StatefulWidget {
-  @override
-  _LogInScreenState createState() => _LogInScreenState();
-}
-
-class _LogInScreenState extends State<LogInScreen> {
+class LogInScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,10 +22,11 @@ class _LogInScreenState extends State<LogInScreen> {
             onPressed: _onForgotBtnPressed,
           ),
           SignInLoginButton(
-            onPressed: _onLoginBtnPressed,
+            onPressed: () {
+              _onLoginBtnPressed(context);
+            },
           ),
           SignInSocialLogin(
-            onLoginFacebook: _onLoginFacebook,
             onLoginGoogle: _onLoginGoogle,
           ),
           SignUpButton(
@@ -42,12 +39,10 @@ class _LogInScreenState extends State<LogInScreen> {
 
   void _onForgotBtnPressed() {}
 
-  void _onLoginBtnPressed() {
+  void _onLoginBtnPressed(context) {
     Navigator.of(context, rootNavigator: false).pushReplacement(
         CupertinoPageRoute(builder: (BuildContext context) => MainScreen()));
   }
-
-  void _onLoginFacebook() {}
 
   void _onLoginGoogle() {}
 
@@ -232,13 +227,13 @@ class SignInLoginButton extends StatelessWidget {
 }
 
 class SignInSocialLogin extends StatelessWidget {
-  SignInSocialLogin({this.onLoginFacebook, this.onLoginGoogle});
+  SignInSocialLogin({this.onLoginGoogle});
 
-  final VoidCallback onLoginFacebook;
   final VoidCallback onLoginGoogle;
 
   @override
   Widget build(BuildContext context) {
+    final bloc = BlocProvider.of(context).signInBloc;
     return Column(
       children: <Widget>[
         Padding(
@@ -260,7 +255,7 @@ class SignInSocialLogin extends StatelessWidget {
                   child: IconButton(
                     icon: Image.asset('assets/icons/facebook_icon.jpg'),
                     iconSize: 35,
-                    onPressed: onLoginGoogle,
+                    onPressed: () => bloc.logInFacebook(),
                   )),
               Container(
                   decoration: BoxDecoration(
