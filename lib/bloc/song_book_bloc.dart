@@ -16,8 +16,6 @@ class SongBookBloc {
   Stream get updateSongBook => _songBookController.stream;
 
   _fetchSongBook() async {
-    _songBook.clear();
-
     var response = await http.get(HttpPath.pathSongBook);
     final refStorage = FirebaseStorage.instance.ref();
 

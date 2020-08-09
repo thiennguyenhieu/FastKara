@@ -16,6 +16,7 @@ import 'package:fast_kara/model/song_model.dart';
 class PlaySongPage extends StatefulWidget {
   final SongModel song;
   const PlaySongPage(this.song);
+
   @override
   _PlaySongPageState createState() => _PlaySongPageState();
 }
@@ -73,7 +74,6 @@ class _PlaySongPageState extends State<PlaySongPage>
 
   @override
   Widget build(BuildContext context) {
-    print(_lyrics);
     return CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
           heroTag: 'playsongpage',
@@ -98,13 +98,8 @@ class _PlaySongPageState extends State<PlaySongPage>
                 height: MediaQuery.of(context).size.height / 2,
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: Colors.white,
                   borderRadius: BorderRadius.circular(5),
-                  image: new DecorationImage(
-                    image:
-                        new ExactAssetImage('assets/images/playsong_image.png'),
-                    fit: BoxFit.cover,
-                  ),
+                  color: AppColors.colorAppChildComponent,
                 ),
                 child: LyricWidget(
                   size: Size(

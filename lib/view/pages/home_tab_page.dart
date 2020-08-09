@@ -18,11 +18,11 @@ class HomeTab extends StatelessWidget {
           transitionBetweenRoutes: false,
           middle: Text('Popular Songs',
               style: TextStyle(color: AppColors.colorAppText, fontSize: 25.0)),
-          backgroundColor: Colors.black,
+          backgroundColor: AppColors.colorAppBackground,
         ),
         child: Scaffold(
             appBar: null,
-            backgroundColor: Colors.black,
+            backgroundColor: AppColors.colorAppBackground,
             body: _SongBookList()));
   }
 }
@@ -31,7 +31,6 @@ class _SongBookList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = BlocProvider.of(context).songBookBloc;
-    final navigateContext = context;
 
     return Container(
         child: StreamBuilder<List<SongModel>>(
@@ -48,7 +47,7 @@ class _SongBookList extends StatelessWidget {
                       title: song.title,
                       subtitle: song.singer,
                       onItemTab: () {
-                        _navigateToSubPage(navigateContext, song);
+                        _navigateToSubPage(context, song);
                       },
                       onMoreBtnPressed: _onMoreBtnPressed,
                     );

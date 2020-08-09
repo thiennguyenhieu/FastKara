@@ -36,7 +36,7 @@ class _MainScreenState extends State<MainScreen> {
         bottom: false,
         child: CupertinoTabScaffold(
           tabBar: CupertinoTabBar(
-            backgroundColor: AppColors.colorAppBackground,
+            backgroundColor: AppColors.colorAppChildComponent,
             activeColor: AppColors.colorAppText,
             inactiveColor: Colors.white,
             items: <BottomNavigationBarItem>[
