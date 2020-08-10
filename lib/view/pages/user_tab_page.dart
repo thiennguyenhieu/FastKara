@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:fast_kara/model/user_model.dart';
 import 'package:fast_kara/view/screens/login_screen.dart';
 
 class UserAccountTab extends StatefulWidget {
@@ -10,8 +9,6 @@ class UserAccountTab extends StatefulWidget {
 }
 
 class _UserAccountTab extends State<UserAccountTab> {
-  var userModel = UserModel();
-
   void _logOut() {
     Navigator.of(context, rootNavigator: true).pushReplacement(
         CupertinoPageRoute(builder: (BuildContext context) => LogInScreen()));
@@ -31,10 +28,6 @@ class _UserAccountTab extends State<UserAccountTab> {
                 Icons.account_circle,
                 size: 80.0,
                 color: Colors.white,
-              ),
-              Text(
-                userModel.getUserName != null ? userModel.getUserName : '0',
-                style: TextStyle(color: Colors.orange, fontSize: 20),
               ),
               RaisedButton(
                 elevation: 5.0,

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:fast_kara/bloc/bloc_provider.dart';
+import 'package:fast_kara/bloc/sign_in_bloc.dart';
 import 'package:fast_kara/static/const_color.dart';
 import 'package:fast_kara/static/const_textstyle.dart';
 import 'package:fast_kara/view/screens/main_screen.dart';
@@ -9,6 +10,7 @@ import 'package:fast_kara/view/screens/main_screen.dart';
 class LogInScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final bloc = BlocProvider.of(context).signInBloc;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: null,
@@ -27,6 +29,7 @@ class LogInScreen extends StatelessWidget {
             },
           ),
           SignInSocialLogin(
+            bloc: bloc,
             onLoginGoogle: _onLoginGoogle,
           ),
           SignUpButton(
@@ -227,13 +230,13 @@ class SignInLoginButton extends StatelessWidget {
 }
 
 class SignInSocialLogin extends StatelessWidget {
-  SignInSocialLogin({this.onLoginGoogle});
+  SignInSocialLogin({this.bloc, this.onLoginGoogle});
 
+  final SignInBloc bloc;
   final VoidCallback onLoginGoogle;
 
   @override
   Widget build(BuildContext context) {
-    final bloc = BlocProvider.of(context).signInBloc;
     return Column(
       children: <Widget>[
         Padding(
@@ -255,7 +258,7 @@ class SignInSocialLogin extends StatelessWidget {
                   child: IconButton(
                     icon: Image.asset('assets/icons/facebook_icon.jpg'),
                     iconSize: 35,
-                    onPressed: () => bloc.logInFacebook(),
+                    onPressed: () => _loginFacebook(context),
                   )),
               Container(
                   decoration: BoxDecoration(
@@ -272,6 +275,14 @@ class SignInSocialLogin extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  void _loginFacebook(context) async {
+    var loginFacebook = await bloc.logInFacebook();
+    if (loginFacebook) {
+      Navigator.of(context, rootNavigator: true)
+          .push(CupertinoPageRoute(builder: (context) => MainScreen()));
+    }
   }
 }
 
