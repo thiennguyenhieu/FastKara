@@ -1,7 +1,7 @@
-import 'dart:async';
 import 'dart:io';
 import 'dart:convert';
 
+import 'package:rxdart/rxdart.dart';
 import 'package:http/http.dart' as http;
 import 'package:firebase_storage/firebase_storage.dart';
 
@@ -9,11 +9,13 @@ import 'package:fast_kara/static/const_http_path.dart';
 import 'package:fast_kara/model/song_model.dart';
 
 class SongBookBloc {
-  final List<SongModel> _songBook = [];
+  List<SongModel> _songBook = [];
+  BehaviorSubject<List<SongModel>> _subjectSongBook;
+  ValueStream<List<SongModel>> get updateSongBook => _subjectSongBook.stream;
 
-  final _songBookController = new StreamController<List<SongModel>>.broadcast();
-
-  Stream get updateSongBook => _songBookController.stream;
+  SongBookBloc() {
+    _subjectSongBook = new BehaviorSubject<List<SongModel>>();
+  }
 
   _fetchSongBook() async {
     var response = await http.get(HttpPath.pathSongBook);
@@ -38,7 +40,7 @@ class SongBookBloc {
         _songBook.add(song);
       }
 
-      _songBookController.sink.add(_songBook);
+      _subjectSongBook.sink.add(_songBook);
     }
   }
 
@@ -47,6 +49,6 @@ class SongBookBloc {
   }
 
   void dispose() {
-    _songBookController.close();
+    _subjectSongBook.close();
   }
 }
