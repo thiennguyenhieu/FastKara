@@ -2,13 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:fast_kara/bloc/bloc_provider.dart';
 import 'package:fast_kara/static/const_color.dart';
 import 'package:fast_kara/model/song_model.dart';
-import 'package:fast_kara/view/widgets/list_item.dart';
+import 'package:fast_kara/view/widgets/songbook_list_item.dart';
 import 'package:fast_kara/view/pages/play_song_page.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class HomeTab extends StatelessWidget {
   @override
@@ -43,14 +43,14 @@ class _SongBookList extends StatelessWidget {
                   itemCount: snapshot.data.length,
                   itemBuilder: (BuildContext context, int index) {
                     SongModel song = snapshot.data[index];
-                    return ListItem(
+                    return SongBookListItem(
                       imageUrl: song.imgUrl,
                       title: song.title,
                       subtitle: song.singer,
                       onItemTab: () {
                         _navigateToSubPage(context, song);
                       },
-                      onMoreBtnPressed: (){
+                      onMoreBtnPressed: () {
                         _onMoreBtnPressed(context, song);
                       },
                     );
@@ -122,15 +122,22 @@ class _SongBookList extends StatelessWidget {
               ],
             ),
           );
-    });
+        });
   }
 
-  void _onPressFavorite(){
-    Fluttertoast.showToast(msg: "Added to Favorite", backgroundColor: Colors.white, textColor: Colors.black, toastLength: Toast.LENGTH_SHORT);
-  }
-  void _onPressDownload(){
-    Fluttertoast.showToast(msg: "Downloading...", backgroundColor: Colors.white, textColor: Colors.black, toastLength: Toast.LENGTH_SHORT);
+  void _onPressFavorite() {
+    Fluttertoast.showToast(
+        msg: "Added to Favorite",
+        backgroundColor: Colors.white,
+        textColor: Colors.black,
+        toastLength: Toast.LENGTH_SHORT);
   }
 
-
+  void _onPressDownload() {
+    Fluttertoast.showToast(
+        msg: "Downloading...",
+        backgroundColor: Colors.white,
+        textColor: Colors.black,
+        toastLength: Toast.LENGTH_SHORT);
+  }
 }

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import 'package:fast_kara/static/const_color.dart';
 import 'package:fast_kara/view/pages/home_tab_page.dart';
-import 'package:fast_kara/view/pages/favorite_tab_page.dart';
 import 'package:fast_kara/view/pages/user_tab_page.dart';
 import 'package:fast_kara/view/pages/search_tab_page.dart';
 
@@ -16,7 +15,6 @@ class _MainScreenState extends State<MainScreen> {
   List<Widget> _pages;
   Widget _pageHome;
   Widget _pageSearch;
-  Widget _pageFavorite;
   Widget _pageUserAccount;
 
   @override
@@ -24,9 +22,8 @@ class _MainScreenState extends State<MainScreen> {
     super.initState();
     _pageHome = HomeTab();
     _pageSearch = SearchTab();
-    _pageFavorite = FavoriteTab();
     _pageUserAccount = UserAccountTab();
-    _pages = [_pageHome, _pageSearch, _pageFavorite, _pageUserAccount];
+    _pages = [_pageHome, _pageSearch, _pageUserAccount];
   }
 
   @override
@@ -44,8 +41,6 @@ class _MainScreenState extends State<MainScreen> {
                   icon: Icon(Icons.home), title: Container()),
               BottomNavigationBarItem(
                   icon: Icon(Icons.search), title: Container()),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.favorite), title: Container()),
               BottomNavigationBarItem(
                   icon: Icon(Icons.account_circle), title: Container()),
             ],

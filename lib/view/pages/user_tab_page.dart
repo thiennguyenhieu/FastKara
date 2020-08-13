@@ -1,59 +1,110 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:fast_kara/view/screens/login_screen.dart';
+import 'package:fast_kara/static/const_color.dart';
 
-class UserAccountTab extends StatefulWidget {
-  @override
-  _UserAccountTab createState() => _UserAccountTab();
-}
-
-class _UserAccountTab extends State<UserAccountTab> {
-  void _logOut() {
-    Navigator.of(context, rootNavigator: true).pushReplacement(
-        CupertinoPageRoute(builder: (BuildContext context) => LogInScreen()));
-  }
-
+class UserAccountTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: Container(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Padding(padding: const EdgeInsets.all(50)),
-              Icon(
-                Icons.account_circle,
-                size: 80.0,
-                color: Colors.white,
-              ),
-              RaisedButton(
-                elevation: 5.0,
-                onPressed: () {
-                  _logOut();
-                },
-                padding: EdgeInsets.all(15.0),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15.0),
-                ),
-                color: Colors.orange[200],
-                child: Text(
-                  'Log out',
-                  style: TextStyle(
-                    color: Color(0xFF150B03),
-                    letterSpacing: 1.5,
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'OpenSans',
-                  ),
-                ),
-              ),
-            ],
-          ),
+    return CupertinoPageScaffold(
+      backgroundColor: AppColors.colorAppBackground,
+      navigationBar: CupertinoNavigationBar(
+        heroTag: 'usertabpage',
+        transitionBetweenRoutes: false,
+        backgroundColor: AppColors.colorAppBackground,
+        middle: Row(
+          children: <Widget>[
+            Icon(
+              Icons.account_circle,
+              color: AppColors.colorAppText,
+              size: 60.0,
+            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 0.0),
+            ),
+            Text(
+              'You',
+              style: TextStyle(color: AppColors.colorAppText, fontSize: 30.0),
+            ),
+          ],
         ),
       ),
+      child: Scaffold(
+        appBar: null,
+        backgroundColor: AppColors.colorAppBackground,
+        body: _UserItemList(),
+      ),
+    );
+  }
+}
+
+class _UserItemList extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      children: ListTile.divideTiles(
+        color: Colors.grey,
+        context: context,
+        tiles: [
+          ListTile(
+            leading: Icon(
+              Icons.favorite_border,
+              color: Colors.white,
+              size: 20.0,
+            ),
+            title: Text(
+              'Likes',
+              style: TextStyle(color: Colors.white, fontSize: 20.0),
+            ),
+            trailing: Wrap(
+              children: <Widget>[
+                Text(
+                  '0',
+                  style: TextStyle(color: Colors.white, fontSize: 20.0),
+                ),
+              ],
+            ),
+          ),
+          ListTile(
+            leading: Icon(
+              Icons.history,
+              color: Colors.white,
+              size: 20.0,
+            ),
+            title: Text(
+              'History',
+              style: TextStyle(color: Colors.white, fontSize: 20.0),
+            ),
+            trailing: Wrap(
+              children: <Widget>[
+                Text(
+                  '0',
+                  style: TextStyle(color: Colors.white, fontSize: 20.0),
+                ),
+              ],
+            ),
+          ),
+          ListTile(
+            leading: Icon(
+              Icons.file_download,
+              color: Colors.white,
+              size: 20.0,
+            ),
+            title: Text(
+              'Downloads',
+              style: TextStyle(color: Colors.white, fontSize: 20.0),
+            ),
+            trailing: Wrap(
+              children: <Widget>[
+                Text(
+                  '0',
+                  style: TextStyle(color: Colors.white, fontSize: 20.0),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ).toList(),
     );
   }
 }

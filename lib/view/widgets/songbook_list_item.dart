@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:fast_kara/static/const_color.dart';
 
-class ListItem extends StatelessWidget {
-  ListItem(
+class SongBookListItem extends StatelessWidget {
+  SongBookListItem(
       {this.imageUrl,
       this.title,
       this.subtitle,
