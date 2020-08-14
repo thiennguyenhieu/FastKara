@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:fast_kara/static/const_color.dart';
 
-class CommonTextStyle {
+abstract class CommonTextStyle {
   static const signInHint = TextStyle(
     color: const Color(0xFF949494),
     fontFamily: 'BebasNeue-Regular',

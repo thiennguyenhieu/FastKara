@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class AppColors {
+abstract class AppColors {
   static const Color colorAppBackground = Colors.black;
   static const Color colorAppChildComponent = Color.fromRGBO(31, 31, 31, 1.0);
   static const Color colorAppText = Color.fromRGBO(255, 218, 159, 1.0);

@@ -74,13 +74,17 @@ class _PlaySongPageState extends State<PlaySongPage>
         navigationBar: CupertinoNavigationBar(
           heroTag: 'playsongpage',
           transitionBetweenRoutes: false,
-          leading: CupertinoNavigationBarBackButton(
-            color: AppColors.colorAppText,
-            onPressed: () => goBack(context),
-          ),
-          middle: Text(
-            'FastKara',
-            style: TextStyle(color: AppColors.colorAppText, fontSize: 20.0),
+          leading: Row(
+            children: <Widget>[
+              CupertinoNavigationBarBackButton(
+                color: AppColors.colorAppText,
+                onPressed: () => goBack(context),
+              ),
+              Text(
+                'Home',
+                style: TextStyle(color: AppColors.colorAppText, fontSize: 20.0),
+              ),
+            ],
           ),
           backgroundColor: AppColors.colorAppBackground,
           border: Border(bottom: BorderSide(color: Colors.transparent)),
@@ -98,27 +102,26 @@ class _PlaySongPageState extends State<PlaySongPage>
                   color: AppColors.colorAppChildComponent,
                 ),
                 child: FutureBuilder(
-                  future: getTextFromFile(widget.song.lyrics),
-                  builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-                    if(snapshot.hasData){
-                      _lyrics.clear();
-                      _lyrics = LyricUtil.formatLyric(snapshot.data);
-                      return LyricWidget(
-                        size: Size(
-                          double.infinity,
-                          double.infinity,
-                        ),
-                        lyrics: _lyrics,
-                        remarkLyrics: [],
-                        enableDrag: true,
-                        controller: _controller,
-                      );
-                    }
-                    else{
-                      return Loading(size: 50,color: Colors.white);
-                    }
-                  }
-                ),
+                    future: getTextFromFile(widget.song.lyrics),
+                    builder:
+                        (BuildContext context, AsyncSnapshot<String> snapshot) {
+                      if (snapshot.hasData) {
+                        _lyrics.clear();
+                        _lyrics = LyricUtil.formatLyric(snapshot.data);
+                        return LyricWidget(
+                          size: Size(
+                            double.infinity,
+                            double.infinity,
+                          ),
+                          lyrics: _lyrics,
+                          remarkLyrics: [],
+                          enableDrag: true,
+                          controller: _controller,
+                        );
+                      } else {
+                        return Loading(size: 50, color: Colors.white);
+                      }
+                    }),
               ),
               Container(
                 margin: EdgeInsets.only(top: 40.0, left: 10.0, right: 10.0),

@@ -7,15 +7,30 @@ import 'package:fast_kara/static/const_color.dart';
 import 'package:fast_kara/static/const_textstyle.dart';
 import 'package:fast_kara/view/screens/main_screen.dart';
 
-class LogInScreen extends StatelessWidget {
+class LogInPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = BlocProvider.of(context).signInBloc;
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: null,
+    return CupertinoPageScaffold(
       backgroundColor: AppColors.colorAppBackground,
-      body: Column(
+      navigationBar: CupertinoNavigationBar(
+        heroTag: 'loginpage',
+        transitionBetweenRoutes: false,
+        backgroundColor: AppColors.colorAppBackground,
+        leading: Row(
+          children: <Widget>[
+            CupertinoNavigationBarBackButton(
+              color: AppColors.colorAppText,
+              onPressed: () => {Navigator.of(context).pop()},
+            ),
+            Text(
+              'You',
+              style: TextStyle(color: AppColors.colorAppText, fontSize: 20.0),
+            ),
+          ],
+        ),
+      ),
+      child: Column(
         children: <Widget>[
           SignInHeader(),
           SignInEmailTextBox(),
@@ -56,7 +71,7 @@ class SignInHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.fromLTRB(120.0, 90.0, 120.0, 20.0),
+      margin: EdgeInsets.fromLTRB(120.0, 20.0, 120.0, 20.0),
       alignment: Alignment.center,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
