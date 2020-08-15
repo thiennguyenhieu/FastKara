@@ -25,7 +25,7 @@ class LogInPage extends StatelessWidget {
             ),
             Text(
               'You',
-              style: TextStyle(color: AppColors.colorAppText, fontSize: 20.0),
+              style: TextStyle(color: AppColors.colorAppText),
             ),
           ],
         ),
