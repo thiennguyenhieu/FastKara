@@ -6,7 +6,7 @@ import 'package:shimmer/shimmer.dart';
 
 import 'package:fast_kara/static/const_color.dart';
 import 'package:fast_kara/bloc/bloc_provider.dart';
-import 'package:fast_kara/view/screens/login_screen.dart';
+import 'package:fast_kara/view/screens/main_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -21,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(
         Duration(seconds: 3),
         () => Navigator.of(context).pushReplacement(CupertinoPageRoute(
-            builder: (BuildContext context) => LogInScreen())));
+            builder: (BuildContext context) => MainScreen())));
   }
 
   @override
