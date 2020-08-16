@@ -30,27 +30,29 @@ class LogInPage extends StatelessWidget {
           ],
         ),
       ),
-      child: Column(
-        children: <Widget>[
-          SignInHeader(),
-          SignInEmailTextBox(),
-          SignInPasswordTextBox(),
-          SignInForgotPasswordButton(
-            onPressed: _onForgotBtnPressed,
-          ),
-          SignInLoginButton(
-            onPressed: () {
-              _onLoginBtnPressed(context);
-            },
-          ),
-          SignInSocialLogin(
-            bloc: bloc,
-            onLoginGoogle: _onLoginGoogle,
-          ),
-          SignUpButton(
-            onPressed: _onSignUpBtnPressed,
-          ),
-        ],
+      child: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
+        child: Column(
+          children: <Widget>[
+            SignInHeader(),
+            SignInEmailTextBox(),
+            SignInPasswordTextBox(),
+            SignInForgotPasswordButton(
+              onPressed: _onForgotBtnPressed,
+            ),
+            SignInLoginButton(
+              onPressed: () {
+                _onLoginBtnPressed(context);
+              },
+            ),
+            SignInSocialLogin(
+              bloc: bloc,
+            ),
+            SignUpButton(
+              onPressed: _onSignUpBtnPressed,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -61,8 +63,6 @@ class LogInPage extends StatelessWidget {
     Navigator.of(context, rootNavigator: false).pushReplacement(
         CupertinoPageRoute(builder: (BuildContext context) => MainScreen()));
   }
-
-  void _onLoginGoogle() {}
 
   void _onSignUpBtnPressed() {}
 }
@@ -245,11 +245,9 @@ class SignInLoginButton extends StatelessWidget {
 }
 
 class SignInSocialLogin extends StatelessWidget {
-  SignInSocialLogin({this.bloc, this.onLoginGoogle});
+  SignInSocialLogin({this.bloc});
 
   final SignInBloc bloc;
-  final VoidCallback onLoginGoogle;
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -265,26 +263,52 @@ class SignInSocialLogin extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              Container(
+              GestureDetector(
+                onTap: () {
+                  _loginFacebook(context);
+                },
+                child: Container(
+                  height: 50.0,
+                  width: 50.0,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black26,
+                        offset: Offset(0, 2),
+                        blurRadius: 6.0,
+                      ),
+                    ],
+                    image: DecorationImage(
+                      image: AssetImage('assets/icons/facebook_icon.jpg'),
+                    ),
                   ),
-                  child: IconButton(
-                    icon: Image.asset('assets/icons/facebook_icon.jpg'),
-                    iconSize: 35,
-                    onPressed: () => _loginFacebook(context),
-                  )),
-              Container(
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  _loginGoogle(context);
+                },
+                child: Container(
+                  height: 50.0,
+                  width: 50.0,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black26,
+                        offset: Offset(0, 2),
+                        blurRadius: 6.0,
+                      ),
+                    ],
+                    image: DecorationImage(
+                      image: AssetImage('assets/icons/google_icon.jpg'),
+                    ),
                   ),
-                  child: IconButton(
-                    icon: Image.asset('assets/icons/google_icon.jpg'),
-                    iconSize: 35,
-                    onPressed: onLoginGoogle,
-                  )),
+                ),
+              ),
             ],
           ),
         ),
@@ -298,6 +322,10 @@ class SignInSocialLogin extends StatelessWidget {
       Navigator.of(context, rootNavigator: true)
           .push(CupertinoPageRoute(builder: (context) => MainScreen()));
     }
+  }
+
+  void _loginGoogle(context) async {
+    print("login by google");
   }
 }
 
