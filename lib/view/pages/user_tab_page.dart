@@ -41,7 +41,11 @@ class UserAccountTab extends StatelessWidget {
             ),
             _UserItemList(),
             Padding(
-              padding: EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 20.0),
+              padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
+            ),
+            _SettingItemList(),
+            Padding(
+              padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
             ),
             _SignInButton(),
           ],
@@ -56,14 +60,12 @@ class _UserItemList extends StatelessWidget {
     Icons.favorite,
     Icons.history,
     Icons.file_download,
-    Icons.settings
   ];
 
   final titles = [
     'Likes',
     'History',
     'Downloads',
-    'Settings',
   ];
 
   @override
@@ -97,6 +99,54 @@ class _UserItemList extends StatelessWidget {
   }
 }
 
+class _SettingItemList extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Card(
+          color: AppColors.colorAppChildComponent,
+          margin: EdgeInsets.all(4),
+          child: ListTile(
+            leading: Icon(
+              Icons.language,
+              color: Colors.grey,
+            ),
+            title: Text(
+              'Language',
+              style: TextStyle(color: Colors.white),
+              textAlign: TextAlign.left,
+            ),
+            trailing: Icon(
+              Icons.keyboard_arrow_right,
+              color: Colors.grey,
+            ),
+          ),
+        ),
+        Card(
+          color: AppColors.colorAppChildComponent,
+          margin: EdgeInsets.all(4),
+          child: ListTile(
+            leading: Icon(
+              Icons.signal_cellular_4_bar,
+              color: Colors.grey,
+            ),
+            title: Text(
+              'Cellular downloads',
+              style: TextStyle(color: Colors.white),
+              textAlign: TextAlign.left,
+            ),
+            trailing: CupertinoSwitch(
+              value: true,
+              onChanged: (bool value) {},
+            ),
+          ),
+        )
+      ],
+    );
+  }
+}
+
 class _SignInButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -118,7 +168,7 @@ class _SignInButton extends StatelessWidget {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
-              borderRadius: BorderRadius.circular(5.0)),
+              borderRadius: BorderRadius.circular(30.0)),
           child: Container(
             constraints: BoxConstraints(
                 maxWidth: double.maxFinite, minHeight: double.infinity),

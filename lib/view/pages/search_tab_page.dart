@@ -90,7 +90,7 @@ class _SearchWidgetState extends State<SearchTab>
         navigationBar: CupertinoNavigationBar(
           heroTag: 'searchtabpage',
           transitionBetweenRoutes: false,
-          backgroundColor: Colors.black,
+          backgroundColor: AppColors.colorAppBackground,
           middle: CustomSearchBar(
             controller: _searchTextController,
             focusNode: bloc.getFocusNode(),
@@ -111,12 +111,18 @@ class _SearchPageBody extends StatelessWidget {
           padding: EdgeInsetsDirectional.only(top: 8.0, start: 8.0),
           heroTag: 'searchtabpage',
           transitionBetweenRoutes: false,
-          backgroundColor: Colors.black,
-          leading: Text('Search',
-              style: TextStyle(
-                color: AppColors.colorAppText,
-                fontSize: 20.0,
-              )),
+          backgroundColor: AppColors.colorAppBackground,
+          middle: Row(
+            children: [
+              Text(
+                'Popular searches',
+                style: TextStyle(
+                  color: AppColors.colorAppText,
+                  fontSize: 20.0,
+                ),
+              ),
+            ],
+          ),
         ),
         backgroundColor: AppColors.colorAppBackground,
         body: _SongBookList());

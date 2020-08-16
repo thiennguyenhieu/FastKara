@@ -17,15 +17,21 @@ class HomeTab extends StatelessWidget {
       navigationBar: CupertinoNavigationBar(
         heroTag: 'hometabpage',
         transitionBetweenRoutes: false,
-        middle: Text('Popular Songs',
-            style: TextStyle(color: AppColors.colorAppText, fontSize: 25.0)),
+        middle: Row(
+          children: [
+            Text(
+              'Trending now',
+              style: TextStyle(
+                color: AppColors.colorAppText,
+                fontSize: 20.0,
+              ),
+            ),
+          ],
+        ),
         backgroundColor: AppColors.colorAppBackground,
       ),
-      child: Scaffold(
-        appBar: null,
-        backgroundColor: AppColors.colorAppBackground,
-        body: _SongBookList(),
-      ),
+      child: _SongBookList(),
+      backgroundColor: AppColors.colorAppBackground,
     );
   }
 }
@@ -36,12 +42,15 @@ class _SongBookList extends StatelessWidget {
     final bloc = BlocProvider.of(context).songBookBloc;
 
     return Container(
+      color: AppColors.colorAppBackground,
       child: StreamBuilder<List<SongModel>>(
         initialData: [],
         stream: bloc.updateSongBook,
         builder: (context, snapshot) {
           if (snapshot.data.length > 0) {
             return ListView.builder(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
               itemCount: snapshot.data.length,
               itemBuilder: (BuildContext context, int index) {
                 SongModel song = snapshot.data[index];
