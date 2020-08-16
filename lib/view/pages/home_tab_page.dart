@@ -8,6 +8,7 @@ import 'package:fast_kara/bloc/bloc_provider.dart';
 import 'package:fast_kara/static/const_color.dart';
 import 'package:fast_kara/model/song_model.dart';
 import 'package:fast_kara/view/widgets/songbook_list_item.dart';
+import 'package:fast_kara/view/widgets/more_detail_list_item.dart';
 import 'package:fast_kara/view/pages/play_song_page.dart';
 
 class HomeTab extends StatelessWidget {
@@ -62,7 +63,7 @@ class _SongBookList extends StatelessWidget {
                     _navigateToSubPage(context, song);
                   },
                   onMoreBtnPressed: () {
-                    _onMoreBtnPressed(context, song);
+                    _showModalSheet(context, song);
                   },
                 );
               },
@@ -85,60 +86,31 @@ class _SongBookList extends StatelessWidget {
         .push(CupertinoPageRoute(builder: (context) => PlaySongPage(song)));
   }
 
-  void _onMoreBtnPressed(context, SongModel song) {
-    showBottomSheet(
+  void _showModalSheet(BuildContext  context, SongModel song) {
+    showCupertinoModalPopup(
         context: context,
         builder: (context) {
-          return Container(
-            height: 200,
-            color: Colors.grey[900],
-            child: ListView(
-              children: <Widget>[
-                ListTile(
-                  leading: (Image.network(song.imgUrl)),
-                  title: Text(
-                    song.title,
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  subtitle: Text(
-                    song.singer,
-                    style: TextStyle(color: Colors.white60),
-                  ),
-                ),
-                Divider(
-                  color: Colors.white,
-                  endIndent: 40,
-                  indent: 40,
-                ),
-                ListTile(
-                  leading: Icon(
-                    Icons.favorite,
-                    color: Colors.white,
-                  ),
-                  title: Text(
-                    "Add To Favorite",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onTap: _onPressFavorite,
-                ),
-                ListTile(
-                  leading: Icon(
-                    Icons.file_download,
-                    color: Colors.white,
-                  ),
-                  title: Text(
-                    "Download",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onTap: _onPressDownload,
-                )
-              ],
+          return SizedBox(
+            height: 300,
+            child: MoreDetailListItem(
+                 subtitle: song.singer,
+                 imageUrl: song.imgUrl,
+                 title: song.title,
+                 onDownloadButtonPress: (){
+                   _onPressDownload(context);
+                 },
+                 onFavoriteButtonPress: (){
+                   _onPressFavorite(context);
+                 },
             ),
           );
-        });
+        }
+    );
   }
 
-  void _onPressFavorite() {
+  void _onPressFavorite(context) {
+    Fluttertoast.cancel();
+    Navigator.of(context).pop();
     Fluttertoast.showToast(
         msg: "Added to Favorite",
         backgroundColor: Colors.white,
@@ -146,7 +118,9 @@ class _SongBookList extends StatelessWidget {
         toastLength: Toast.LENGTH_SHORT);
   }
 
-  void _onPressDownload() {
+  void _onPressDownload(context) {
+    Fluttertoast.cancel();
+    Navigator.of(context).pop();
     Fluttertoast.showToast(
         msg: "Downloading...",
         backgroundColor: Colors.white,
