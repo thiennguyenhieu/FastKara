@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
-import 'package:fast_kara/extpackage/flutter_lyric/lyric_widget.dart';
-import 'package:fast_kara/extpackage/flutter_lyric/lyric_controller.dart';
-import 'package:fast_kara/extpackage/flutter_lyric/lyric_util.dart';
-import 'package:fast_kara/extpackage/flutter_lyric/lyric.dart';
+import 'package:fast_kara/package/flutter_lyric/lyric_widget.dart';
+import 'package:fast_kara/package/flutter_lyric/lyric_controller.dart';
+import 'package:fast_kara/package/flutter_lyric/lyric_util.dart';
+import 'package:fast_kara/package/flutter_lyric/lyric.dart';
 
 import 'package:fast_kara/bloc/bloc_provider.dart';
 import 'package:fast_kara/bloc/play_song_bloc.dart';

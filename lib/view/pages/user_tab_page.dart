@@ -5,6 +5,7 @@ import 'package:fast_kara/static/const_color.dart';
 import 'package:fast_kara/static/const_textstyle.dart';
 import 'package:fast_kara/view/pages/login_page.dart';
 import 'package:fast_kara/view/pages/language_page.dart';
+import 'package:fast_kara/package/localization/app_translations.dart';
 
 class UserAccountTab extends StatelessWidget {
   @override
@@ -29,7 +30,7 @@ class UserAccountTab extends StatelessWidget {
                 padding: EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 0.0),
               ),
               Text(
-                'You',
+                AppTranslations.of(context).text("user_tab_title"),
                 style: TextStyle(color: AppColors.colorAppText, fontSize: 30.0),
               ),
             ],
@@ -53,20 +54,20 @@ class UserAccountTab extends StatelessWidget {
 }
 
 class _UserItemList extends StatelessWidget {
-  final icons = [
-    Icons.favorite,
-    Icons.history,
-    Icons.file_download,
-  ];
-
-  final titles = [
-    'Likes',
-    'History',
-    'Downloads',
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final icons = [
+      Icons.favorite,
+      Icons.history,
+      Icons.file_download,
+    ];
+
+    final titles = [
+      AppTranslations.of(context).text("user_tab_likes"),
+      AppTranslations.of(context).text("user_tab_history"),
+      AppTranslations.of(context).text("user_tab_downloads"),
+    ];
+
     return ListView.builder(
       scrollDirection: Axis.vertical,
       shrinkWrap: true,

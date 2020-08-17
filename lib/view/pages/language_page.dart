@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:fast_kara/static/const_color.dart';
+import 'package:fast_kara/package/localization/app_translations.dart';
+import 'package:fast_kara/package/localization/application.dart';
 
 class LanguagePage extends StatelessWidget {
   @override
@@ -19,7 +21,7 @@ class LanguagePage extends StatelessWidget {
               onPressed: () => {Navigator.of(context).pop()},
             ),
             Text(
-              'You',
+              AppTranslations.of(context).text("user_tab_title"),
               style: TextStyle(color: AppColors.colorAppText),
             ),
           ],
@@ -45,13 +47,32 @@ class _LanguageItemList extends StatefulWidget {
 }
 
 class _LanguageItemListState extends State<_LanguageItemList> {
+  static final List<String> languagesList = application.supportedLanguages;
+  static final List<String> languageCodesList =
+      application.supportedLanguagesCodes;
+
+  final Map<dynamic, dynamic> languagesMap = {
+    languagesList[0]: languageCodesList[0],
+    languagesList[1]: languageCodesList[1],
+  };
+
   Language _language = Language.English;
+
+  @override
+  void initState() {
+    super.initState();
+    application.onLocaleChanged = onLocaleChange;
+  }
+
+  void onLocaleChange(Locale locale) async {
+    AppTranslations.load(locale);
+  }
 
   @override
   Widget build(BuildContext context) {
     final languages = [
-      'English',
-      'Vietnamese',
+      AppTranslations.of(context).text("language_english"),
+      AppTranslations.of(context).text("language_vietnamese"),
     ];
 
     return ListView.builder(
@@ -75,13 +96,25 @@ class _LanguageItemListState extends State<_LanguageItemList> {
             value: Language.values[index],
             groupValue: _language,
             onChanged: (Language value) {
-              setState(() {
-                _language = value;
-              });
+              _language = value;
+              _selectLanguage(value);
             },
           ),
         );
       },
     );
+  }
+
+  void _selectLanguage(Language language) {
+    String strLanguage;
+    if (language == Language.English) {
+      strLanguage = "English";
+    } else {
+      strLanguage = "Vietnamese";
+    }
+
+    setState(() {
+      onLocaleChange(Locale(languagesMap[strLanguage]));
+    });
   }
 }

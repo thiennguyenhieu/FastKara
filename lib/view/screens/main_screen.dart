@@ -1,8 +1,8 @@
-import 'package:fast_kara/bloc/bloc_provider.dart';
-import 'package:fast_kara/bloc/search_manager_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'package:fast_kara/bloc/bloc_provider.dart';
+import 'package:fast_kara/bloc/search_manager_bloc.dart';
 import 'package:fast_kara/static/const_color.dart';
 import 'package:fast_kara/view/pages/home_tab_page.dart';
 import 'package:fast_kara/view/pages/user_tab_page.dart';

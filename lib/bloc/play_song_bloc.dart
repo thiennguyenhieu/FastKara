@@ -1,7 +1,7 @@
 import 'package:rxdart/rxdart.dart';
 import 'package:audioplayers/audioplayers.dart';
 
-import 'package:fast_kara/extpackage/flutter_lyric/lyric_controller.dart';
+import 'package:fast_kara/package/flutter_lyric/lyric_controller.dart';
 
 class PlaySongBloc {
   AudioPlayer _audioPlayer;

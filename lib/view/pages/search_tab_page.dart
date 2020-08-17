@@ -1,13 +1,12 @@
-import 'package:fast_kara/bloc/bloc_provider.dart';
-import 'package:fast_kara/model/song_model.dart';
-import 'package:fast_kara/view/pages/play_song_page.dart';
-import 'package:fast_kara/view/widgets/custom_search_bar.dart';
-import 'package:fast_kara/view/widgets/songbook_list_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import 'package:fast_kara/static/const_color.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:fast_kara/bloc/bloc_provider.dart';
 import 'package:fast_kara/bloc/search_manager_bloc.dart';
+import 'package:fast_kara/model/song_model.dart';
+import 'package:fast_kara/view/widgets/custom_search_bar.dart';
+import 'package:fast_kara/view/widgets/songbook_list_item.dart';
 
 class SearchTab extends StatefulWidget {
   final SearchManagerBloc bloc;
@@ -145,102 +144,22 @@ class _SongBookList extends StatelessWidget {
               itemBuilder: (BuildContext context, int index) {
                 SongModel song = snapshot.data[index];
                 return SongBookListItem(
-                  imageUrl: song.imgUrl,
-                  title: song.title,
-                  subtitle: song.singer,
-                  onItemTab: () {
-                    _navigateToSubPage(context, song);
-                  },
-                  onMoreBtnPressed: () {
-                    _onMoreBtnPressed(context, song);
-                  },
+                  song: song,
+                  context: context,
                 );
               },
             );
           } else {
             return Center(
-                child: CircularProgressIndicator(
-              strokeWidth: 5,
-              valueColor:
-                  new AlwaysStoppedAnimation<Color>(AppColors.colorAppText),
-            ));
+              child: CircularProgressIndicator(
+                strokeWidth: 5,
+                valueColor:
+                    new AlwaysStoppedAnimation<Color>(AppColors.colorAppText),
+              ),
+            );
           }
         },
       ),
     );
-  }
-
-  Future _navigateToSubPage(context, SongModel song) async {
-    Navigator.of(context, rootNavigator: true)
-        .push(CupertinoPageRoute(builder: (context) => PlaySongPage(song)));
-  }
-
-  void _onMoreBtnPressed(context, SongModel song) {
-    showBottomSheet(
-        context: context,
-        builder: (context) {
-          return Container(
-            height: 200,
-            color: Colors.grey[900],
-            child: ListView(
-              children: <Widget>[
-                ListTile(
-                  leading: (Image.network(song.imgUrl)),
-                  title: Text(
-                    song.title,
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  subtitle: Text(
-                    song.singer,
-                    style: TextStyle(color: Colors.white60),
-                  ),
-                ),
-                Divider(
-                  color: Colors.white,
-                  endIndent: 40,
-                  indent: 40,
-                ),
-                ListTile(
-                  leading: Icon(
-                    Icons.favorite,
-                    color: Colors.white,
-                  ),
-                  title: Text(
-                    "Add To Favorite",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onTap: _onPressFavorite,
-                ),
-                ListTile(
-                  leading: Icon(
-                    Icons.file_download,
-                    color: Colors.white,
-                  ),
-                  title: Text(
-                    "Download",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onTap: _onPressDownload,
-                )
-              ],
-            ),
-          );
-        });
-  }
-
-  void _onPressFavorite() {
-    Fluttertoast.showToast(
-        msg: "Added to Favorite",
-        backgroundColor: Colors.white,
-        textColor: Colors.black,
-        toastLength: Toast.LENGTH_SHORT);
-  }
-
-  void _onPressDownload() {
-    Fluttertoast.showToast(
-        msg: "Downloading...",
-        backgroundColor: Colors.white,
-        textColor: Colors.black,
-        toastLength: Toast.LENGTH_SHORT);
   }
 }

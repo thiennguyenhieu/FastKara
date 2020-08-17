@@ -59,7 +59,7 @@ class MoreDetailListItem extends StatelessWidget {
                     color: Colors.white,
                   ),
                   title: Text(
-                    "Add To Favorite",
+                    "Like",
                     style: TextStyle(color: Colors.white),
                   ),
                   onTap: onFavoriteButtonPress,
