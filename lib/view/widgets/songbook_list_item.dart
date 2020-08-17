@@ -21,13 +21,13 @@ class SongBookListItem extends StatelessWidget {
     return SizedBox(
         height: 80,
         child: Card(
-            color: AppColors.colorAppChildComponent,
+            color: AppColors.colorListItemCard,
             margin: EdgeInsets.all(4),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10.0),
             ),
             child: ListTile(
-              contentPadding: EdgeInsets.only(left: 4.0),
+              contentPadding: EdgeInsets.only(left: 4.0, top: 0.0, bottom: 0.0),
               leading: Image.network(
                 imageUrl,
                 fit: BoxFit.fill,

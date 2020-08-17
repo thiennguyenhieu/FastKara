@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fast_kara/static/const_color.dart';
 import 'package:fast_kara/static/const_textstyle.dart';
 import 'package:fast_kara/view/pages/login_page.dart';
+import 'package:fast_kara/view/pages/language_page.dart';
 
 class UserAccountTab extends StatelessWidget {
   @override
@@ -15,41 +16,37 @@ class UserAccountTab extends StatelessWidget {
         transitionBetweenRoutes: false,
         backgroundColor: AppColors.colorAppBackground,
       ),
-      child: Container(
-        color: AppColors.colorAppBackground,
-        child: Column(
-          children: <Widget>[
-            Row(
-              children: <Widget>[
-                Icon(
-                  Icons.account_circle,
-                  color: AppColors.colorAppText,
-                  size: 60.0,
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 0.0),
-                ),
-                Text(
-                  'You',
-                  style:
-                      TextStyle(color: AppColors.colorAppText, fontSize: 30.0),
-                ),
-              ],
-            ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
-            ),
-            _UserItemList(),
-            Padding(
-              padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
-            ),
-            _SettingItemList(),
-            Padding(
-              padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
-            ),
-            _SignInButton(),
-          ],
-        ),
+      child: Column(
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Icon(
+                Icons.account_circle,
+                color: AppColors.colorAppText,
+                size: 60.0,
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 0.0),
+              ),
+              Text(
+                'You',
+                style: TextStyle(color: AppColors.colorAppText, fontSize: 30.0),
+              ),
+            ],
+          ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
+          ),
+          _UserItemList(),
+          Padding(
+            padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
+          ),
+          _SettingItemList(),
+          Padding(
+            padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
+          ),
+          _SignInButton(),
+        ],
       ),
     );
   }
@@ -76,7 +73,7 @@ class _UserItemList extends StatelessWidget {
       itemCount: titles.length,
       itemBuilder: (context, index) {
         return Card(
-          color: AppColors.colorAppChildComponent,
+          color: AppColors.colorListItemCard,
           margin: EdgeInsets.all(4),
           child: ListTile(
             leading: Icon(
@@ -105,7 +102,7 @@ class _SettingItemList extends StatelessWidget {
     return Column(
       children: [
         Card(
-          color: AppColors.colorAppChildComponent,
+          color: AppColors.colorListItemCard,
           margin: EdgeInsets.all(4),
           child: ListTile(
             leading: Icon(
@@ -121,10 +118,14 @@ class _SettingItemList extends StatelessWidget {
               Icons.keyboard_arrow_right,
               color: Colors.grey,
             ),
+            onTap: () => {
+              Navigator.of(context, rootNavigator: true).push(
+                  CupertinoPageRoute(builder: (context) => LanguagePage()))
+            },
           ),
         ),
         Card(
-          color: AppColors.colorAppChildComponent,
+          color: AppColors.colorListItemCard,
           margin: EdgeInsets.all(4),
           child: ListTile(
             leading: Icon(
@@ -137,7 +138,7 @@ class _SettingItemList extends StatelessWidget {
               textAlign: TextAlign.left,
             ),
             trailing: CupertinoSwitch(
-              value: true,
+              value: false,
               onChanged: (bool value) {},
             ),
           ),

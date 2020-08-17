@@ -92,7 +92,7 @@ class _LyricsPlayerState extends State<_LyricsPlayer>
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
-        color: AppColors.colorAppChildComponent,
+        color: AppColors.colorListItemCard,
       ),
       child: FutureBuilder(
         future: _getTextFromFile(widget.lyricsUrl),
