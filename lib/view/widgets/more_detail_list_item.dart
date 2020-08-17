@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:fast_kara/static/const_color.dart';
+import 'package:fast_kara/package/localization/app_translations.dart';
 
 class MoreDetailListItem extends StatelessWidget {
   MoreDetailListItem(
@@ -59,7 +60,7 @@ class MoreDetailListItem extends StatelessWidget {
                     color: Colors.white,
                   ),
                   title: Text(
-                    "Like",
+                    AppTranslations.of(context).text("morepopup_like"),
                     style: TextStyle(color: Colors.white),
                   ),
                   onTap: onFavoriteButtonPress,
@@ -73,7 +74,7 @@ class MoreDetailListItem extends StatelessWidget {
                     color: Colors.white,
                   ),
                   title: Text(
-                    "Download",
+                    AppTranslations.of(context).text("morepopup_download"),
                     style: TextStyle(color: Colors.white),
                   ),
                   onTap: onDownloadButtonPress,

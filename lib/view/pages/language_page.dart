@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:fast_kara/static/const_color.dart';
 import 'package:fast_kara/package/localization/app_translations.dart';
@@ -39,8 +40,6 @@ class LanguagePage extends StatelessWidget {
   }
 }
 
-enum Language { English, Vietnamese }
-
 class _LanguageItemList extends StatefulWidget {
   @override
   _LanguageItemListState createState() => _LanguageItemListState();
@@ -56,11 +55,12 @@ class _LanguageItemListState extends State<_LanguageItemList> {
     languagesList[1]: languageCodesList[1],
   };
 
-  Language _language = Language.English;
+  String _language = "";
 
   @override
   void initState() {
     super.initState();
+    _loadLanguage();
     application.onLocaleChanged = onLocaleChange;
   }
 
@@ -93,11 +93,14 @@ class _LanguageItemListState extends State<_LanguageItemList> {
               style: TextStyle(color: Colors.white),
               textAlign: TextAlign.left,
             ),
-            value: Language.values[index],
+            value: languagesList[index],
             groupValue: _language,
-            onChanged: (Language value) {
+            onChanged: (String value) {
               _language = value;
-              _selectLanguage(value);
+              setState(() {
+                onLocaleChange(Locale(languagesMap[value]));
+              });
+              _saveLanguage(value);
             },
           ),
         );
@@ -105,16 +108,15 @@ class _LanguageItemListState extends State<_LanguageItemList> {
     );
   }
 
-  void _selectLanguage(Language language) {
-    String strLanguage;
-    if (language == Language.English) {
-      strLanguage = "English";
-    } else {
-      strLanguage = "Vietnamese";
-    }
+  void _saveLanguage(String value) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('language', value);
+  }
 
-    setState(() {
-      onLocaleChange(Locale(languagesMap[strLanguage]));
-    });
+  void _loadLanguage() async {
+    final prefs = await SharedPreferences.getInstance();
+    _language = prefs.getString('language') ?? languagesList[1];
+
+    setState(() => {});
   }
 }

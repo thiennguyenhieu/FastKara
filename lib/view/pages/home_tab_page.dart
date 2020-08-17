@@ -13,6 +13,7 @@ class HomeTab extends StatelessWidget {
       navigationBar: CupertinoNavigationBar(
         heroTag: 'hometabpage',
         transitionBetweenRoutes: false,
+        backgroundColor: AppColors.colorAppBackground,
         middle: Row(
           children: [
             Text(
@@ -24,10 +25,9 @@ class HomeTab extends StatelessWidget {
             ),
           ],
         ),
-        backgroundColor: AppColors.colorAppBackground,
       ),
-      child: _SongBookList(),
       backgroundColor: AppColors.colorAppBackground,
+      child: _SongBookList(),
     );
   }
 }
