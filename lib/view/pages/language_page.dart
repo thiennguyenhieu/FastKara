@@ -71,8 +71,8 @@ class _LanguageItemListState extends State<_LanguageItemList> {
   @override
   Widget build(BuildContext context) {
     final languages = [
-      AppTranslations.of(context).text("language_english"),
-      AppTranslations.of(context).text("language_vietnamese"),
+      "English",
+      "Tiếng Việt",
     ];
 
     return ListView.builder(

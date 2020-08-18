@@ -5,9 +5,9 @@ class SongModel {
   final String imgUrl;
   final String beatUrl;
   final String lyrics;
-  //final int viewCount;
-  //final int searchCount;
+  final int viewCount;
+  final int searchCount;
 
   SongModel(this.songId, this.title, this.singer, this.imgUrl, this.beatUrl,
-      this.lyrics /*, this.viewCount, this.searchCount*/);
+      this.lyrics, this.viewCount, this.searchCount);
 }

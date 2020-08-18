@@ -5,6 +5,7 @@ import 'package:fast_kara/bloc/bloc_provider.dart';
 import 'package:fast_kara/static/const_color.dart';
 import 'package:fast_kara/model/song_model.dart';
 import 'package:fast_kara/view/widgets/songbook_list_item.dart';
+import 'package:fast_kara/package/localization/app_translations.dart';
 
 class HomeTab extends StatelessWidget {
   @override
@@ -17,7 +18,7 @@ class HomeTab extends StatelessWidget {
         middle: Row(
           children: [
             Text(
-              'Trending now',
+              AppTranslations.of(context).text("home_tab_title"),
               style: TextStyle(
                 color: AppColors.colorAppText,
                 fontSize: 20.0,
@@ -41,7 +42,7 @@ class _SongBookList extends StatelessWidget {
       color: AppColors.colorAppBackground,
       child: StreamBuilder<List<SongModel>>(
         initialData: [],
-        stream: bloc.updateSongBook,
+        stream: bloc.getSongBookByView,
         builder: (context, snapshot) {
           if (snapshot.data.length > 0) {
             return ListView.builder(

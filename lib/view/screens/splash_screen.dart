@@ -49,17 +49,6 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
             new Positioned(
                 child: new Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Padding(
-                      padding: EdgeInsets.only(bottom: 100),
-                      child: Text(
-                        'from',
-                        style: TextStyle(
-                            color: Colors.grey, fontWeight: FontWeight.bold),
-                      ),
-                    ))),
-            new Positioned(
-                child: new Align(
               alignment: Alignment.bottomCenter,
               child: Padding(
                 padding: EdgeInsets.only(bottom: 80),

@@ -8,6 +8,7 @@ import 'package:fast_kara/static/const_color.dart';
 import 'package:fast_kara/model/song_model.dart';
 import 'package:fast_kara/view/widgets/more_detail_list_item.dart';
 import 'package:fast_kara/view/pages/play_song_page.dart';
+import 'package:fast_kara/package/localization/app_translations.dart';
 
 class SongBookListItem extends StatelessWidget {
   SongBookListItem({this.song, this.context});
@@ -82,7 +83,7 @@ class SongBookListItem extends StatelessWidget {
     Fluttertoast.cancel();
     Navigator.of(context).pop();
     Fluttertoast.showToast(
-        msg: "Added to Favorite",
+        msg: AppTranslations.of(context).text("morepopup_added_like"),
         backgroundColor: Colors.white,
         textColor: Colors.black,
         toastLength: Toast.LENGTH_LONG);
@@ -92,7 +93,7 @@ class SongBookListItem extends StatelessWidget {
     Fluttertoast.cancel();
     Navigator.of(context).pop();
     Fluttertoast.showToast(
-        msg: "Downloading...",
+        msg: AppTranslations.of(context).text("morepopup_downloading"),
         backgroundColor: Colors.white,
         textColor: Colors.black,
         toastLength: Toast.LENGTH_LONG);

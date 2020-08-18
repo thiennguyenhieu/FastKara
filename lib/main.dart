@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:fast_kara/view/screens/splash_screen.dart';
 import 'package:fast_kara/bloc/bloc_provider.dart';
@@ -25,10 +26,22 @@ class FastKaraApp extends StatefulWidget {
 class _FastKaraAppState extends State<FastKaraApp> {
   AppTranslationsDelegate _newLocaleDelegate;
 
+  static final List<String> languagesList = application.supportedLanguages;
+  static final List<String> languageCodesList =
+      application.supportedLanguagesCodes;
+
+  final Map<dynamic, dynamic> languagesMap = {
+    languagesList[0]: languageCodesList[0],
+    languagesList[1]: languageCodesList[1],
+  };
+
+  String _language = "";
+
   @override
   void initState() {
     super.initState();
     _newLocaleDelegate = AppTranslationsDelegate(newLocale: null);
+    _loadLanguage();
     application.onLocaleChanged = onLocaleChange;
   }
 
@@ -63,8 +76,13 @@ class _FastKaraAppState extends State<FastKaraApp> {
   }
 
   void onLocaleChange(Locale locale) {
-    setState(() {
-      _newLocaleDelegate = AppTranslationsDelegate(newLocale: locale);
-    });
+    _newLocaleDelegate = AppTranslationsDelegate(newLocale: locale);
+  }
+
+  void _loadLanguage() async {
+    final prefs = await SharedPreferences.getInstance();
+    _language = prefs.getString('language') ?? languagesList[1];
+
+    setState(() => {onLocaleChange(Locale(languagesMap[_language]))});
   }
 }

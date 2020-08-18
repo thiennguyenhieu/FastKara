@@ -7,6 +7,7 @@ import 'package:fast_kara/bloc/search_manager_bloc.dart';
 import 'package:fast_kara/model/song_model.dart';
 import 'package:fast_kara/view/widgets/custom_search_bar.dart';
 import 'package:fast_kara/view/widgets/songbook_list_item.dart';
+import 'package:fast_kara/package/localization/app_translations.dart';
 
 class SearchTab extends StatefulWidget {
   final SearchManagerBloc bloc;
@@ -114,7 +115,7 @@ class _SearchPageBody extends StatelessWidget {
           middle: Row(
             children: [
               Text(
-                'Popular searches',
+                AppTranslations.of(context).text("search_tab_title"),
                 style: TextStyle(
                   color: AppColors.colorAppText,
                   fontSize: 20.0,
@@ -136,7 +137,7 @@ class _SongBookList extends StatelessWidget {
     return Container(
       child: StreamBuilder<List<SongModel>>(
         initialData: [],
-        stream: bloc.updateSongBook,
+        stream: bloc.getSongBookBySearch,
         builder: (context, snapshot) {
           if (snapshot.data.length > 0) {
             return ListView.builder(

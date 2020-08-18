@@ -53,11 +53,11 @@ class _MainScreenState extends State<_MainScreen> {
             inactiveColor: Colors.white,
             items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
-                  icon: Icon(Icons.home), title: Container()),
+                  icon: Icon(Icons.home), title: SizedBox()),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.search), title: Container()),
+                  icon: Icon(Icons.search), title: SizedBox()),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.account_circle), title: Container()),
+                  icon: Icon(Icons.account_circle), title: SizedBox()),
             ],
             onTap: (index) {
               if (index == 1) {

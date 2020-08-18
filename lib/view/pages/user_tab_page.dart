@@ -111,7 +111,7 @@ class _SettingItemList extends StatelessWidget {
               color: Colors.grey,
             ),
             title: Text(
-              'Language',
+              AppTranslations.of(context).text("user_tab_language"),
               style: TextStyle(color: Colors.white),
               textAlign: TextAlign.left,
             ),
@@ -134,7 +134,7 @@ class _SettingItemList extends StatelessWidget {
               color: Colors.grey,
             ),
             title: Text(
-              'Cellular downloads',
+              AppTranslations.of(context).text("user_tab_cellular"),
               style: TextStyle(color: Colors.white),
               textAlign: TextAlign.left,
             ),
@@ -176,7 +176,7 @@ class _SignInButton extends StatelessWidget {
                 maxWidth: double.maxFinite, minHeight: double.infinity),
             alignment: Alignment.center,
             child: Text(
-              "Sign in to sync across devices",
+              AppTranslations.of(context).text("user_tab_signin_btn"),
               textAlign: TextAlign.center,
               style: CommonTextStyle.signInButton,
             ),

@@ -13,6 +13,7 @@ import 'package:fast_kara/bloc/bloc_provider.dart';
 import 'package:fast_kara/bloc/play_song_bloc.dart';
 import 'package:fast_kara/static/const_color.dart';
 import 'package:fast_kara/model/song_model.dart';
+import 'package:fast_kara/package/localization/app_translations.dart';
 
 class PlaySongPage extends StatelessWidget {
   final SongModel song;
@@ -26,14 +27,15 @@ class PlaySongPage extends StatelessWidget {
       navigationBar: CupertinoNavigationBar(
         heroTag: 'playsongpage',
         transitionBetweenRoutes: false,
-        leading: Row(
+        leading: SizedBox(),
+        middle: Row(
           children: <Widget>[
             CupertinoNavigationBarBackButton(
               color: AppColors.colorAppText,
               onPressed: () => _exitPage(context, bloc),
             ),
             Text(
-              'Home',
+              AppTranslations.of(context).text("back"),
               style: TextStyle(color: AppColors.colorAppText),
             ),
           ],
@@ -188,7 +190,7 @@ class _PropressBar extends StatelessWidget {
                     value: snapshot.data,
                   );
                 } else {
-                  return Container();
+                  return SizedBox();
                 }
               }),
         ),
@@ -209,7 +211,7 @@ class _PropressBar extends StatelessWidget {
                         style: TextStyle(color: Colors.white),
                       );
                     } else {
-                      return Container();
+                      return SizedBox();
                     }
                   },
                 ),
@@ -225,7 +227,7 @@ class _PropressBar extends StatelessWidget {
                         style: TextStyle(color: Colors.white),
                       );
                     } else {
-                      return Container();
+                      return SizedBox();
                     }
                   },
                 ),
@@ -305,7 +307,7 @@ class _ButtonBar extends StatelessWidget {
               ],
             );
           } else {
-            return Container();
+            return SizedBox();
           }
         },
       ),
@@ -327,7 +329,7 @@ class _BluetoothDevice extends StatelessWidget {
             color: Colors.blue,
           ),
           Text(
-            "No device",
+            AppTranslations.of(context).text("playsong_bluetooth"),
             style: TextStyle(
               color: Colors.blue,
             ),
