@@ -66,23 +66,22 @@ class _FastKaraAppState extends State<FastKaraApp> {
           //provides RTL support
           GlobalWidgetsLocalizations.delegate,
         ],
-        supportedLocales: [
-          const Locale('en', ''), // English
-          const Locale('vi', ''), // Vietnamese
-        ],
+        supportedLocales: application.supportedLocales(),
         home: SplashScreen(),
       ),
     );
   }
 
   void onLocaleChange(Locale locale) {
-    _newLocaleDelegate = AppTranslationsDelegate(newLocale: locale);
+    setState(() {
+      _newLocaleDelegate = AppTranslationsDelegate(newLocale: locale);
+    });
   }
 
   void _loadLanguage() async {
     final prefs = await SharedPreferences.getInstance();
     _language = prefs.getString('language') ?? languagesList[1];
 
-    setState(() => {onLocaleChange(Locale(languagesMap[_language]))});
+    onLocaleChange(Locale(languagesMap[_language]));
   }
 }

@@ -61,11 +61,6 @@ class _LanguageItemListState extends State<_LanguageItemList> {
   void initState() {
     super.initState();
     _loadLanguage();
-    application.onLocaleChanged = onLocaleChange;
-  }
-
-  void onLocaleChange(Locale locale) async {
-    AppTranslations.load(locale);
   }
 
   @override
@@ -97,10 +92,7 @@ class _LanguageItemListState extends State<_LanguageItemList> {
             groupValue: _language,
             onChanged: (String value) {
               _language = value;
-              setState(() {
-                onLocaleChange(Locale(languagesMap[value]));
-              });
-              _saveLanguage(value);
+              _changeLanguage(value);
             },
           ),
         );
@@ -108,9 +100,11 @@ class _LanguageItemListState extends State<_LanguageItemList> {
     );
   }
 
-  void _saveLanguage(String value) async {
+  void _changeLanguage(String value) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setString('language', value);
+
+    application.onLocaleChanged(new Locale(languagesMap[value]));
   }
 
   void _loadLanguage() async {
