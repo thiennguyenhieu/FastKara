@@ -46,14 +46,22 @@ class PlaySongPage extends StatelessWidget {
       child: Scaffold(
         appBar: null,
         backgroundColor: AppColors.colorAppBackground,
-        body: Column(
-          children: <Widget>[
-            _LyricsPlayer(song.lyrics, bloc),
-            _SongInfo(song.title, song.singer),
-            _PropressBar(bloc),
-            _ButtonBar(bloc),
-            _BluetoothDevice(),
-          ],
+        body: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/images/playsong_background.jpg"),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: Column(
+            children: <Widget>[
+              _LyricsPlayer(song.lyrics, bloc),
+              _SongInfo(song.title, song.singer),
+              _PropressBar(bloc),
+              _ButtonBar(bloc),
+              _BluetoothDevice(),
+            ],
+          ),
         ),
       ),
     );
@@ -92,10 +100,6 @@ class _LyricsPlayerState extends State<_LyricsPlayer>
       margin: EdgeInsets.only(left: 10.0, top: 0.0, right: 10.0),
       height: MediaQuery.of(context).size.height / 2,
       width: double.infinity,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
-        color: AppColors.colorListItemCard,
-      ),
       child: FutureBuilder(
         future: _getTextFromFile(widget.lyricsUrl),
         builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
