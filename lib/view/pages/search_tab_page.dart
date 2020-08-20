@@ -78,6 +78,13 @@ class _SearchWidgetState extends State<SearchTab>
     });
   }
 
+  _clearSearch() {
+    _searchTextController.clear();
+    this.setState(() {
+      _searchTextInProgress = null;
+    });
+  }
+
   @override
   dispose() {
     _searchTextController.dispose();
@@ -96,36 +103,66 @@ class _SearchWidgetState extends State<SearchTab>
             focusNode: bloc.getFocusNode(),
             animation: _animation,
             onCancel: _cancelSearch,
-            onClear: _cancelSearch,
+            onClear: _clearSearch,
           ),
         ),
-        child: _SearchPageBody());
+        child: _SearchPageBody(
+            this.bloc, _searchTextInProgress == null, _searchTextInProgress));
   }
 }
 
 class _SearchPageBody extends StatelessWidget {
+  final SearchManagerBloc bloc;
+  final _searchTextInProgress;
+  final _isInSearch;
+  _SearchPageBody(this.bloc, this._isInSearch, this._searchTextInProgress);
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: CupertinoNavigationBar(
-          padding: EdgeInsetsDirectional.only(top: 8.0, start: 8.0),
-          heroTag: 'searchtabpage',
-          transitionBetweenRoutes: false,
-          backgroundColor: AppColors.colorAppBackground,
-          middle: Row(
-            children: [
-              Text(
-                AppTranslations.of(context).text("search_tab_title"),
-                style: TextStyle(
-                  color: AppColors.colorAppText,
-                  fontSize: 20.0,
+    if (_isInSearch) {
+      return Scaffold(
+          appBar: CupertinoNavigationBar(
+            padding: EdgeInsetsDirectional.only(top: 8.0, start: 8.0),
+            heroTag: 'searchtabpage',
+            transitionBetweenRoutes: false,
+            backgroundColor: AppColors.colorAppBackground,
+            middle: Row(
+              children: [
+                Text(
+                  AppTranslations.of(context).text("search_tab_title"),
+                  style: TextStyle(
+                    color: AppColors.colorAppText,
+                    fontSize: 20.0,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-        backgroundColor: AppColors.colorAppBackground,
-        body: _SongBookList());
+          backgroundColor: AppColors.colorAppBackground,
+          body: _SongBookList());
+    } else {
+      return Scaffold(
+          appBar: CupertinoNavigationBar(
+            padding: EdgeInsetsDirectional.only(top: 8.0, start: 8.0),
+            heroTag: 'searchtabpage',
+            transitionBetweenRoutes: false,
+            backgroundColor: AppColors.colorAppBackground,
+            middle: Row(
+              children: [
+                Text(
+                  AppTranslations.of(context).text("search_tab_search") +
+                      """ "$_searchTextInProgress" """,
+                  style: TextStyle(
+                    color: AppColors.colorAppText,
+                    fontSize: 20.0,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          backgroundColor: AppColors.colorAppBackground,
+          body: _SongBookListInSearch(this._searchTextInProgress, this.bloc));
+    }
   }
 }
 
@@ -135,9 +172,53 @@ class _SongBookList extends StatelessWidget {
     final bloc = BlocProvider.of(context).songBookBloc;
 
     return Container(
+      color: AppColors.colorAppBackground,
       child: StreamBuilder<List<SongModel>>(
         initialData: [],
-        stream: bloc.getSongBookBySearch,
+        stream: bloc.getSongBookByView,
+        builder: (context, snapshot) {
+          if (snapshot.data.length > 0) {
+            return ListView.builder(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              itemCount: snapshot.data.length,
+              itemBuilder: (BuildContext context, int index) {
+                SongModel song = snapshot.data[index];
+                return SongBookListItem(
+                  song: song,
+                  context: context,
+                );
+              },
+            );
+          } else {
+            return Center(
+                child: CircularProgressIndicator(
+              strokeWidth: 5,
+              valueColor:
+                  new AlwaysStoppedAnimation<Color>(AppColors.colorAppText),
+            ));
+          }
+        },
+      ),
+    );
+  }
+}
+
+class _SongBookListInSearch extends StatelessWidget {
+  final _searchTextInProgress;
+  final SearchManagerBloc searchBloc;
+  _SongBookListInSearch(this._searchTextInProgress, this.searchBloc);
+
+  @override
+  Widget build(BuildContext context) {
+    final bloc = BlocProvider.of(context).songBookBloc;
+
+    searchBloc.searchProcess(bloc.getSongBook(), _searchTextInProgress);
+
+    return Container(
+      child: StreamBuilder<List<SongModel>>(
+        initialData: [],
+        stream: searchBloc.getSongBookInSearch,
         builder: (context, snapshot) {
           if (snapshot.data.length > 0) {
             return ListView.builder(
