@@ -69,6 +69,10 @@ class SongBookBloc {
     _fetchSongBook();
   }
 
+  getSongBook() {
+    return _songBook;
+  }
+
   void dispose() {
     _subjectSongBookByView.close();
     _subjectSongBookBySearch.close();
