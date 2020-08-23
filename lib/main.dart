@@ -18,7 +18,6 @@ Future<Null> main() async {
 class FastKaraApp extends StatefulWidget {
   final AppManagerBloc bloc;
   FastKaraApp(this.bloc);
-
   @override
   _FastKaraAppState createState() => _FastKaraAppState();
 }
@@ -40,9 +39,11 @@ class _FastKaraAppState extends State<FastKaraApp> {
   @override
   void initState() {
     super.initState();
+    widget.bloc.songBookBloc.fetchSongBook();
     _newLocaleDelegate = AppTranslationsDelegate(newLocale: null);
     _loadLanguage();
     application.onLocaleChanged = onLocaleChange;
+
   }
 
   @override
