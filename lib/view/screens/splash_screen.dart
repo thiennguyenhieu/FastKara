@@ -26,8 +26,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = BlocProvider.of(context).songBookBloc;
-    bloc.fetchSongBook();
     return Scaffold(
       backgroundColor: AppColors.colorAppBackground,
       body: Container(
