@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:fast_kara/static/const_color.dart';
+import 'package:fast_kara/package/localization/app_translations.dart';
 
 class CustomSearchBar extends AnimatedWidget {
   CustomSearchBar({
@@ -58,7 +59,7 @@ class CustomSearchBar extends AnimatedWidget {
                       ),
                     ),
                     new Text(
-                      'Search',
+                      AppTranslations.of(context).text("search_tab_search"),
                       style: new TextStyle(
                         inherit: false,
                         color: CupertinoColors.inactiveGray
@@ -121,7 +122,7 @@ class CustomSearchBar extends AnimatedWidget {
             padding: const EdgeInsets.only(left: 8.0),
             onPressed: onCancel,
             child: new Text(
-              'Cancel',
+              AppTranslations.of(context).text("search_tab_cancel"),
               softWrap: false,
               style: new TextStyle(
                 inherit: false,

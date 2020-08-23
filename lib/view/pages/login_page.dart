@@ -6,6 +6,7 @@ import 'package:fast_kara/bloc/sign_in_bloc.dart';
 import 'package:fast_kara/static/const_color.dart';
 import 'package:fast_kara/static/const_textstyle.dart';
 import 'package:fast_kara/view/screens/main_screen.dart';
+import 'package:fast_kara/package/localization/app_translations.dart';
 
 class LogInPage extends StatelessWidget {
   @override
@@ -24,7 +25,7 @@ class LogInPage extends StatelessWidget {
               onPressed: () => {Navigator.of(context).pop()},
             ),
             Text(
-              'You',
+              AppTranslations.of(context).text("user_tab_title"),
               style: TextStyle(color: AppColors.colorAppText),
             ),
           ],
@@ -88,7 +89,7 @@ class SignInHeader extends StatelessWidget {
           ),
           SizedBox(height: 40),
           Text(
-            "SIGN IN",
+            AppTranslations.of(context).text("signin_title"),
             style: CommonTextStyle.signInHeader,
           ),
         ],
@@ -133,7 +134,7 @@ class SignInEmailTextBox extends StatelessWidget {
             borderRadius: BorderRadius.circular(16),
             color: Colors.grey[700],
           ),
-          placeholder: 'Enter your Email',
+          placeholder: AppTranslations.of(context).text("signin_enter_email"),
           placeholderStyle: CommonTextStyle.signInHint,
         ),
       ),
@@ -178,7 +179,8 @@ class SignInPasswordTextBox extends StatelessWidget {
             borderRadius: BorderRadius.circular(16),
             color: Colors.grey[700],
           ),
-          placeholder: 'Enter your password',
+          placeholder:
+              AppTranslations.of(context).text("signin_enter_password"),
           placeholderStyle: CommonTextStyle.signInHint,
         ),
       ),
@@ -199,7 +201,7 @@ class SignInForgotPasswordButton extends StatelessWidget {
       child: FlatButton(
         onPressed: onPressed,
         child: Text(
-          'Forgot Password?',
+          AppTranslations.of(context).text("signin_forgot_password"),
           style: CommonTextStyle.signInNormal,
         ),
       ),
@@ -233,7 +235,7 @@ class SignInLoginButton extends StatelessWidget {
             constraints: BoxConstraints(maxWidth: 320.0, minHeight: 50.0),
             alignment: Alignment.center,
             child: Text(
-              "Sign In",
+              AppTranslations.of(context).text("signin_title"),
               textAlign: TextAlign.center,
               style: CommonTextStyle.signInButton,
             ),
@@ -255,7 +257,7 @@ class SignInSocialLogin extends StatelessWidget {
         Padding(
             padding: EdgeInsets.only(top: 30),
             child: Text(
-              'Sign in with',
+              AppTranslations.of(context).text("signin_signin_with"),
               style: CommonTextStyle.signInNormal,
             )),
         Padding(
@@ -343,11 +345,11 @@ class SignUpButton extends StatelessWidget {
           text: TextSpan(
             children: [
               TextSpan(
-                text: 'Don\'t have an Account? ',
+                text: AppTranslations.of(context).text("signin_no_account"),
                 style: CommonTextStyle.signInHint,
               ),
               TextSpan(
-                text: 'Sign Up',
+                text: AppTranslations.of(context).text("signin_signup"),
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 15.0,

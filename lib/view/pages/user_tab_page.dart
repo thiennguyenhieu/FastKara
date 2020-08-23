@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:fast_kara/static/const_color.dart';
 import 'package:fast_kara/static/const_textstyle.dart';
 import 'package:fast_kara/view/pages/login_page.dart';
+import 'package:fast_kara/view/pages/language_page.dart';
+import 'package:fast_kara/package/localization/app_translations.dart';
 
 class UserAccountTab extends StatelessWidget {
   @override
@@ -15,68 +17,64 @@ class UserAccountTab extends StatelessWidget {
         transitionBetweenRoutes: false,
         backgroundColor: AppColors.colorAppBackground,
       ),
-      child: Container(
-        color: AppColors.colorAppBackground,
-        child: Column(
-          children: <Widget>[
-            Row(
-              children: <Widget>[
-                Icon(
-                  Icons.account_circle,
-                  color: AppColors.colorAppText,
-                  size: 60.0,
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 0.0),
-                ),
-                Text(
-                  'You',
-                  style:
-                      TextStyle(color: AppColors.colorAppText, fontSize: 30.0),
-                ),
-              ],
-            ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
-            ),
-            _UserItemList(),
-            Padding(
-              padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
-            ),
-            _SettingItemList(),
-            Padding(
-              padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
-            ),
-            _SignInButton(),
-          ],
-        ),
+      child: Column(
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Icon(
+                Icons.account_circle,
+                color: AppColors.colorAppText,
+                size: 60.0,
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 0.0),
+              ),
+              Text(
+                AppTranslations.of(context).text("user_tab_title"),
+                style: TextStyle(color: AppColors.colorAppText, fontSize: 30.0),
+              ),
+            ],
+          ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
+          ),
+          _UserItemList(),
+          Padding(
+            padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
+          ),
+          _SettingItemList(),
+          Padding(
+            padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
+          ),
+          _SignInButton(),
+        ],
       ),
     );
   }
 }
 
 class _UserItemList extends StatelessWidget {
-  final icons = [
-    Icons.favorite,
-    Icons.history,
-    Icons.file_download,
-  ];
-
-  final titles = [
-    'Likes',
-    'History',
-    'Downloads',
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final icons = [
+      Icons.favorite,
+      Icons.history,
+      Icons.file_download,
+    ];
+
+    final titles = [
+      AppTranslations.of(context).text("user_tab_likes"),
+      AppTranslations.of(context).text("user_tab_history"),
+      AppTranslations.of(context).text("user_tab_downloads"),
+    ];
+
     return ListView.builder(
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
       itemCount: titles.length,
       itemBuilder: (context, index) {
         return Card(
-          color: AppColors.colorAppChildComponent,
+          color: AppColors.colorListItemCard,
           margin: EdgeInsets.all(4),
           child: ListTile(
             leading: Icon(
@@ -105,7 +103,7 @@ class _SettingItemList extends StatelessWidget {
     return Column(
       children: [
         Card(
-          color: AppColors.colorAppChildComponent,
+          color: AppColors.colorListItemCard,
           margin: EdgeInsets.all(4),
           child: ListTile(
             leading: Icon(
@@ -113,7 +111,7 @@ class _SettingItemList extends StatelessWidget {
               color: Colors.grey,
             ),
             title: Text(
-              'Language',
+              AppTranslations.of(context).text("user_tab_language"),
               style: TextStyle(color: Colors.white),
               textAlign: TextAlign.left,
             ),
@@ -121,10 +119,14 @@ class _SettingItemList extends StatelessWidget {
               Icons.keyboard_arrow_right,
               color: Colors.grey,
             ),
+            onTap: () => {
+              Navigator.of(context, rootNavigator: true).push(
+                  CupertinoPageRoute(builder: (context) => LanguagePage()))
+            },
           ),
         ),
         Card(
-          color: AppColors.colorAppChildComponent,
+          color: AppColors.colorListItemCard,
           margin: EdgeInsets.all(4),
           child: ListTile(
             leading: Icon(
@@ -132,12 +134,12 @@ class _SettingItemList extends StatelessWidget {
               color: Colors.grey,
             ),
             title: Text(
-              'Cellular downloads',
+              AppTranslations.of(context).text("user_tab_cellular"),
               style: TextStyle(color: Colors.white),
               textAlign: TextAlign.left,
             ),
             trailing: CupertinoSwitch(
-              value: true,
+              value: false,
               onChanged: (bool value) {},
             ),
           ),
@@ -174,7 +176,7 @@ class _SignInButton extends StatelessWidget {
                 maxWidth: double.maxFinite, minHeight: double.infinity),
             alignment: Alignment.center,
             child: Text(
-              "Sign in to sync across devices",
+              AppTranslations.of(context).text("user_tab_signin_btn"),
               textAlign: TextAlign.center,
               style: CommonTextStyle.signInButton,
             ),

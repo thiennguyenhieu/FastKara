@@ -1,8 +1,8 @@
-import 'package:fast_kara/bloc/bloc_provider.dart';
-import 'package:fast_kara/bloc/search_manager_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'package:fast_kara/bloc/bloc_provider.dart';
+import 'package:fast_kara/bloc/search_manager_bloc.dart';
 import 'package:fast_kara/static/const_color.dart';
 import 'package:fast_kara/view/pages/home_tab_page.dart';
 import 'package:fast_kara/view/pages/user_tab_page.dart';
@@ -48,16 +48,16 @@ class _MainScreenState extends State<_MainScreen> {
         bottom: false,
         child: CupertinoTabScaffold(
           tabBar: CupertinoTabBar(
-            backgroundColor: AppColors.colorAppChildComponent,
+            backgroundColor: AppColors.colorAppTabBar,
             activeColor: AppColors.colorAppText,
             inactiveColor: Colors.white,
             items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
-                  icon: Icon(Icons.home), title: Container()),
+                  icon: Icon(Icons.home), title: SizedBox()),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.search), title: Container()),
+                  icon: Icon(Icons.search), title: SizedBox()),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.account_circle), title: Container()),
+                  icon: Icon(Icons.account_circle), title: SizedBox()),
             ],
             onTap: (index) {
               if (index == 1) {

@@ -1,15 +1,11 @@
-import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:fast_kara/bloc/bloc_provider.dart';
 import 'package:fast_kara/static/const_color.dart';
 import 'package:fast_kara/model/song_model.dart';
 import 'package:fast_kara/view/widgets/songbook_list_item.dart';
-import 'package:fast_kara/view/widgets/more_detail_list_item.dart';
-import 'package:fast_kara/view/pages/play_song_page.dart';
+import 'package:fast_kara/package/localization/app_translations.dart';
 
 class HomeTab extends StatelessWidget {
   @override
@@ -18,10 +14,11 @@ class HomeTab extends StatelessWidget {
       navigationBar: CupertinoNavigationBar(
         heroTag: 'hometabpage',
         transitionBetweenRoutes: false,
+        backgroundColor: AppColors.colorAppBackground,
         middle: Row(
           children: [
             Text(
-              'Trending now',
+              AppTranslations.of(context).text("home_tab_title"),
               style: TextStyle(
                 color: AppColors.colorAppText,
                 fontSize: 20.0,
@@ -29,10 +26,9 @@ class HomeTab extends StatelessWidget {
             ),
           ],
         ),
-        backgroundColor: AppColors.colorAppBackground,
       ),
-      child: _SongBookList(),
       backgroundColor: AppColors.colorAppBackground,
+      child: _SongBookList(),
     );
   }
 }
@@ -46,7 +42,7 @@ class _SongBookList extends StatelessWidget {
       color: AppColors.colorAppBackground,
       child: StreamBuilder<List<SongModel>>(
         initialData: [],
-        stream: bloc.updateSongBook,
+        stream: bloc.getSongBookByView,
         builder: (context, snapshot) {
           if (snapshot.data.length > 0) {
             return ListView.builder(
@@ -56,15 +52,8 @@ class _SongBookList extends StatelessWidget {
               itemBuilder: (BuildContext context, int index) {
                 SongModel song = snapshot.data[index];
                 return SongBookListItem(
-                  imageUrl: song.imgUrl,
-                  title: song.title,
-                  subtitle: song.singer,
-                  onItemTab: () {
-                    _navigateToSubPage(context, song);
-                  },
-                  onMoreBtnPressed: () {
-                    _showModalSheet(context, song);
-                  },
+                  song: song,
+                  context: context,
                 );
               },
             );
@@ -79,52 +68,5 @@ class _SongBookList extends StatelessWidget {
         },
       ),
     );
-  }
-
-  Future _navigateToSubPage(context, SongModel song) async {
-    Navigator.of(context, rootNavigator: true)
-        .push(CupertinoPageRoute(builder: (context) => PlaySongPage(song)));
-  }
-
-  void _showModalSheet(BuildContext  context, SongModel song) {
-    showCupertinoModalPopup(
-        context: context,
-        builder: (context) {
-          return SizedBox(
-            height: 300,
-            child: MoreDetailListItem(
-                 subtitle: song.singer,
-                 imageUrl: song.imgUrl,
-                 title: song.title,
-                 onDownloadButtonPress: (){
-                   _onPressDownload(context);
-                 },
-                 onFavoriteButtonPress: (){
-                   _onPressFavorite(context);
-                 },
-            ),
-          );
-        }
-    );
-  }
-
-  void _onPressFavorite(context) {
-    Fluttertoast.cancel();
-    Navigator.of(context).pop();
-    Fluttertoast.showToast(
-        msg: "Added to Favorite",
-        backgroundColor: Colors.white,
-        textColor: Colors.black,
-        toastLength: Toast.LENGTH_SHORT);
-  }
-
-  void _onPressDownload(context) {
-    Fluttertoast.cancel();
-    Navigator.of(context).pop();
-    Fluttertoast.showToast(
-        msg: "Downloading...",
-        backgroundColor: Colors.white,
-        textColor: Colors.black,
-        toastLength: Toast.LENGTH_SHORT);
   }
 }

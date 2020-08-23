@@ -10,14 +10,22 @@ import 'package:fast_kara/model/song_model.dart';
 
 class SongBookBloc {
   List<SongModel> _songBook = [];
-  BehaviorSubject<List<SongModel>> _subjectSongBook;
-  ValueStream<List<SongModel>> get updateSongBook => _subjectSongBook.stream;
+
+  BehaviorSubject<List<SongModel>> _subjectSongBookByView;
+  ValueStream<List<SongModel>> get getSongBookByView =>
+      _subjectSongBookByView.stream;
+
+  BehaviorSubject<List<SongModel>> _subjectSongBookBySearch;
+  ValueStream<List<SongModel>> get getSongBookBySearch =>
+      _subjectSongBookBySearch.stream;
 
   SongBookBloc() {
-    _subjectSongBook = new BehaviorSubject<List<SongModel>>();
+    _subjectSongBookByView = new BehaviorSubject<List<SongModel>>();
+    _subjectSongBookBySearch = new BehaviorSubject<List<SongModel>>();
   }
 
   _fetchSongBook() async {
+    _songBook.clear();
     var response = await http.get(HttpPath.pathSongBook);
     final refStorage = FirebaseStorage.instance.ref();
 
@@ -35,12 +43,25 @@ class SongBookBloc {
             (await refStorage.child(songsInfo["lyrics"]).getDownloadURL())
                 .toString();
 
-        SongModel song = SongModel(songsInfo["songid"], songsInfo["title"],
-            songsInfo["singer"], urlImage, urlBeat, urlLyrics);
+        SongModel song = SongModel(
+          songsInfo["songid"],
+          songsInfo["title"],
+          songsInfo["singer"],
+          urlImage,
+          urlBeat,
+          urlLyrics,
+          songsInfo["viewcount"],
+          songsInfo["searchcount"],
+        );
         _songBook.add(song);
       }
 
-      _subjectSongBook.sink.add(_songBook);
+      _songBook.sort((a, b) => b.viewCount.compareTo(a.viewCount));
+      _subjectSongBookByView.sink.add(_songBook);
+
+      List<SongModel> _songBookSearch = [..._songBook];
+      _songBookSearch.sort((a, b) => b.searchCount.compareTo(a.searchCount));
+      _subjectSongBookBySearch.sink.add(_songBookSearch);
     }
   }
 
@@ -48,7 +69,12 @@ class SongBookBloc {
     _fetchSongBook();
   }
 
+  getSongBook() {
+    return _songBook;
+  }
+
   void dispose() {
-    _subjectSongBook.close();
+    _subjectSongBookByView.close();
+    _subjectSongBookBySearch.close();
   }
 }

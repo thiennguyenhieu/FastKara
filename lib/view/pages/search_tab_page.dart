@@ -1,13 +1,13 @@
-import 'package:fast_kara/bloc/bloc_provider.dart';
-import 'package:fast_kara/model/song_model.dart';
-import 'package:fast_kara/view/pages/play_song_page.dart';
-import 'package:fast_kara/view/widgets/custom_search_bar.dart';
-import 'package:fast_kara/view/widgets/songbook_list_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import 'package:fast_kara/static/const_color.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:fast_kara/bloc/bloc_provider.dart';
 import 'package:fast_kara/bloc/search_manager_bloc.dart';
+import 'package:fast_kara/model/song_model.dart';
+import 'package:fast_kara/view/widgets/custom_search_bar.dart';
+import 'package:fast_kara/view/widgets/songbook_list_item.dart';
+import 'package:fast_kara/package/localization/app_translations.dart';
 
 class SearchTab extends StatefulWidget {
   final SearchManagerBloc bloc;
@@ -78,6 +78,13 @@ class _SearchWidgetState extends State<SearchTab>
     });
   }
 
+  _clearSearch() {
+    _searchTextController.clear();
+    this.setState(() {
+      _searchTextInProgress = null;
+    });
+  }
+
   @override
   dispose() {
     _searchTextController.dispose();
@@ -96,36 +103,66 @@ class _SearchWidgetState extends State<SearchTab>
             focusNode: bloc.getFocusNode(),
             animation: _animation,
             onCancel: _cancelSearch,
-            onClear: _cancelSearch,
+            onClear: _clearSearch,
           ),
         ),
-        child: _SearchPageBody());
+        child: _SearchPageBody(
+            this.bloc, _searchTextInProgress == null, _searchTextInProgress));
   }
 }
 
 class _SearchPageBody extends StatelessWidget {
+  final SearchManagerBloc bloc;
+  final _searchTextInProgress;
+  final _isInSearch;
+  _SearchPageBody(this.bloc, this._isInSearch, this._searchTextInProgress);
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: CupertinoNavigationBar(
-          padding: EdgeInsetsDirectional.only(top: 8.0, start: 8.0),
-          heroTag: 'searchtabpage',
-          transitionBetweenRoutes: false,
-          backgroundColor: AppColors.colorAppBackground,
-          middle: Row(
-            children: [
-              Text(
-                'Popular searches',
-                style: TextStyle(
-                  color: AppColors.colorAppText,
-                  fontSize: 20.0,
+    if (_isInSearch) {
+      return Scaffold(
+          appBar: CupertinoNavigationBar(
+            padding: EdgeInsetsDirectional.only(top: 8.0, start: 8.0),
+            heroTag: 'searchtabpage',
+            transitionBetweenRoutes: false,
+            backgroundColor: AppColors.colorAppBackground,
+            middle: Row(
+              children: [
+                Text(
+                  AppTranslations.of(context).text("search_tab_title"),
+                  style: TextStyle(
+                    color: AppColors.colorAppText,
+                    fontSize: 20.0,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-        backgroundColor: AppColors.colorAppBackground,
-        body: _SongBookList());
+          backgroundColor: AppColors.colorAppBackground,
+          body: _SongBookList());
+    } else {
+      return Scaffold(
+          appBar: CupertinoNavigationBar(
+            padding: EdgeInsetsDirectional.only(top: 8.0, start: 8.0),
+            heroTag: 'searchtabpage',
+            transitionBetweenRoutes: false,
+            backgroundColor: AppColors.colorAppBackground,
+            middle: Row(
+              children: [
+                Text(
+                  AppTranslations.of(context).text("search_tab_search") +
+                      """ "$_searchTextInProgress" """,
+                  style: TextStyle(
+                    color: AppColors.colorAppText,
+                    fontSize: 20.0,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          backgroundColor: AppColors.colorAppBackground,
+          body: _SongBookListInSearch(this._searchTextInProgress, this.bloc));
+    }
   }
 }
 
@@ -135,25 +172,21 @@ class _SongBookList extends StatelessWidget {
     final bloc = BlocProvider.of(context).songBookBloc;
 
     return Container(
+      color: AppColors.colorAppBackground,
       child: StreamBuilder<List<SongModel>>(
         initialData: [],
-        stream: bloc.updateSongBook,
+        stream: bloc.getSongBookByView,
         builder: (context, snapshot) {
           if (snapshot.data.length > 0) {
             return ListView.builder(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
               itemCount: snapshot.data.length,
               itemBuilder: (BuildContext context, int index) {
                 SongModel song = snapshot.data[index];
                 return SongBookListItem(
-                  imageUrl: song.imgUrl,
-                  title: song.title,
-                  subtitle: song.singer,
-                  onItemTab: () {
-                    _navigateToSubPage(context, song);
-                  },
-                  onMoreBtnPressed: () {
-                    _onMoreBtnPressed(context, song);
-                  },
+                  song: song,
+                  context: context,
                 );
               },
             );
@@ -169,78 +202,46 @@ class _SongBookList extends StatelessWidget {
       ),
     );
   }
+}
 
-  Future _navigateToSubPage(context, SongModel song) async {
-    Navigator.of(context, rootNavigator: true)
-        .push(CupertinoPageRoute(builder: (context) => PlaySongPage(song)));
-  }
+class _SongBookListInSearch extends StatelessWidget {
+  final _searchTextInProgress;
+  final SearchManagerBloc searchBloc;
+  _SongBookListInSearch(this._searchTextInProgress, this.searchBloc);
 
-  void _onMoreBtnPressed(context, SongModel song) {
-    showBottomSheet(
-        context: context,
-        builder: (context) {
-          return Container(
-            height: 200,
-            color: Colors.grey[900],
-            child: ListView(
-              children: <Widget>[
-                ListTile(
-                  leading: (Image.network(song.imgUrl)),
-                  title: Text(
-                    song.title,
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  subtitle: Text(
-                    song.singer,
-                    style: TextStyle(color: Colors.white60),
-                  ),
-                ),
-                Divider(
-                  color: Colors.white,
-                  endIndent: 40,
-                  indent: 40,
-                ),
-                ListTile(
-                  leading: Icon(
-                    Icons.favorite,
-                    color: Colors.white,
-                  ),
-                  title: Text(
-                    "Add To Favorite",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onTap: _onPressFavorite,
-                ),
-                ListTile(
-                  leading: Icon(
-                    Icons.file_download,
-                    color: Colors.white,
-                  ),
-                  title: Text(
-                    "Download",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onTap: _onPressDownload,
-                )
-              ],
-            ),
-          );
-        });
-  }
+  @override
+  Widget build(BuildContext context) {
+    final bloc = BlocProvider.of(context).songBookBloc;
 
-  void _onPressFavorite() {
-    Fluttertoast.showToast(
-        msg: "Added to Favorite",
-        backgroundColor: Colors.white,
-        textColor: Colors.black,
-        toastLength: Toast.LENGTH_SHORT);
-  }
+    searchBloc.searchProcess(bloc.getSongBook(), _searchTextInProgress);
 
-  void _onPressDownload() {
-    Fluttertoast.showToast(
-        msg: "Downloading...",
-        backgroundColor: Colors.white,
-        textColor: Colors.black,
-        toastLength: Toast.LENGTH_SHORT);
+    return Container(
+      child: StreamBuilder<List<SongModel>>(
+        initialData: [],
+        stream: searchBloc.getSongBookInSearch,
+        builder: (context, snapshot) {
+          if (snapshot.data.length > 0) {
+            return ListView.builder(
+              itemCount: snapshot.data.length,
+              itemBuilder: (BuildContext context, int index) {
+                SongModel song = snapshot.data[index];
+                return SongBookListItem(
+                  song: song,
+                  context: context,
+                );
+              },
+            );
+          } else {
+            return Center(
+              child: CircularProgressIndicator(
+                strokeWidth: 5,
+                valueColor:
+                    new AlwaysStoppedAnimation<Color>(AppColors.colorAppText),
+              ),
+            );
+          }
+        },
+      ),
+    );
   }
 }
