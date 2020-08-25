@@ -25,7 +25,7 @@ class SongBookBloc {
   }
 
   _fetchSongBook() async {
-    _songBook.clear();
+//    _songBook.clear();
     var response = await http.get(HttpPath.pathSongBook);
     final refStorage = FirebaseStorage.instance.ref();
 
