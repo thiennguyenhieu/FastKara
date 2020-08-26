@@ -290,7 +290,7 @@ class SignInSocialLogin extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  _loginGoogle(context);
+                  _signInGoogle(context);
                 },
                 child: Container(
                   height: 50.0,
@@ -326,8 +326,12 @@ class SignInSocialLogin extends StatelessWidget {
     }
   }
 
-  void _loginGoogle(context) async {
-    print("login by google");
+  void _signInGoogle(context) async {
+    bool signInGoogle = await bloc.signInGoogle();
+    if (signInGoogle) {
+      Navigator.of(context, rootNavigator: true)
+          .push(CupertinoPageRoute(builder: (context) => MainScreen()));
+    }
   }
 }
 
