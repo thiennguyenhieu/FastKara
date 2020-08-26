@@ -40,6 +40,9 @@ class _FastKaraAppState extends State<FastKaraApp> {
   void initState() {
     super.initState();
     widget.bloc.songBookBloc.fetchSongBook();
+    //For Testing, need to make song book bigger.
+    widget.bloc.songBookBloc.fetchSongBook();
+    //
     _newLocaleDelegate = AppTranslationsDelegate(newLocale: null);
     _loadLanguage();
     application.onLocaleChanged = onLocaleChange;

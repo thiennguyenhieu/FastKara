@@ -1,3 +1,4 @@
+import 'package:fast_kara/bloc/song_book_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -40,33 +41,66 @@ class _SongBookList extends StatelessWidget {
 
     return Container(
       color: AppColors.colorAppBackground,
-      child: StreamBuilder<List<SongModel>>(
-        initialData: [],
-        stream: bloc.getSongBookByView,
-        builder: (context, snapshot) {
-          if (snapshot.data.length > 0) {
-            return ListView.builder(
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              itemCount: snapshot.data.length,
-              itemBuilder: (BuildContext context, int index) {
+      child: _SongBook(bloc)
+    );
+  }
+}
+
+class _SongBook extends StatefulWidget {
+  final SongBookBloc bloc;
+  _SongBook(this.bloc);
+  @override
+  __SongBookState createState() => __SongBookState();
+}
+
+class __SongBookState extends State<_SongBook> {
+  ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
+        widget.bloc.fetchSongBook();
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<List<SongModel>>(
+      initialData: [],
+      stream: widget.bloc.getSongBookByView,
+      builder: (context, snapshot) {
+        if (snapshot.data.length > 0) {
+          return ListView.builder(
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            itemCount: snapshot.data.length + 1,
+            controller: _scrollController,
+            itemBuilder: (context, index) {
+              if(index == snapshot.data.length){
+                return CupertinoActivityIndicator(radius: 20);
+              }
+              else {
                 SongModel song = snapshot.data[index];
                 return SongBookListItem(
                   song: song,
                   context: context,
                 );
-              },
-            );
-          } else {
-            return Center(
-                child: CircularProgressIndicator(
-              strokeWidth: 5,
-              valueColor:
-                  new AlwaysStoppedAnimation<Color>(AppColors.colorAppText),
-            ));
-          }
-        },
-      ),
+              }
+            },
+          );
+        } else {
+          return Center(
+              child: CircularProgressIndicator(
+                strokeWidth: 5,
+                valueColor: new AlwaysStoppedAnimation<Color>(AppColors.colorAppText),
+              ));
+        }
+      },
     );
   }
 }
+
