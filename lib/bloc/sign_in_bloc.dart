@@ -16,19 +16,20 @@ class SignInBloc {
     bool googleSignInResult = await _signInGoogle();
     return googleSignInResult;
   }
-
-  Future<Null> _logOutGoogle() async {
-    await googleSignIn.signOut();
-  }
-
-  void logOutFacebook() {
-    _logOutFacebook();
+  
+  Future<bool> logInFacebook() async {
+    var facebookLoginResult = await _logInFacebook();
+    return facebookLoginResult;
   }
 
   void logOutGoogle() {
     _logOutGoogle();
   }
 
+  void logOutFacebook() {
+    _logOutFacebook();
+  }
+  
   Future<bool> _logInFacebook() async {
     final FacebookLoginResult result = await facebookLogin.logIn(['email']);
     bool bRet = false;
@@ -59,10 +60,9 @@ class SignInBloc {
   Future<Null> _logOutFacebook() async {
     await facebookLogin.logOut();
   }
-
-  Future<bool> logInFacebook() async {
-    var facebookLoginResult = await _logInFacebook();
-    return facebookLoginResult;
+  
+  Future<Null> _logOutGoogle() async {
+    await googleSignIn.signOut();
   }
 
   void dispose() {}
