@@ -1,3 +1,5 @@
+import 'package:fast_kara/bloc/bloc_provider.dart';
+import 'package:fast_kara/bloc/sign_in_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -10,6 +12,7 @@ import 'package:fast_kara/package/localization/app_translations.dart';
 class UserAccountTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final bloc = BlocProvider.of(context).signInBloc;
     return CupertinoPageScaffold(
       backgroundColor: AppColors.colorAppBackground,
       navigationBar: CupertinoNavigationBar(
@@ -42,11 +45,15 @@ class UserAccountTab extends StatelessWidget {
           Padding(
             padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
           ),
-          _SettingItemList(),
+          _SettingItemList(
+            bloc: bloc,
+          ),
           Padding(
             padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
           ),
-          _SignInButton(),
+          _SignInButton(
+            bloc: bloc,
+          ),
         ],
       ),
     );
@@ -98,6 +105,8 @@ class _UserItemList extends StatelessWidget {
 }
 
 class _SettingItemList extends StatelessWidget {
+  _SettingItemList({this.bloc});
+  final SignInBloc bloc;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -143,13 +152,44 @@ class _SettingItemList extends StatelessWidget {
               onChanged: (bool value) {},
             ),
           ),
-        )
+        ),
+        Card(
+          color: AppColors.colorListItemCard,
+          margin: EdgeInsets.all(4),
+          child: ListTile(
+            leading: Icon(
+              Icons.logout,
+              color: Colors.grey,
+            ),
+            title: Text(
+              AppTranslations.of(context).text("user_tab_signout"),
+              style: TextStyle(color: Colors.white),
+              textAlign: TextAlign.left,
+            ),
+            trailing: Icon(
+              Icons.keyboard_arrow_right,
+              color: Colors.grey,
+            ),
+            onTap: () => {
+              _logOut(context),
+            },
+          ),
+        ),
       ],
     );
+  }
+
+  void _logOut(context) async {
+    bloc.logOutFacebook();
+    bloc.logOutGoogle();
+    Navigator.of(context, rootNavigator: true)
+        .push(CupertinoPageRoute(builder: (context) => LogInPage()));
   }
 }
 
 class _SignInButton extends StatelessWidget {
+  _SignInButton({this.bloc});
+  final SignInBloc bloc;
   @override
   Widget build(BuildContext context) {
     return Container(

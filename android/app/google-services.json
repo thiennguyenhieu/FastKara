@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "760079617317-t0ma7j5nvpf5c7ptbackjajn6dq1bqm2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fastapp.fastkara",
+            "certificate_hash": "2341838674527494f864bf96ab8e5b0b3acc8f1b"
+          }
+        },
+        {
           "client_id": "760079617317-mskmemmmmd5e3tnnivhog853pa4d59jb.apps.googleusercontent.com",
           "client_type": 3
         }
