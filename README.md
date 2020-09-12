@@ -1,16 +1,15 @@
-# fast_kara
+# Fast Kara
 
 A karaoke application written in Flutter.
 
-## Getting Started
+This is starting point for us in learning Flutter.
+Contributors:
+https://github.com/pthieu2812
+https://github.com/minwon310197
+https://github.com/ktquang114
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Some screenshots:
+<img src=“https://github.com/thiennguyenhieu/FastKara/blob/master/screenshots/home.png">                                                                      
+<img src=“https://github.com/thiennguyenhieu/FastKara/blob/master/screenshots/playsong.png>                                                                               
+<img src=“https://github.com/thiennguyenhieu/FastKara/blob/master/screenshots/search.png>                                                                   
+<img src=“https://github.com/thiennguyenhieu/FastKara/blob/master/screenshots/user.png>
