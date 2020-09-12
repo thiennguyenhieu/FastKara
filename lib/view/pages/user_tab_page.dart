@@ -158,7 +158,7 @@ class _SettingItemList extends StatelessWidget {
           margin: EdgeInsets.all(4),
           child: ListTile(
             leading: Icon(
-              Icons.logout,
+              Icons.verified_user,
               color: Colors.grey,
             ),
             title: Text(
