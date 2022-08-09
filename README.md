@@ -10,7 +10,7 @@ https://github.com/minwon310197<br />
 https://github.com/ktquang114<br /> 
 
 Some screenshots:<br /> 
-![alt text](https://github.com/thiennguyenhieu/FastKara/blob/master/screenshots/home.png")                                                                    
+![alt text](https://github.com/thiennguyenhieu/FastKara/blob/master/screenshots/home.png)                                                                    
 ![alt text](https://github.com/thiennguyenhieu/FastKara/blob/master/screenshots/playsong.png)                                                                              
 ![alt text](https://github.com/thiennguyenhieu/FastKara/blob/master/screenshots/search.png)                                                                  
 ![alt text](https://github.com/thiennguyenhieu/FastKara/blob/master/screenshots/user.png)
